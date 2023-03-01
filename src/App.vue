@@ -100,9 +100,12 @@
             style="width:10%"
             id="navbarSupportedContent"
           >
-          <div class="col text-center text-light pt-3"><h3>{{ store2.title }}</h3></div>
+            <div class="col text-center text-light pt-3">
+              <h3>{{ store2.title }}</h3>
+              <h6 v-if="store.isLogin">คุณ {{ store.userData.ses_empfname }} {{ store.userData.ses_emplname }}</h6>
+            </div>
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link active" href="#">Page</a>
               </li>
               <li class="nav-item">
@@ -110,7 +113,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Page</a>
-              </li>
+              </li> -->
               <li class="nav-item" v-if="store.isLogin">
                 <a class="nav-link" href="#" @click="logout"
                   ><i class="fa-solid fa-right-from-bracket"></i
@@ -118,7 +121,9 @@
               </li>
             </ul>
           </div>
+          
         </div>
+        
       </nav>
       <main class="p-2">
         <RouterView></RouterView>
