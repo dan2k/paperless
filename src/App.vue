@@ -147,7 +147,7 @@ const logout = () => {
   store2.toggle=true;
 };
 </script>
-<style scoped>
+<style >
 /*
     DEMO STYLE
 */

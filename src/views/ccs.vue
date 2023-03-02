@@ -1,6 +1,5 @@
 <template>
   <filter-bar
-    v-if="!isRoute"
     v-model:month="month"
     v-model:year="year"
     v-model:type="type"
@@ -8,35 +7,23 @@
   />
   <div class="row justify-content-md-center" v-if="data.length">
     <div class="col-sm-12 col-md-7">
-      <h5>
-        {{ dcs }}
-        <button
-          v-if="isRoute"
-          @click="$router.push({ path: `/rcs`, query: { type, year, month,rg:$route.query.rg,groupid:$route.query.groupid } })"
-          type="button"
-          class="float-end btn btn-link btn-sm"
-        >
-          ย้อนกลับ
-        </button>
-      </h5>
-
-      <ol class="list-group list-group-numbered">
+      
+      <ol class="list-group ">
         <li
           v-for="d in data"
           class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
         >
           <div class="ms-2 me-auto w-100">
-            <div class="fw-bold">{{ d.cust_pcode }}</div>
+           
             <div>
-              {{ d.cust_pdesc }}
+              {{ d.desc }}
               <span v-if="d.co > 0" class="float-end"
                 >
                 <button 
                   type="button" 
                   class="btn btn-link btn-sm"
-                  @click="$router.push({path:`/dcs/${d.cust_ptype}/${d.cust_pcode}/${type}/${year}/${month}`,query:{rg:$route.query.rg,groupid:$route.query.groupid,cc:$route.query.cc}})"
-                  >ดูรายการ</button>
-                </span
+                  @click="$router.push({path:'/rcs',query:{rg:d.rg,groupid:group_id,type,month,year}})"
+                  >ดูรายการ</button></span
               >
             </div>
           </div>
@@ -72,41 +59,30 @@ const store2 = useAppStore();
 const month = ref(route.query.month??d[1]);
 const year = ref(route.query.year??d[0]);
 const type = ref(route.query.type??0);
-const cc = route.query.cc??store.userData.cc;
-const group_id = route.query.groupid??store.userData.group_id;
+const rg = store.userData.section_id;
+const group_id = store.userData.group_id;
 // const cust_ptype=store.userData.ses_placetype;
 // const cust_pcode=store.userData.ses_placecode;
 const data = ref([]);
 const dcs = ref(null);
-const isRoute=ref(false)
 const search = async () => {
-  await getSumDcs(cc, group_id, type.value, year.value, month.value);
+  await getSumRcs(group_id, type.value, year.value, month.value);
 };
-const getDCSInfo = async () => {
-  try {
-    let rs = await api.get(`/paperless/v1/getDCSInfo/4/${cc}`);
-    dcs.value = rs.data.data;
-  } catch (err) {
-    errAlert(err);
-  }
-  
-};
+
 const sums = computed(() => {
   return data.value.reduce((p, it) => p + Number(it.co), 0);
 });
 onMounted( async () => {
   store2.title = "รายงานการ Service/PM";
-  isRoute.value=(route.query.cc&&route.query.groupid);
-  await getDCSInfo();
   if(route.query.type && route.query.year){
     await search()
   }
 });
 
-const getSumDcs = async (cc, groupid, type, year, month) => {
+const getSumRcs = async ( groupid, type, year, month) => {
   try {
     let rs = await api.get(
-      `/paperless/v1/getSumDcs/${cc}/${groupid}/${type}/${year}/${month}`
+      `/paperless/v1/getSumRcs/${groupid}/${type}/${year}/${month}`
     );
     data.value = rs.data.data;
     console.log(data.value);

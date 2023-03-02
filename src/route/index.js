@@ -46,6 +46,18 @@ const routes = [
 		component: () => import("../views/pcs.vue"),
 		beforeEnter: beforeEnter,
 	},
+	{
+		path:"/rcs",
+		name:'rcs',
+		component: () => import("../views/rcs.vue"),
+		beforeEnter: beforeEnter,
+	},
+	{
+		path:"/ccs",
+		name:'ccs',
+		component: () => import("../views/ccs.vue"),
+		beforeEnter: beforeEnter,
+	},
     {
 		path: "/login",
 		name: "login",

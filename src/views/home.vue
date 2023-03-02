@@ -15,7 +15,8 @@
         switch(level){
           case 1: path='/dcs';break;
           case 2: path='/pcs';break;
-          case 3: path='/ccs';break;
+          case 3: path='/rcs';break;
+          case 4: path='/ccs';break;
         }
       }
       router.replace({path});

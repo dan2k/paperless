@@ -7,7 +7,7 @@
     @search="search()"
   />
   <div class="row justify-content-md-center" v-if="serverItemsLength > 0">
-    <div class="col-8">
+    <!-- <div class="col-8">
       <h5>
         {{ dcs }}
         <button v-if="isRoute" @click="$router.push({path:`/pcs`,query:{type,year,month}})" type="button" class="float-end btn btn-link btn-sm">
@@ -39,12 +39,51 @@
     </div>
     <div class="col-8">
       <span class="float-end">รวม {{ serverItemsLength }} รายการ</span>
+    </div> -->
+    <div class="col-sm-12 col-md-7">
+      <h5>
+        {{ dcs }}
+        <button
+          v-if="isRoute"
+          @click="$router.push({ path: `/pcs`, query: { type, year, month,rg:$route.query.rg,groupid:$route.query.groupid,cc:$route.query.cc } })"
+          type="button"
+          class="float-end btn btn-link btn-sm"
+        >
+          ย้อนกลับ
+        </button>
+      </h5>
+      <div class="card mb-1" v-for="i in items">
+        <div class="card-body">
+          <h5 class="card-title fs-6">{{ i.sv_no }}</h5>
+          <div class="row d-flex justify-content-between px-2">
+            <div v-if="i.problem_type=='P1'" class="col-sm-12 col-md-12"><span class="card-title">สัญญา:&nbsp;</span><span class="fw-light">{{ i.contract_desc }} </span></div>
+            <div v-if="i.problem_type=='P3'" class="col-sm-12 col-md-12">
+              <span class="card-title">สัญญา:&nbsp;</span> 
+              <ul >
+                <li style="font-size:14px;" v-for="l in i.contract_desc.split('|')" >{{ l }}</li>
+              </ul>
+            </div>
+            <div v-if="i.problem_type=='P1'" class="col-sm-12 col-md-12"><span class="card-title">อุปกรณ์เสีย:&nbsp;</span><span class="fw-light">{{ i.equip }} </span></div>
+            <div class="col-sm-12 col-md-5"><span class="card-title">วันที่รับแจ้ง:&nbsp;</span><span class="fw-light">{{ i.sv_date }} {{ i.sv_time }}</span></div>
+            <div class="col-sm-12 col-md-5"><span class="card-title">วันที่รับแล้วเสร็จ:&nbsp;</span><span class="fw-light">{{ i.sv_solve_date }} {{ i.sv_solve_time }}</span></div>
+            <div class="col-sm-12 col-md-5"><span class="card-title">ผู้รับผิดชอบ:&nbsp;</span><span class="fw-light">{{ i.thiname }} </span></div>
+            
+          </div>
+          
+        </div>
+        
+      </div>
+      <div class="ms-2 me-auto w-100">
+            <div class="fw-bold">
+              รวมทั้งหมด <span class="float-end">{{ sums }} รายการ</span>
+            </div>
+      </div>
     </div>
   </div>
 </template>
 <script setup>
 import FilterBar from "../components/filterbar.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref,watch } from "vue";
 import { useAppStore } from "@/store";
 import { useRouter, useRoute } from "vue-router";
 import { api, errAlert, okAlert } from "@/helpers";
@@ -68,14 +107,12 @@ const search = async () => {
   await loadFromServer();
 };
 const getDCSInfo = async () => {
-  
   try {
     let rs = await api.get(`/paperless/v1/getDCSInfo/${custptype}/${custpcode}`);
     dcs.value = rs.data.data;
   } catch (err) {
     errAlert(err);
   }
-  
 };
 const headers = [
   { text: "หมายเลขปัญหา", value: "sv_no", width: 120 },
@@ -90,6 +127,10 @@ const serverItemsLength = ref(0);
 let custptype = store.userData.ses_placetype;
 let custpcode = store.userData.ses_placecode;
 const isRoute = ref(false);
+const sums=ref(0);
+watch(items,(n)=>{
+  sums.value=items.value.length;
+})
 onMounted(async () => {
   if (route.params.custptype && route.params.custpcode) {
     isRoute.value = true;
@@ -130,6 +171,10 @@ const loadFromServer = async () => {
 };
 </script>
 <style>
+.card:hover{
+  background-color: #ddd;
+  cursor:pointer;
+}
 .line {
   width: 100%;
   height: 1px;
