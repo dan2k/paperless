@@ -35,12 +35,6 @@ const routes = [
 		beforeEnter: beforeEnter,
 	},
 	{
-		path:"/dcs/:custptype/:custpcode/:type/:year/:month",
-		name:'dcs-2',
-		component: () => import("../views/dcs.vue"),
-		beforeEnter: beforeEnter,
-	},
-	{
 		path:"/pcs",
 		name:'pcs',
 		component: () => import("../views/pcs.vue"),

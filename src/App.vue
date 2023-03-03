@@ -102,7 +102,7 @@
           >
             <div class="col text-center text-light pt-3">
               <h3>{{ store2.title }}</h3>
-              <h6 v-if="store.isLogin">คุณ {{ store.userData.ses_empfname }} {{ store.userData.ses_emplname }}</h6>
+              <h6 v-if="store.isLogin"><i class="fa-solid fa-user"></i> คุณ {{ store.userData.ses_empfname }} {{ store.userData.ses_emplname }}</h6>
             </div>
             <ul class="navbar-nav ml-auto">
               <!-- <li class="nav-item">
@@ -147,7 +147,7 @@ const logout = () => {
   store2.toggle=true;
 };
 </script>
-<style >
+<style scoped>
 /*
     DEMO STYLE
 */

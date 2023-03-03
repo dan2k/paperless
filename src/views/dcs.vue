@@ -1,13 +1,14 @@
 <template>
-  <filter-bar
-    v-show="!isRoute"
-    v-model:month="month"
-    v-model:year="year"
-    v-model:type="type"
-    @search="search()"
-  />
-  <div class="row justify-content-md-center" v-if="serverItemsLength > 0">
-    <!-- <div class="col-8">
+  <div class="main">
+    <filter-bar
+      v-if="!$route.query.pcs"
+      v-model:month="month"
+      v-model:year="year"
+      v-model:type="type"
+      @search="search()"
+    />
+    <div class="row justify-content-md-center" v-if="serverItemsLength > 0">
+      <!-- <div class="col-8">
       <h5>
         {{ dcs }}
         <button v-if="isRoute" @click="$router.push({path:`/pcs`,query:{type,year,month}})" type="button" class="float-end btn btn-link btn-sm">
@@ -40,140 +41,242 @@
     <div class="col-8">
       <span class="float-end">รวม {{ serverItemsLength }} รายการ</span>
     </div> -->
-    <div class="col-sm-12 col-md-7">
-      <h5>
-        {{ dcs }}
-        <button
-          v-if="isRoute"
-          @click="$router.push({ path: `/pcs`, query: { type, year, month,rg:$route.query.rg,groupid:$route.query.groupid,cc:$route.query.cc } })"
-          type="button"
-          class="float-end btn btn-link btn-sm"
-        >
-          ย้อนกลับ
-        </button>
-      </h5>
-      <div class="card mb-1" v-for="i in items">
-        <div class="card-body">
-          <h5 class="card-title fs-6">{{ i.sv_no }}</h5>
-          <div class="row d-flex justify-content-between px-2">
-            <div v-if="i.problem_type=='P1'" class="col-sm-12 col-md-12"><span class="card-title">สัญญา:&nbsp;</span><span class="fw-light">{{ i.contract_desc }} </span></div>
-            <div v-if="i.problem_type=='P3'" class="col-sm-12 col-md-12">
-              <span class="card-title">สัญญา:&nbsp;</span> 
-              <ul >
-                <li style="font-size:14px;" v-for="l in i.contract_desc.split('|')" >{{ l }}</li>
-              </ul>
-            </div>
-            <div v-if="i.problem_type=='P1'" class="col-sm-12 col-md-12"><span class="card-title">อุปกรณ์เสีย:&nbsp;</span><span class="fw-light">{{ i.equip }} </span></div>
-            <div class="col-sm-12 col-md-5"><span class="card-title">วันที่รับแจ้ง:&nbsp;</span><span class="fw-light">{{ i.sv_date }} {{ i.sv_time }}</span></div>
-            <div class="col-sm-12 col-md-5"><span class="card-title">วันที่รับแล้วเสร็จ:&nbsp;</span><span class="fw-light">{{ i.sv_solve_date }} {{ i.sv_solve_time }}</span></div>
-            <div class="col-sm-12 col-md-5"><span class="card-title">ผู้รับผิดชอบ:&nbsp;</span><span class="fw-light">{{ i.thiname }} </span></div>
-            
+      <div class="col-sm-12 col-md-7">
+        <div class="text-primary d-flex justify-content-between px-2">
+          <div class="col-10">
+            <nav aria-label="breadcrumb">
+              <!-- <i class="fa-solid fa-sitemap"></i> -->
+              <ol class="breadcrumb">
+                <li v-if="isRoute && $route.query.ccs" class="breadcrumb-item">
+                  <i class="fa-solid fa-sitemap"></i>
+                  <a
+                    href="javascript:void(0)"
+                    @click="$router.push({ path: '/ccs', query: { type, year, month } })"
+                    >หน้าแรก</a
+                  >
+                </li>
+                <!-- <li v-if="isRoute &&  !$route.query.ccs && $route.query.rcs" class="breadcrumb-item" ><i class="fa-solid fa-sitemap"></i> <a  href="javascript:void(0)" @click="$router.push({path:'/rcs',query:{type,year,month,groupid:$route.query.groupid,rg:$route.query.rg}})">หน้าแรก</a></li> -->
+                <li
+                  v-if="isRoute && !$route.query.ccs && $route.query.rcs"
+                  class="breadcrumb-item"
+                >
+                  <a
+                    href="javascript:void(0)"
+                    @click="
+                      $router.push({
+                        path: '/rcs',
+                        query: {
+                          type,
+                          year,
+                          month,
+                          groupid: $route.query.groupid,
+                          rg: $route.query.rg,
+                          ccs: $route.query.ccs,
+                          rcs: $route.query.rcs,
+                          pcs: $route.query.pcs,
+                        },
+                      })
+                    "
+                    >หน้าแรก</a
+                  >
+                </li>
+                <li
+                  v-if="isRoute && $route.query.ccs && $route.query.rcs"
+                  class="breadcrumb-item"
+                >
+                  <a
+                    href="javascript:void(0)"
+                    @click="
+                      $router.push({
+                        path: '/rcs',
+                        query: {
+                          type,
+                          year,
+                          month,
+                          groupid: $route.query.groupid,
+                          rg: $route.query.rg,
+                          ccs: $route.query.ccs,
+                          rcs: $route.query.rcs,
+                          pcs: $route.query.pcs,
+                        },
+                      })
+                    "
+                    >{{ $route.query.rcs }}</a
+                  >
+                </li>
+                <li
+                  v-if="
+                    isRoute && !$route.query.ccs && !$route.query.rcs && $route.query.pcs
+                  "
+                  class="breadcrumb-item"
+                >
+                  <a
+                    href="javascript:void(0)"
+                    @click="
+                      $router.push({
+                        path: '/pcs',
+                        query: {
+                          type,
+                          year,
+                          month,
+                          groupid: $route.query.groupid,
+                          rg: $route.query.rg,
+                          cc: $route.query.cc,
+                          ccs: $route.query.ccs,
+                          rcs: $route.query.rcs,
+                          pcs: $route.query.pcs,
+                        },
+                      })
+                    "
+                    >หน้าแรก</a
+                  >
+                </li>
+                <li
+                  v-if="isRoute && $route.query.rcs && $route.query.pcs"
+                  class="breadcrumb-item"
+                >
+                  <a
+                    href="javascript:void(0)"
+                    @click="
+                      $router.push({
+                        path: '/pcs',
+                        query: {
+                          type,
+                          year,
+                          month,
+                          groupid: $route.query.groupid,
+                          rg: $route.query.rg,
+                          cc: $route.query.cc,
+                          ccs: $route.query.ccs,
+                          rcs: $route.query.rcs,
+                          pcs: $route.query.pcs,
+                        },
+                      })
+                    "
+                    >{{ $route.query.pcs }}</a
+                  >
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  <i v-if="!$route.query.pcs" class="fa-solid fa-sitemap"></i>&nbsp;{{ dcs }}
+                </li>
+              </ol>
+            </nav>
           </div>
-          
+          <button
+            v-if="isRoute"
+            @click="
+              $router.push({
+                path: `/pcs`,
+                query: {
+                  type,
+                  year,
+                  month,
+                  rg: $route.query.rg,
+                  groupid: $route.query.groupid,
+                  cc: $route.query.cc,
+                  ccs: $route.query.ccs,
+                  rcs: $route.query.rcs,
+                  pcs: $route.query.pcs,
+                },
+              })
+            "
+            type="button"
+            class="float-end btn btn-link btn-sm"
+          >
+            ย้อนกลับ
+          </button>
         </div>
-        
-      </div>
-      <div class="ms-2 me-auto w-100">
-            <div class="fw-bold">
-              รวมทั้งหมด <span class="float-end">{{ sums }} รายการ</span>
+        <div class="card mb-1" v-for="i in items">
+          <div class="card-body">
+            <h5 class="card-title fs-6">{{ i.sv_no }}</h5>
+            <div class="row d-flex justify-content-between px-2">
+              <div v-if="i.problem_type == 'P1'" class="col-sm-12 col-md-12">
+                <span class="card-title">สัญญา:&nbsp;</span
+                ><span class="fw-light">{{ i.contract_desc }} </span>
+              </div>
+              <div v-if="i.problem_type == 'P3'" class="col-sm-12 col-md-12">
+                <span class="card-title">สัญญา:&nbsp;</span>
+                <ul>
+                  <li style="font-size: 14px" v-for="l in i.contract_desc.split('|')">
+                    {{ l }}
+                  </li>
+                </ul>
+              </div>
+              <div v-if="i.problem_type == 'P1'" class="col-sm-12 col-md-12">
+                <span class="card-title">อุปกรณ์เสีย:&nbsp;</span
+                ><span class="fw-light">{{ i.equip }} </span>
+              </div>
+              <div class="col-sm-12 col-md-5">
+                <span class="card-title">วันที่รับแจ้ง:&nbsp;</span
+                ><span class="fw-light">{{ i.sv_date }} {{ i.sv_time }}</span>
+              </div>
+              <div class="col-sm-12 col-md-5">
+                <span class="card-title">วันที่รับแล้วเสร็จ:&nbsp;</span
+                ><span class="fw-light">{{ i.sv_solve_date }} {{ i.sv_solve_time }}</span>
+              </div>
+              <div class="col-sm-12 col-md-5">
+                <span class="card-title">ผู้รับผิดชอบ:&nbsp;</span
+                ><span class="fw-light">{{ i.thiname }} </span>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="ms-2 me-auto w-100">
+          <div class="fw-bold">
+            รวมทั้งหมด <span class="float-end">{{ sums }} รายการ</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
 import FilterBar from "../components/filterbar.vue";
-import { onMounted, ref,watch } from "vue";
-import { useAppStore } from "@/store";
-import { useRouter, useRoute } from "vue-router";
-import { api, errAlert, okAlert } from "@/helpers";
-import datatable from "vue3-easy-data-table";
-import "vue3-easy-data-table/dist/style.css";
-import { useAuthStore } from "../store";
-const router = useRouter();
-const route = useRoute();
-let date = new Date();
-let d = date.toJSON();
-d = d.split("T");
-d = d[0];
-d = d.split("-");
-const store = useAuthStore();
-const store2 = useAppStore();
-const month = ref(d[1]);
-const year = ref(d[0]);
-const type = ref(0);
+import { onMounted, ref, watch } from "vue";
+// import datatable from "vue3-easy-data-table";
+// import "vue3-easy-data-table/dist/style.css";
+import { useService } from "./service";
+const {
+  route,
+  appStore,
+  authStore,
+  month,
+  year,
+  type,
+  items,
+  serverItemsLength,
+  getDCSInfo,
+  loadFromServer,
+} = useService();
 const dcs = ref(null);
-const search = async () => {
-  await loadFromServer();
-};
-const getDCSInfo = async () => {
-  try {
-    let rs = await api.get(`/paperless/v1/getDCSInfo/${custptype}/${custpcode}`);
-    dcs.value = rs.data.data;
-  } catch (err) {
-    errAlert(err);
-  }
-};
-const headers = [
-  { text: "หมายเลขปัญหา", value: "sv_no", width: 120 },
-  { text: "วันที่", value: "sv_date" },
-  { text: "เวลา", value: "sv_time" },
-  { text: "ผู้รับผิดชอบ", value: "thiname" },
-];
-
-const items = ref([]);
-const loading = ref(false);
-const serverItemsLength = ref(0);
-let custptype = store.userData.ses_placetype;
-let custpcode = store.userData.ses_placecode;
+let custptype = route.query.custptype ?? authStore.userData.ses_placetype;
+let custpcode = route.query.custpcode ?? authStore.userData.ses_placecode;
 const isRoute = ref(false);
-const sums=ref(0);
-watch(items,(n)=>{
-  sums.value=items.value.length;
-})
+const sums = ref(0);
+watch(items, (n) => {
+  sums.value = items.value.length;
+});
+const search = async () => {
+  await loadFromServer(custptype, custpcode);
+};
 onMounted(async () => {
-  if (route.params.custptype && route.params.custpcode) {
+  dcs.value = await getDCSInfo(custptype, custpcode);
+  if (route.query.custptype && route.query.custpcode) {
     isRoute.value = true;
   }
-  store2.title = "รายงานการ Service/PM";
+  appStore.title = "รายงานการ Service/PM";
   if (isRoute.value) {
-    custptype = route.params.custptype;
-    custpcode = route.params.custpcode;
-    year.value = route.params.year;
-    month.value = route.params.month;
-    type.value = route.params.type;
-    await getDCSInfo();
     await search();
   }
 });
-const serverOptions = ref({
-  page: 1,
-  rowsPerPage: 100,
-  sortBy: "sv_no",
-  sortType: "asc",
-});
-
-const loadFromServer = async () => {
-  loading.value = true;
-  try {
-    let rs = await api.get(
-      `/paperless/v1/getJob/${custptype}/${custpcode}/${type.value}/${year.value}/${month.value}/${serverOptions.value.page}/${serverOptions.value.rowsPerPage}/${serverOptions.value.sortBy}/${serverOptions.value.sortType}`
-    );
-    items.value = rs.data.data;
-    serverItemsLength.value = rs.data.totals;
-    if (serverItemsLength.value == 0) {
-      okAlert("ไม่พบข้อมูล");
-    }
-  } catch (err) {
-    errAlert(err);
-  }
-  loading.value = false;
-};
 </script>
 <style>
-.card:hover{
+.main {
+  font-size: 14px;
+}
+.card:hover {
   background-color: #ddd;
-  cursor:pointer;
+  cursor: pointer;
 }
 .line {
   width: 100%;
@@ -181,13 +284,8 @@ const loadFromServer = async () => {
   border-bottom: 1px dashed #ddd;
   margin: 40px 0;
 }
+/* 
 @media screen and (max-width: 767px) {
-  /* table th,
-	table td {
-		max-width: 767;
-		width: 100%;
-	} */
-
   table tr td {
     width: 100% !important;
   }
@@ -198,12 +296,6 @@ const loadFromServer = async () => {
     display: block;
     width: 100%;
   }
-  /* table tbody tr > *:first-child {
-		
-		background-color: #212529;
-		color: white;
-		text-align: left;
-	} */
   table tbody tr > td > span:before {
     content: attr(data-label) "\003A\00a0\00a0";
     float: left;
@@ -211,5 +303,5 @@ const loadFromServer = async () => {
     font-weight: bold;
     font-size: 1em;
   }
-}
+} */
 </style>
