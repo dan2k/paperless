@@ -147,16 +147,16 @@ const logout = () => {
   store2.toggle=true;
 };
 </script>
-<style scoped>
+<style >
 /*
     DEMO STYLE
 */
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-body {
-  font-family: "Poppins", sans-serif;
+/* body {
+  font-family: sans-serif,"Poppins" ;
   background: #fafafa;
-}
+} */
 
 p {
   font-family: "Poppins", sans-serif;
