@@ -48,7 +48,7 @@
               <!-- <i class="fa-solid fa-sitemap"></i> -->
               <ol class="breadcrumb">
                 <li v-if="isRoute && $route.query.ccs" class="breadcrumb-item">
-                  <i class="fa-solid fa-sitemap"></i>
+                  <i class="fa-solid fa-sitemap"></i>&nbsp;
                   <a
                     href="javascript:void(0)"
                     @click="$router.push({ path: '/ccs', query: { type, year, month } })"
@@ -59,7 +59,8 @@
                 <li
                   v-if="isRoute && !$route.query.ccs && $route.query.rcs"
                   class="breadcrumb-item"
-                >
+                > 
+                  <i class="fa-solid fa-sitemap"></i>&nbsp;
                   <a
                     href="javascript:void(0)"
                     @click="
@@ -110,6 +111,7 @@
                   "
                   class="breadcrumb-item"
                 >
+                <i class="fa-solid fa-sitemap"></i>&nbsp;
                   <a
                     href="javascript:void(0)"
                     @click="
