@@ -98,6 +98,18 @@ export const useService=()=>{
         }
         close()
     };
+    const getCdgJob= async (type,newplacecode)=>{
+      start()
+      try{
+        let rs= await api.get(`/paperless/v1/getCdgJob/${type}/${newplacecode}`);
+        close()
+        // return {data:rs.data.data,cc,cc:rs.data.cc,aa:rs.data.aa}
+        return rs.data.data
+      }catch(err){
+        errAlert(err)
+      }
+      close();
+    }
     return {
         authStore,
         appStore,
@@ -116,6 +128,7 @@ export const useService=()=>{
         getSumDcs,
         getSumPcs,
         getSumRcs,
+        getCdgJob,
 
     }
 

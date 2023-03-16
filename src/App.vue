@@ -66,7 +66,7 @@
 
     <!-- Page Content Holder -->
     <div id="content">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-50 mb-5">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-50 mb-1">
         <div class="container-fluid">
           <!-- <button
             v-if="store.isLogin"          
