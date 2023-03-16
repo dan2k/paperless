@@ -76,7 +76,7 @@ onMounted(async () => {
   }
 });
 </script>
-<style>
+<style scoped>
 .main {
   font-size: 14px;
 }

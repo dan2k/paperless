@@ -7,6 +7,7 @@
       v-model:type="type"
       @search="search()"
     />
+    <h4 v-if="$route.query.rg" class="text-center text-primary"><u>รายงาน {{$route.query.type==0?'service':'PM'}} {{ $route.query.month }}/{{ Number($route.query.year)+543 }}</u></h4>
     <div class="row justify-content-md-center" v-if="data.length">
       <div class="col-sm-12 col-md-7">
         <div class="text-primary d-flex justify-content-between px-2">
@@ -138,7 +139,7 @@ onMounted(async () => {
   }
 });
 </script>
-<style>
+<style scoped>
 .main {
   font-size: 14px;
 }

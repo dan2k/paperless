@@ -11,6 +11,9 @@ import  "bootstrap";
 // import "@/assets/js/solid";
 // fontawesome 6.3
 import "@/assets/js/all.min";
+// import '@/views/thsarabunnew-webfont-normal.js';
+// import '@/views/Sarabun-Regular-normal.js';
+
 const app=createApp(App)
 app.config.devtools = true;
 app.use(VueSweetalert2);

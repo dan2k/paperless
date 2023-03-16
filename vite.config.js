@@ -21,6 +21,11 @@ export default defineConfig(async ({ command, mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         },
+        '/imauthapi': {
+          target: env.VITE_PRIVATE_IMAUTH_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/imauthapi/, '')
+        },
       },
     },
     build:{

@@ -7,6 +7,7 @@
       v-model:type="type"
       @search="search()"
     />
+    <h4 v-if="$route.query.pcs" class="text-center text-primary"><u>รายงาน {{$route.query.type==0?'service':'PM'}} {{ $route.query.month }}/{{ Number($route.query.year)+543 }}</u></h4>
     <div class="row justify-content-md-center" v-if="serverItemsLength > 0">
       <!-- <div class="col-8">
       <h5>
@@ -190,14 +191,14 @@
         </div>
         <div class="card mb-1" v-for="i in items">
           <div class="card-body">
-            <h5 class="card-title fs-6">{{ i.sv_no }}</h5>
+            <h5 class="fw-bold fs-6 text-primary">{{ i.sv_no }}</h5>
             <div class="row d-flex justify-content-between px-2">
               <div v-if="i.problem_type == 'P1'" class="col-sm-12 col-md-12">
-                <span class="card-title">สัญญา:&nbsp;</span
-                ><span class="fw-light">{{ i.contract_desc }} </span>
+                <span class="fw-semibold">สัญญา:&nbsp;</span
+                ><span class="fw-lighter">{{ i.contract_desc }} </span>
               </div>
               <div v-if="i.problem_type == 'P3'" class="col-sm-12 col-md-12">
-                <span class="card-title">สัญญา:&nbsp;</span>
+                <span class="fw-semibold">สัญญา:&nbsp;</span>
                 <ul>
                   <li style="font-size: 14px" v-for="l in i.contract_desc.split('|')">
                     {{ l }}
@@ -205,26 +206,26 @@
                 </ul>
               </div>
               <div v-if="i.problem_type == 'P1'" class="col-sm-12 col-md-12">
-                <span class="card-title">อุปกรณ์เสีย:&nbsp;</span
+                <span class="fw-semibold">อุปกรณ์เสีย:&nbsp;</span
                 ><span class="fw-light">{{ i.equip }} </span>
               </div>
               <div class="col-sm-12 col-md-5">
-                <span class="card-title">วันที่รับแจ้ง:&nbsp;</span
+                <span class="fw-semibold">วันที่รับแจ้ง:&nbsp;</span
                 ><span class="fw-light">{{ i.sv_date }} {{ i.sv_time }}</span>
               </div>
               <div class="col-sm-12 col-md-5">
-                <span class="card-title">วันที่รับแล้วเสร็จ:&nbsp;</span
+                <span class="fw-semibold">วันที่รับแล้วเสร็จ:&nbsp;</span
                 ><span class="fw-light">{{ i.sv_solve_date }} {{ i.sv_solve_time }}</span>
               </div>
               <div class="col-sm-12 col-md-5">
-                <span class="card-title">ผู้รับผิดชอบ:&nbsp;</span
+                <span class="fw-semibold">ผู้รับผิดชอบ:&nbsp;</span
                 ><span class="fw-light">{{ i.thiname }} </span>
               </div>
             </div>
           </div>
         </div>
         <div class="ms-2 me-auto w-100">
-          <div class="fw-bold">
+          <div class="fw-bold mt-2">
             รวมทั้งหมด <span class="float-end">{{ sums }} รายการ</span>
           </div>
         </div>
@@ -272,7 +273,7 @@ onMounted(async () => {
   }
 });
 </script>
-<style>
+<style scoped>
 .main {
   font-size: 14px;
 }

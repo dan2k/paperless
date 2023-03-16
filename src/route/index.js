@@ -52,6 +52,25 @@ const routes = [
 		component: () => import("../views/ccs.vue"),
 		beforeEnter: beforeEnter,
 	},
+	{
+		path:"/cdg",
+		name:'cdg',
+		component: () => import("../views/cdg.vue"),
+		beforeEnter: beforeEnter,
+	},
+	
+	{
+		path:"/ddopa",
+		name:'ddopa',
+		component: () => import("../views/ddopa.vue"),
+		beforeEnter: beforeEnter,
+	},
+	{
+		path:"/pdf",
+		name:'pdf',
+		component: () => import("../views/testpdf.vue"),
+		beforeEnter: beforeEnter,
+	},
     {
 		path: "/login",
 		name: "login",
