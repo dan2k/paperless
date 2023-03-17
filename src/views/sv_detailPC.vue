@@ -1,5 +1,5 @@
 <template>
-  <div id="pdf" style="font-family: sarabun" class="main" v-show="isShow">
+    <div  style="font-family: sarabun" class="mainx">
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
@@ -142,9 +142,9 @@
       </div>
       <div style="float: right; width: 40%"></div>
     </div>
-    <!-- <div
+    <div
       style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 3px"
-    ></div> -->
+    ></div>
     <div class="dservice" style="position: relative">
       <div class="hservice">SERVICE</div>
       <div style="width: 100%">
@@ -255,7 +255,7 @@
         style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 3px"
       ></div>
 
-      <div style="width: 100%; height: 60px">
+      <div style="width: 100%; height: 150px">
         <b>งาน /ปัญหา /อาการเสีย:&nbsp; </b>
         <span style="text-align: justify">
           แจ้งเครื่องเสีย: เครื่องเก็บนิ้วชี้ไม่อ่านบัตร ไม่อ่านบัตรสมาร์ทคาร์ด
@@ -265,7 +265,7 @@
         style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 3px"
       ></div>
 
-      <div style="width: 100%; height: 60px">
+      <div style="width: 100%; height: 150px">
         <b>รายละเอียดดำเนินการ:&nbsp; </b>
         <span>
           1.ทำการตรวจสอบ ไม่อ่านบัตร <br />
@@ -333,7 +333,7 @@
           </tbody>
         </table>
       </div>
-      <div style="width: 100%; font-weight: bold; font-size: 6px; padding-left: 10px">
+      <div style="width: 100%; font-weight: bold; font-size: 16px; padding-left: 10px">
         DEFECTIVE PART
       </div>
       <div style="width: 100%">
@@ -426,70 +426,74 @@
     <div class="ft" >CDG GROUP,CONTROLDATA (THAILAND) LTD. MOI SITE</div>
     
   </div>
-  <div class="btn btn-primary" @click="generatePDF()">pdf</div>
+  <div class="row">
+    <div class="col-12 col-md-4 mx-auto  text-center">
+        <button class="btn btn-primary btn-sm me-1" @click="approve()">อนุมัติ</button>
+        <button class="btn btn-primary btn-sm me-1" @click="open()">พิมพ์</button>
+        <button class="btn btn-primary btn-sm" @click="$router.push({path:`/cdg`,query:{type:$route.query.type,ptype:$route.query.ptype,pv:$route.query.pv,pcode:$route.query.pcode}})">หน้าแรก</button>
+    </div>
+  </div>
 </template>
 <script setup>
-import { ref,onMounted } from "vue";
-import { jsPDF } from "jsPDF";
-import {
-  saraban_normal,
-  saraban_bold,
-  saraban_bolditalic,
-  saraban_italic,
-} from "./sarabunnew.js";
-const isShow=ref(false);
-onMounted(()=>{
-  generatePDF()
-})
-const generatePDF =async () => {
-  isShow.value=true;
-  const doc = new jsPDF({
-    orientation: "p",
-    format: "a4",
-    unit: "px",
-    lineHeight: 2,
-    putOnlyUsedFonts: true,
-  }); // create jsPDF object
-  doc.addFileToVFS("sarabun-normal.ttf", saraban_normal);
-  doc.addFont("sarabun-normal.ttf", "sarabun", "normal");
-  doc.addFileToVFS("sarabun-bold.ttf", saraban_bold);
-  doc.addFont("sarabun-bold.ttf", "sarabun", "bold");
-  doc.addFileToVFS("sarabun-bolditalic.ttf", saraban_bolditalic);
-  doc.addFont("sarabun-bolditalic.ttf", "sarabun", "bolditalic");
-  doc.addFileToVFS("sarabun-italic.ttf", saraban_italic);
-  doc.addFont("sarabun-italic.ttf", "sarabun", "italic");
-  const pdfElement = document.getElementById("pdf"); // HTML element to be converted to PDF
-  await doc.html(pdfElement, {
-    callback: (pdf) => {
-      // pdf.addFileToVFS('sarabun-normal.ttf', saraban_normal)
-      // pdf.addFont('sarabun-normal.ttf', 'sarabun', 'normal');
-      // pdf.setFont('sarabun', 'normal');
-      // console.log(pdf.getFileFromVFS('sarabun-normal.ttf'));
-      // console.log(pdf.getFontList());
-      // pdf.save('test.pdf')
-      pdf.output("dataurlnewwindow");
-      // const myPdfData = pdf.output('datauristring/dataurlstring')
-      window.close()
-      isShow.value=false;
-    },
-    filename:'test.pdf',
-    margin: 0, // optional: page margin
-    // optional: other HTMLOptions
-  });
-  
-};
-
+   const open=()=>{
+        window.open(`/pdf`)
+    }
+    const approve=async ()=>{
+      const inputOptions = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            '5': 'พอใจมาก',
+            '4': 'พอใจ',
+            '3': 'ปานกลาง',
+            '2': 'ไม่พอใจ',
+            '1': 'ไม่พอใจมาก',
+          })
+        }, 10)
+      })
+      const { value: satisfaction } = await Swal.fire({
+        title: 'กรุณาเลือกระดับความพึงพอใจ',
+        input: 'radio',
+        inputOptions: inputOptions,
+        inputValidator: (value) => {
+          if (!value) {
+            return 'ท่านยังไม่ได้เลือกระดับความพึงพอใจ'
+          }
+        },
+        showCancelButton: true,
+        cancelButtonText:'ยกเลิก',
+        confirmButtonText:'ตกลง',
+      })
+      if(satisfaction){
+        alert(satisfaction)
+      }
+    }
 </script>
-<style scoped>
-#pdf {
-  font-family: "saraban";
+<style >
+.swal2-label{
+  font-size:10px !important;
 }
-.main {
+.swal2-title{
+  font-size:16px !important;
+}
+.swal2-confirm{
+  font-size:12px !important;
+}
+.swal2-cancel{
+  font-size:12px !important;
+}
+.swal2-validation-message{
+  font-size:12px !important;
+}
+.mainx {
   position:relative;
-  font-size: 6px;
-  width: 447px;
-  margin: 0px 0px;
+  font-size: 12px;
+  width:70%;
+  margin: auto auto;
   padding: 12px;
+  border-style:solid;
+  border-color:#f6eded;
+  border-width:1px;
+  background-color:#fff;
 }
 div.underline {
   border-bottom-style: dotted;
@@ -501,7 +505,7 @@ div.dservice {
   border: 1px solid black;
   border-radius: 5px;
   width: 100%;
-  height: 205px;
+  height: 440px;
   padding: 5px 5px;
   margin-left:auto;
   margin-right:auto;
@@ -512,30 +516,30 @@ div.dservice {
 }
 div.hservice {
   position: absolute;
-  top: -8px;
+  top: -11px;
   right: 47%;
   background-color: white;
   z-index: 9999;
-  font-size: 8px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   padding-left: 5px;
 }
 div.dusage {
-  margin-top: 10px;
+  margin-top: 15px;
   border: 1px solid black;
   border-radius: 5px;
   width: 100%;
-  height: 105px;
+  height: 230px;
   padding: 5px 5px;
 }
 div.husage {
   position: absolute;
-  top: -8px;
+  top: -11px;
   right: 45%;
   background-color: white;
   z-index: 999;
-  font-size: 8px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   padding-left: 5px;

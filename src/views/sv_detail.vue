@@ -1,5 +1,5 @@
 <template>
-  <div id="pdf" style="font-family: sarabun" class="main" v-show="isShow">
+  <div id="pdf" style="font-family: sarabun" class="mainx mx-auto">
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
@@ -16,8 +16,10 @@
         <!-- <div style="width: 80%; ">
           Controldata ( Thailand ) Ltd.
         </div> -->
-        <div style="width: 100%; text-align: left;">
-          <b>Controldata&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;Thailand&nbsp;&nbsp;)&nbsp;&nbsp;Ltd.</b>
+        <div style="width: 100%; text-align: left">
+          <b
+            >Controldata&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;Thailand&nbsp;&nbsp;)&nbsp;&nbsp;Ltd.</b
+          >
         </div>
       </div>
       <div style="width: 47%; float: left; text-align: center; padding-top: 10px">
@@ -423,73 +425,90 @@
     <div
       style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 142px"
     ></div>
-    <div class="ft" >CDG GROUP,CONTROLDATA (THAILAND) LTD. MOI SITE</div>
-    
+    <div class="ft">CDG GROUP,CONTROLDATA (THAILAND) LTD. MOI SITE</div>
   </div>
-  <div class="btn btn-primary" @click="generatePDF()">pdf</div>
+  <div class="row">
+    <div class="col-12 col-md-4 mx-auto text-center">
+      <button class="btn btn-primary btn-sm me-1" @click="approve()">อนุมัติ</button>
+      <button class="btn btn-primary btn-sm me-1" @click="open()">พิมพ์</button>
+      <button
+        class="btn btn-primary btn-sm me-1"
+        @click="
+          $router.push({
+            path: `/cdg`,
+            query: {
+              type: $route.query.type,
+              ptype: $route.query.ptype,
+              pv: $route.query.pv,
+              pcode: $route.query.pcode,
+            },
+          })
+        "
+      >
+        หน้าแรก
+      </button>
+    </div>
+  </div>
 </template>
 <script setup>
-import { ref,onMounted } from "vue";
-import { jsPDF } from "jsPDF";
-import {
-  saraban_normal,
-  saraban_bold,
-  saraban_bolditalic,
-  saraban_italic,
-} from "./sarabunnew.js";
-const isShow=ref(false);
-onMounted(()=>{
-  generatePDF()
-})
-const generatePDF =async () => {
-  isShow.value=true;
-  const doc = new jsPDF({
-    orientation: "p",
-    format: "a4",
-    unit: "px",
-    lineHeight: 2,
-    putOnlyUsedFonts: true,
-  }); // create jsPDF object
-  doc.addFileToVFS("sarabun-normal.ttf", saraban_normal);
-  doc.addFont("sarabun-normal.ttf", "sarabun", "normal");
-  doc.addFileToVFS("sarabun-bold.ttf", saraban_bold);
-  doc.addFont("sarabun-bold.ttf", "sarabun", "bold");
-  doc.addFileToVFS("sarabun-bolditalic.ttf", saraban_bolditalic);
-  doc.addFont("sarabun-bolditalic.ttf", "sarabun", "bolditalic");
-  doc.addFileToVFS("sarabun-italic.ttf", saraban_italic);
-  doc.addFont("sarabun-italic.ttf", "sarabun", "italic");
-  const pdfElement = document.getElementById("pdf"); // HTML element to be converted to PDF
-  await doc.html(pdfElement, {
-    callback: (pdf) => {
-      // pdf.addFileToVFS('sarabun-normal.ttf', saraban_normal)
-      // pdf.addFont('sarabun-normal.ttf', 'sarabun', 'normal');
-      // pdf.setFont('sarabun', 'normal');
-      // console.log(pdf.getFileFromVFS('sarabun-normal.ttf'));
-      // console.log(pdf.getFontList());
-      // pdf.save('test.pdf')
-      pdf.output("dataurlnewwindow");
-      // const myPdfData = pdf.output('datauristring/dataurlstring')
-      window.close()
-      isShow.value=false;
-    },
-    filename:'test.pdf',
-    margin: 0, // optional: page margin
-    // optional: other HTMLOptions
-  });
-  
+import { useService } from "./service.js";
+const { router } = useService();
+const open = () => {
+  window.open(`/pdf`);
 };
-
+const approve=async ()=>{
+      const inputOptions = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            '5': 'พอใจมาก',
+            '4': 'พอใจ',
+            '3': 'ปานกลาง',
+            '2': 'ไม่พอใจ',
+            '1': 'ไม่พอใจมาก',
+          })
+        }, 10)
+      })
+      const { value: satisfaction } = await Swal.fire({
+        title: 'กรุณาเลือกระดับความพึงพอใจ',
+        input: 'radio',
+        inputOptions: inputOptions,
+        inputValidator: (value) => {
+          if (!value) {
+            return 'ท่านยังไม่ได้เลือกระดับความพึงพอใจ'
+          }
+        },
+        showCancelButton: true,
+        cancelButtonText:'ยกเลิก',
+        confirmButtonText:'ตกลง',
+      })
+      if(satisfaction){
+        alert(satisfaction)
+      }
+    }
 </script>
 <style scoped>
-#pdf {
-  font-family: "saraban";
+.swal2-label{
+  font-size:10px !important;
 }
-.main {
-  position:relative;
+.swal2-title{
+  font-size:16px !important;
+}
+.swal2-confirm{
+  font-size:12px !important;
+}
+.swal2-cancel{
+  font-size:12px !important;
+}
+.swal2-validation-message{
+  font-size:12px !important;
+}
+.mainx {
+  position: relative;
   font-size: 6px;
   width: 447px;
   margin: 0px 0px;
   padding: 12px;
+  background-color: #fff;
 }
 div.underline {
   border-bottom-style: dotted;
@@ -503,8 +522,8 @@ div.dservice {
   width: 100%;
   height: 205px;
   padding: 5px 5px;
-  margin-left:auto;
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 .dservice input[type="checkbox"] {
   width: 10px;
@@ -557,16 +576,16 @@ th,
 td {
   padding: 3px;
 }
-.ft{
-	width:96%;
-	position:absolute;
-	bottom:7px;
-	border-top-style:solid;
-	border-top-width:1px;
-	text-align:right;
-    z-index:990;
+.ft {
+  width: 96%;
+  position: absolute;
+  bottom: 7px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  text-align: right;
+  z-index: 990;
 }
-.l{
+.l {
   /* ความสูงของตัวอักษร เท่ากับความสูงของเส้นประ */
   line-height: 14px;
   /* สีพื้นหลัง สีเดียวกันกับการวาด grid */
@@ -574,8 +593,7 @@ td {
   /* ขนาดของ grid 2em เท่ากับความสูงของตัวอีกษร */
   background-size: 2px 2px, 2px 14px;
   /* วาด grid */
-  background-image:
-    linear-gradient(to bottom, transparent 5px, #fff 5px),
+  background-image: linear-gradient(to bottom, transparent 5px, #fff 5px),
     linear-gradient(to right, #fff 1px, transparent 1px),
     linear-gradient(to right, transparent 2px, #fff 2px),
     linear-gradient(to bottom, gray 1px, transparent 1px);

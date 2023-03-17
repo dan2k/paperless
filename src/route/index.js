@@ -58,6 +58,18 @@ const routes = [
 		component: () => import("../views/cdg.vue"),
 		beforeEnter: beforeEnter,
 	},
+	{
+		path:"/sv",
+		name:'sv',
+		component: () => import("../views/sv_detail.vue"),
+		beforeEnter: beforeEnter,
+	},
+	{
+		path:"/svpc",
+		name:'svpc',
+		component: () => import("../views/sv_detailPC.vue"),
+		beforeEnter: beforeEnter,
+	},
 	
 	{
 		path:"/ddopa",

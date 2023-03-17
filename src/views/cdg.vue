@@ -74,12 +74,12 @@
             </div>
             <div class="col-12 col-md-12">
               <span class="card-title fw-normal"
-                ><i class="fa-solid fa-house"></i>&nbsp;สัญญา:&nbsp;</span
+                ><i class="fa-regular fa-file-lines"></i>&nbsp;สัญญา:&nbsp;</span
               >
-              <span style="color: #999" v-if="type==0">{{ d.contract }}</span>
-              <div style="color:#999" v-if="type==1">
+              <span style="color: #999" v-if="type == 0">{{ d.contract }}</span>
+              <div style="color: #999" v-if="type == 1">
                 <ul>
-                  <li v-for="c in d.contract.split('|')">{{ c }} {{  }}</li>
+                  <li v-for="c in d.contract.split('|')">{{ c }} {{}}</li>
                 </ul>
               </div>
             </div>
@@ -107,7 +107,7 @@
               >
               <span style="color: #999">{{ d.solvedate }}</span>
             </div>
-            <div class="col-12 col-md-12 mb-1" v-if="type==0">
+            <div class="col-12 col-md-12 mb-1" v-if="type == 0">
               <span class="card-title fw-normal"
                 ><i class="fa-solid fa-tag"></i>&nbsp;ปัญหา:&nbsp;</span
               >
@@ -117,8 +117,17 @@
             </div>
           </div>
           <div class="line my-1"></div>
-          <div class="col-12 col-md-12 text-end">
-            <button class="btn btn-primary btn-sm">
+          <div class="col-12 col-md-12">
+            <button
+              class="btn btn-primary btn-sm d-block d-md-none float-end"
+              @click="open('mobile')"
+            >
+              <i class="fa-regular fa-file-lines"></i>&nbsp;รายละเอียด
+            </button>
+            <button
+              class="btn btn-primary btn-sm d-none d-md-block float-end"
+              @click="open('pc')"
+            >
               <i class="fa-regular fa-file-lines"></i>&nbsp;รายละเอียด
             </button>
           </div>
@@ -126,13 +135,12 @@
       </div>
     </div>
   </div>
-
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
 import { useService } from "./service";
-const { authStore, appStore, getCdgJob } = useService();
-const type = ref(0);
+const { router, route,authStore, appStore, getCdgJob } = useService();
+const type = ref(route.query.type??0);
 const data = ref([]);
 const data2 = ref([]);
 const ptypes = ref([]);
@@ -146,6 +154,14 @@ onMounted(async () => {
   await getData();
   // console.log(data.value);
 });
+const open = (t) => {
+  let x = t == "mobile" ? "" : "pc";
+  // window.open(`/sv${x}`);
+  router.push({
+    path: `/sv${x}`,
+    query: { type: type.value, ptype: ptype.value, pv: pv.value, pcode: pcode.value },
+  });
+};
 const getData = async () => {
   ptypes.value.length = 0;
   pvs.value.length = 0;
@@ -153,24 +169,30 @@ const getData = async () => {
   data2.value.length = 0;
   data.value = await getCdgJob(type.value, authStore.userData.ses_newplacecode);
   if (!data.value) return;
-
+  
   let tmp = groupBy(data.value, "cust_ptype");
-  ptypes.value = Object.keys(tmp);
+  let tmp2=[];
+
+  ptypes.value=tmp2 = Object.keys(tmp);
   ptypes.value = ptypes.value.map((it, i) => {
-    return { 
-      k: it, 
+    return {
+      k: it,
       v: data.value.filter((it2) => it2.cust_ptype == it)[0].cust_desc,
-      co:data.value.reduce((p,it2)=>{
-        if(it2.cust_ptype==it){
-          return Number(p)+1
+      co: data.value.reduce((p, it2) => {
+        if (it2.cust_ptype == it) {
+          return Number(p) + 1;
         }
-        return p
-      },0) 
+        return p;
+      }, 0),
     };
   });
   ptype.value = "";
-  if (ptypes.value.length < 2) {
-    ptype.value = ptypes.value[0].k;
+  if (ptypes.value.length < 2 || tmp2.includes(route.query.ptype)) {
+    if(route.query.ptype){
+      ptype.value = route.query.ptype;
+    }else{
+      ptype.value = ptypes.value[0].k;
+    }
     getPV();
   }
 };
@@ -179,21 +201,26 @@ const getPV = () => {
   pcodes.value.length = 0;
   data2.value.length = 0;
   pv.value = "";
-  if( ptype.value=="") return;
+  if (ptype.value == "") return;
   let tmp = groupBy(data.value, "province_id");
-  pvs.value = Object.keys(tmp);
+  let tmp2=[];
+  pvs.value=tmp2 = Object.keys(tmp);
   pvs.value = pvs.value.map((it, i) => {
     return {
       k: it,
       v: data.value.filter((it2) => it2.province_id == it)[0].province_name,
-      co: data.value.reduce((p,it2)=>{
-        if(it2.province_id==it && it2.cust_ptype==ptype.value) return Number(p)+1
-        return p
-      },0)
+      co: data.value.reduce((p, it2) => {
+        if (it2.province_id == it && it2.cust_ptype == ptype.value) return Number(p) + 1;
+        return p;
+      }, 0),
     };
   });
-  if (pvs.value.length < 2 ) {
-    pv.value = pvs.value[0].k;
+  if (pvs.value.length < 2 || tmp2.includes(route.query.pv)) {
+    if(route.query.pv){
+      pv.value = pvs.value[0].k;
+    }else{
+      pv.value = pvs.value[0].k;
+    }
     getPcode();
   }
 };
@@ -201,32 +228,36 @@ const getPcode = () => {
   pcodes.value.length = 0;
   data2.value.length = 0;
   pcode.value = "";
-  if(pv.value=="") return;
+  if (pv.value == "") return;
   let tmpdata = data.value.filter((it) => it.cust_ptype == ptype.value);
   let tmp = groupBy(
     tmpdata.filter((it) => it.cust_ptype == ptype.value),
     "cust_pcode"
   );
-  pcodes.value = Object.keys(tmp);
+  let tmp2=[];
+  pcodes.value=tmp2 = Object.keys(tmp);
   pcodes.value = pcodes.value.map((it, i) => {
-    return { 
-      k: it, 
+    return {
+      k: it,
       v: tmpdata.filter((it2) => it2.cust_pcode === it)[0]?.cust_pdesc,
-      co: tmpdata.reduce((p,it2)=>{
-        if(it2.cust_pcode==it) return Number(p)+1
-        return p
-      },0)
-
+      co: tmpdata.reduce((p, it2) => {
+        if (it2.cust_pcode == it) return Number(p) + 1;
+        return p;
+      }, 0),
     };
   });
-  if (pcodes.value.length < 2 ) {
-    pcode.value = pcodes.value[0].k;
+  if (pcodes.value.length < 2 || tmp2.includes(route.query.pcode) || route.query.pcode=='xxx') {
+    if(route.query.pcode){
+      pcode.value = route.query.pcode
+    }else{
+      pcode.value = pcodes.value[0].k;
+    }
     getData2();
   }
 };
 const getData2 = () => {
-  data2.value.length=0;
-  if(pcode.value=="") return 
+  data2.value.length = 0;
+  if (pcode.value == "") return;
   if (pcode.value == "xxx") {
     data2.value = data.value.filter((it) => it.cust_ptype == ptype.value);
   } else {
