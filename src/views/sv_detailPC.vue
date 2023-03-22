@@ -3,7 +3,7 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style=" padding: 0px 0px;
+          style="padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -322,7 +322,7 @@
             <tr>
               <td class="underline">{{ docs[0]?.pno }}</td>
               <td class="underline">{{ docs[0]?.pno_desc }}</td>
-              <td class="underline">{{ detail.ptype=='P1'?'1':'&nbsp;' }}</td>
+              <td class="underline">{{ detail.ptype=='P1' && docs?.length>0?'1':'&nbsp;' }}</td>
               <td class="underline">{{ docs[0]?.sno }}</td>
               <td class="underline">{{ docs[0]?.doc_no }}</td>
             </tr>
@@ -352,7 +352,7 @@
             <div style="width: 100%; float: left; padding-left: 10px">อุปกรณ์</div>
           </div>
           <div class="underline" style="width: 80%; float: right; text-align: left">
-            {{ tags[0]?.pno_desc }}
+            &nbsp;{{ tags[0]?.pno_desc }}
           </div>
         </div>
         <div style="float: left; width: 39%">
