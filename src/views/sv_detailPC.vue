@@ -3,8 +3,7 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style="
-            padding: 0px 0px;
+          style=" padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -25,7 +24,7 @@
       </div>
       <div style="width: 22%; float: right">
         <div style="width: 100%; text-align: right; padding-top: 30px">
-          <b>SERVICE ID:</b> RG06660001
+          <b>SERVICE ID:</b> {{ detail.sv_no }}
         </div>
       </div>
     </div>
@@ -36,13 +35,13 @@
           รับแจ้ง วันที่ :
         </div>
         <div class="underline" style="width: 25%; float: left; text-align: center">
-          10/03/2566
+          {{ detail.ptype=='P1'?detail.s_date:detail.ap_date }}
         </div>
         <div style="width: 23%; font-weight: bold; float: left; text-align: center">
           เวลา :
         </div>
         <div class="underline" style="width: 25%; float: right; text-align: center">
-          12:12
+          {{ detail.ptype=='P1'?detail.s_time:'08:00' }}
         </div>
       </div>
     </div>
@@ -58,7 +57,7 @@
           </div>
         </div>
         <div class="underline" style="width: 80%; float: right; text-align: left">
-          เพ็ญสิณี บุญพวงตวงสิน
+          {{ detail.thicust }}
         </div>
       </div>
       <div style="float: right; width: 40%">
@@ -66,13 +65,13 @@
           นัดหมาย วันที่ :
         </div>
         <div class="underline" style="width: 25%; float: left; text-align: center">
-          10/03/2566
+          {{ detail.ap_date }}
         </div>
         <div style="width: 23%; font-weight: bold; float: left; text-align: center">
           เวลา :
         </div>
         <div class="underline" style="width: 25%; float: right; text-align: center">
-          12:12
+          {{ detail.ap_time }}
         </div>
       </div>
     </div>
@@ -88,7 +87,7 @@
           </div>
         </div>
         <div class="underline" style="width: 80%; float: right; text-align: left">
-          S650101
+          {{ detail.cust_pcode }}
         </div>
       </div>
       <div style="float: right; width: 40%"></div>
@@ -105,7 +104,7 @@
           </div>
         </div>
         <div class="underline" style="width: 83%; float: right; text-align: left">
-          C22-6508
+          {{ detail.ptype=='P1'?detail.contract_no:'รายละเอียดตามสัญญาด้านล่าง' }}
         </div>
       </div>
     </div>
@@ -121,7 +120,7 @@
           </div>
         </div>
         <div class="underline" style="width: 87%; float: right; text-align: left">
-          ศูนย์บริการร่วมห้างเทสโก้โลตัสเอ็กตร้า สาขาท่าทอง
+          {{ detail.cust_pdesc }} <span v-if="detail.cust_ptype==1">{{ detail.province_name }}</span>
         </div>
       </div>
     </div>
@@ -137,7 +136,7 @@
           </div>
         </div>
         <div class="underline" style="width: 80%; float: right; text-align: left">
-          0824030399
+          &nbsp;{{detail.phone}}
         </div>
       </div>
       <div style="float: right; width: 40%"></div>
@@ -152,7 +151,7 @@
           <div style="width: 33%; float: left">
             <input type="checkbox" value="1" />&nbsp;รับประกัน
           </div>
-          <div style="width: 33%; float: left">
+          <div style="width: 33%; float: left" >
             <input type="checkbox" value="1" checked="true" />&nbsp;สัญญาบำรุงรักษา
           </div>
           <div style="width: 33%; float: left">
@@ -170,7 +169,7 @@
       <div style="width: 100%"></div>
       <div style="width: 100%">
         <div style="width: 11%; float: left">
-          <input type="checkbox" value="1" checked="true" />&nbsp;HW
+          <input type="checkbox" value="1" :checked="detail.ptype=='P1'" />&nbsp;HW
         </div>
         <div style="width: 11%; float: left">
           <input type="checkbox" value="1" />&nbsp;APP
@@ -185,14 +184,14 @@
           <input type="checkbox" value="1" />&nbsp;NET
         </div>
         <div style="width: 11%; float: left">
-          <input type="checkbox" value="1" />&nbsp;PM
+          <input type="checkbox" value="1" :checked="detail.ptype=='P3'"/>&nbsp;PM
         </div>
         <div style="width: 11%; float: left">
           <input type="checkbox" value="1" />&nbsp;PROJECT
         </div>
-        <div style="width: 11%; float: left">
+        <!-- <div style="width: 11%; float: left">
           <input type="checkbox" value="1" />&nbsp;HW
-        </div>
+        </div> -->
         <div style="width: 11%; float: left">
           <input type="checkbox" value="1" />&nbsp;อื่น ๆ
         </div>
@@ -209,7 +208,7 @@
             </div>
           </div>
           <div class="underline" style="width: 80%; float: right; text-align: left">
-            Hardware
+            {{ detail.ptype=='P1'?'Hardware':'P.M.' }}
           </div>
         </div>
         <div style="float: right; width: 40%">
@@ -217,7 +216,7 @@
             หมายเลขปัญหา
           </div>
           <div class="underline" style="width: 70%; float: left; text-align: left">
-            RG06660001
+            {{ detail.sv_no }}
           </div>
         </div>
       </div>
@@ -230,7 +229,7 @@
             <div style="width: 100%; float: left">สินค้า</div>
           </div>
           <div class="underline" style="width: 80%; float: right; text-align: left">
-            Match On Card
+            &nbsp;{{ detail.type_desc }}
           </div>
         </div>
         <div style="float: left; width: 25%">
@@ -238,7 +237,7 @@
             <div style="width: 100%; float: left; text-align: left">รุ่น</div>
           </div>
           <div class="underline" style="width: 80%; float: left; text-align: left">
-            CDTMOC18
+            &nbsp;{{ detail.pno }}
           </div>
         </div>
         <div style="float: right; width: 40%">
@@ -246,7 +245,7 @@
             หมายเลขเครื่อง
           </div>
           <div class="underline" style="width: 70%; float: left; text-align: left">
-            0000003073
+            &nbsp;{{ detail.sv_sn }}
           </div>
         </div>
       </div>
@@ -257,9 +256,12 @@
 
       <div style="width: 100%; height: 150px">
         <b>งาน /ปัญหา /อาการเสีย:&nbsp; </b>
-        <span style="text-align: justify">
-          แจ้งเครื่องเสีย: เครื่องเก็บนิ้วชี้ไม่อ่านบัตร ไม่อ่านบัตรสมาร์ทคาร์ด
+        <span style="text-align: justify" v-if="detail.ptype=='P1'">
+          {{ detail.sv_detail }} {{ detail.problem_sub2_desc }}
         </span>
+        <ul v-if="detail.ptype=='P3'">
+          <li v-for="c in detail.contract.split('|')">{{ c }}</li>
+        </ul>
       </div>
       <div
         style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 3px"
@@ -267,10 +269,11 @@
 
       <div style="width: 100%; height: 150px">
         <b>รายละเอียดดำเนินการ:&nbsp; </b>
-        <span>
-          1.ทำการตรวจสอบ ไม่อ่านบัตร <br />
-          2.ดำเนินการ เปลี่ยน SMC Reader ใหม่ <br />
-          3.ทำการทดสอบ อ่านบัตรได้ปกติ <br />
+        <span v-if="detail.ptype=='P1'">
+          1.ทำการตรวจสอบ {{ detail.sv_solve_detail }} <br />
+          2.ดำเนินการ {{ detail.sv_solve_detail2 }} <br />
+          3.ทำการทดสอบ {{ detail.sv_solve_detail3 }} <br />
+          <span v-if="detail.flag_takeback==1">4.นำอุปกรณ์กลับศูนย์บริการ</span>
         </span>
       </div>
       <div
@@ -279,15 +282,15 @@
       <div style="width: 100%">
         <div style="width: 55%; float: left">
           <div style="width: 22%; float: left; font-weight: bold">เวลาเริ่ม บริการ</div>
-          <div class="underline" style="width: 17%; float: left">&nbsp;</div>
+          <div class="underline" style="width: 17%; float: left">&nbsp;{{ detail.start_time }}</div>
           <div style="width: 12%; float: left; font-weight: bold">เสร็จสิ้น</div>
-          <div class="underline" style="width: 20%; float: left">&nbsp;</div>
+          <div class="underline" style="width: 20%; float: left">&nbsp;{{ detail.solve_time }}</div>
         </div>
         <div style="width: 45%; float: right">
           <div style="width: 25%; float: left; font-weight: bold">รวมเวลาบริการ</div>
-          <div class="underline" style="width: 20%; float: left">&nbsp;</div>
+          <div class="underline" style="width: 20%; float: left">&nbsp;{{ detail.usetime?.split(':')[0] }}</div>
           <div style="width: 12%; float: left; font-weight: bold">ชั่วโมง</div>
-          <div class="underline" style="width: 20%; float: left">&nbsp;</div>
+          <div class="underline" style="width: 20%; float: left">&nbsp;{{ detail.usetime?.split(':')[1] }}</div>
           <div style="width: 22%; float: left; font-weight: bold">นาที</div>
         </div>
       </div>
@@ -309,26 +312,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="underline">CDTMOC18</td>
-              <td class="underline">Smart Card Reader ยี่ห้อ CDG รุ่น CDTMOC18</td>
-              <td class="underline">1</td>
-              <td class="underline">0000002116</td>
-              <td class="underline">PO3/347/66</td>
+            <tr v-if="doc2s.length">
+              <td class="underline">{{ doc2s[0].pno }}</td>
+              <td class="underline">{{ doc2s[0].pno_desc }}</td>
+              <td class="underline">{{ doc2s[0].draw_amt }}</td>
+              <td class="underline">-</td>
+              <td class="underline">{{ doc2s[0].doc_no }}</td>
             </tr>
             <tr>
-              <td class="underline">CDTMOC18</td>
-              <td class="underline">Smart Card Reader ยี่ห้อ CDG รุ่น CDTMOC18</td>
-              <td class="underline">1</td>
-              <td class="underline">0000002116</td>
-              <td class="underline">PO3/347/66</td>
+              <td class="underline">{{ docs[0]?.pno }}</td>
+              <td class="underline">{{ docs[0]?.pno_desc }}</td>
+              <td class="underline">{{ detail.ptype=='P1'?'1':'&nbsp;' }}</td>
+              <td class="underline">{{ docs[0]?.sno }}</td>
+              <td class="underline">{{ docs[0]?.doc_no }}</td>
             </tr>
-            <tr>
-              <td>CDTMOC18</td>
-              <td>Smart Card Reader ยี่ห้อ CDG รุ่น CDTMOC18</td>
-              <td>1</td>
-              <td>0000002116</td>
-              <td>PO3/347/66</td>
+            <tr >
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+              <td class="underline">&nbsp;</td>
+            </tr>
+            <tr v-if="doc2s.length<1" >
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
             </tr>
           </tbody>
         </table>
@@ -342,7 +352,7 @@
             <div style="width: 100%; float: left; padding-left: 10px">อุปกรณ์</div>
           </div>
           <div class="underline" style="width: 80%; float: right; text-align: left">
-            Smart Card Reader ยี่ห้อ CDG รุ่น CDTMOC18
+            {{ tags[0]?.pno_desc }}
           </div>
         </div>
         <div style="float: left; width: 39%">
@@ -350,7 +360,7 @@
             <div style="width: 100%; float: left; text-align: left">หมายเลขเครื่อง</div>
           </div>
           <div class="underline" style="width: 70%; float: left; text-align: left">
-            0000003073
+            {{ tags[0]?.sno }}
           </div>
         </div>
         <div style="float: right; width: 18%">
@@ -358,7 +368,7 @@
             Tag no
           </div>
           <div class="underline" style="width: 70%; float: left; text-align: left">
-            &nbsp;Y469112
+            &nbsp;{{ tags[0]?.tag_no }}
           </div>
         </div>
       </div>
@@ -411,7 +421,7 @@
     <div style="width: 100%">
       <div style="width: 50%; float: left">
         <div style="width: 21%; float: left; text-align: right">(</div>
-        <div class="underline" style="width: 71%; float: left">&nbsp;</div>
+        <div class="underline" style="width: 71%; float: left;text-align:center;">&nbsp;{{[detail.thiname2,detail.thiname3].join(',')}}</div>
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
       <div style="width: 50%; float: left">
@@ -429,15 +439,29 @@
   <div class="row">
     <div class="col-12 col-md-4 mx-auto  text-center">
         <button class="btn btn-primary btn-sm me-1" @click="approve()">อนุมัติ</button>
-        <button class="btn btn-primary btn-sm me-1" @click="open()">พิมพ์</button>
+        <button class="btn btn-primary btn-sm me-1" @click="open(detail.sv_no)">พิมพ์</button>
         <button class="btn btn-primary btn-sm" @click="$router.push({path:`/cdg`,query:{type:$route.query.type,ptype:$route.query.ptype,pv:$route.query.pv,pcode:$route.query.pcode}})">หน้าแรก</button>
     </div>
   </div>
 </template>
 <script setup>
-   const open=()=>{
-        window.open(`/pdf`)
+   import { onMounted,ref } from 'vue';
+   import {useService} from './service.js'
+   const {route,getJobDetail}=useService()
+   const detail=ref([])
+   const tags=ref([])
+   const docs=ref([])
+   const doc2s=ref([])
+   const open=(jobid)=>{
+        window.open(`/pdf/${jobid}`)
     }
+    onMounted(async () => {
+      let {data,doc,doc2,tag}=await getJobDetail(route.params.jobid)
+      detail.value=data[0];
+      tags.value=tag;
+      docs.value=doc;
+      doc2s.value=doc2;
+    })
     const approve=async ()=>{
       const inputOptions = new Promise((resolve) => {
         setTimeout(() => {

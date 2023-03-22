@@ -110,6 +110,17 @@ export const useService=()=>{
       }
       close();
     }
+    const getJobDetail= async (jobid)=>{
+      start()
+      try{
+        let rs=await api.get(`/paperless/v1/getJobDetail/${jobid}`)
+        close()
+        return {data:rs.data.data,doc:rs.data.doc,doc2:rs.data.doc2,tag:rs.data.tag} 
+      }catch(err){
+        errAlert(err)
+      }
+      close()
+    }
     return {
         authStore,
         appStore,
@@ -129,7 +140,7 @@ export const useService=()=>{
         getSumPcs,
         getSumRcs,
         getCdgJob,
-
+        getJobDetail,
     }
 
 }

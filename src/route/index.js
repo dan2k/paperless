@@ -59,13 +59,13 @@ const routes = [
 		beforeEnter: beforeEnter,
 	},
 	{
-		path:"/sv",
+		path:"/sv/:jobid",
 		name:'sv',
 		component: () => import("../views/sv_detail.vue"),
 		beforeEnter: beforeEnter,
 	},
 	{
-		path:"/svpc",
+		path:"/svpc/:jobid",
 		name:'svpc',
 		component: () => import("../views/sv_detailPC.vue"),
 		beforeEnter: beforeEnter,
@@ -78,9 +78,9 @@ const routes = [
 		beforeEnter: beforeEnter,
 	},
 	{
-		path:"/pdf",
+		path:"/pdf/:jobid",
 		name:'pdf',
-		component: () => import("../views/testpdf.vue"),
+		component: () => import("../views/pdf.vue"),
 		beforeEnter: beforeEnter,
 	},
     {
