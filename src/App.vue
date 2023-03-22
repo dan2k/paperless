@@ -118,10 +118,10 @@
                 <a class="nav-link" href="javascript:void(0)" @click="$router.replace({path:`/ddopa`})"
                   >D.DOPA</a>
               </li>
-              <li class="nav-item" v-if="store.isLogin">
+              <!-- <li class="nav-item" v-if="store.isLogin">
                 <a class="nav-link" href="javascript:void(0)" @click="$router.replace({path:`/pdf`})"
                   >PDF</a>
-              </li>
+              </li> -->
               <li class="nav-item" v-if="store.isLogin">
                 <a class="nav-link" href="#" @click="logout"
                   ><i class="fa-solid fa-right-from-bracket"></i
