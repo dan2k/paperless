@@ -362,7 +362,7 @@
             <div style="width: 100%; float: left; text-align: left">หมายเลขเครื่อง</div>
           </div>
           <div class="underline" style="width: 70%; float: left; text-align: left">
-            {{ tags[0]?.sno }}
+            &nbsp;{{ tags[0]?.sno }}
           </div>
         </div>
         <div style="float: right; width: 18%">

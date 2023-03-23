@@ -28,7 +28,7 @@ onMounted(async () => {
   store.$reset();
 });
 const goto = () => {
-  window.location = "/mpsicc?home=movement&url=" + import.meta.env.VITE_PRIVATE_BASE_URL;
+  window.location = "/mpsicc?home=paperless&url=" + import.meta.env.VITE_PRIVATE_BASE_URL;
 };
 const setLogin = () => {
   store2.toggle=false;

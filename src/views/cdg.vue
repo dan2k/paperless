@@ -229,7 +229,8 @@ const getPcode = () => {
   data2.value.length = 0;
   pcode.value = "";
   if (pv.value == "") return;
-  let tmpdata = data.value.filter((it) => it.cust_ptype == ptype.value);
+  let tmpdata = data.value.filter((it) => it.cust_ptype == ptype.value && it.province_id == pv.value);
+  console.log({tmpdata})
   let tmp = groupBy(
     tmpdata.filter((it) => it.cust_ptype == ptype.value),
     "cust_pcode"

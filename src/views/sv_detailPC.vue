@@ -360,7 +360,7 @@
             <div style="width: 100%; float: left; text-align: left">หมายเลขเครื่อง</div>
           </div>
           <div class="underline" style="width: 70%; float: left; text-align: left">
-            {{ tags[0]?.sno }}
+            &nbsp;{{ tags[0]?.sno }}
           </div>
         </div>
         <div style="float: right; width: 18%">
@@ -447,7 +447,8 @@
 <script setup>
    import { onMounted,ref } from 'vue';
    import {useService} from './service.js'
-   const {route,getJobDetail}=useService()
+   import { errAlert,okAlert } from "@/helpers";
+   const {router,route,authStore,getJobDetail}=useService()
    const detail=ref([])
    const tags=ref([])
    const docs=ref([])
@@ -456,6 +457,16 @@
         window.open(`/pdf/${jobid}`)
     }
     onMounted(async () => {
+      // console.log(route.query)
+      if(route.query.error){
+        if(route.query.error=='false'){//อนุมัติผ่าน
+            await okAlert("อนุมัติรายการเรียบร้อยแล้ว")
+        }else{
+          await errAlert(`ไม่สามารถอนุมัติรายการได้กรุณาลองใหม่อีกครั้ง ${route.query.msg}`);
+        }
+        router.push({path:`/cdg`,query:{type:route.query.type,ptype:route.query.ptype,pv:route.query.pv,pcode:route.query.pcode}})
+        return 
+      }
       let {data,doc,doc2,tag}=await getJobDetail(route.params.jobid)
       detail.value=data[0];
       tags.value=tag;
@@ -488,8 +499,15 @@
         confirmButtonText:'ตกลง',
       })
       if(satisfaction){
-        alert(satisfaction)
+        // alert(satisfaction);
+        let uri=window.location.href;
+        gotoImauth(route.params.jobid,satisfaction,uri)
       }
+    }
+    const gotoImauth=(jobid,s,uri)=>{
+      let empid=authStore.userData.ses_empid
+      let state=btoa(`approve|${jobid}|${s}|${uri}|${empid}`)
+      window.location.href="https://imauth.bora.dopa.go.th/api/v1/oauth2/auth/?response_type=code&client_id=TGFNQU56RDNMcDRrWDRlNHhEUHNLNVNLOE8waU5wZ1Y=&redirect_uri=https://www.controldata.co.th/mpsicc/ddopa&scope=pid%20th_fullname%20dob&state="+state; 
     }
 </script>
 <style >
