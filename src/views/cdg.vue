@@ -215,11 +215,11 @@ const getPV = () => {
       }, 0),
     };
   });
-  if (pvs.value.length < 2 || tmp2.includes(route.query.pv)) {
+  if (pvs.value.length >0 || tmp2.includes(route.query.pv)) {
     if(route.query.pv){
-      pv.value = pvs.value[0].k;
+      pv.value = route.query.pv;
     }else{
-      pv.value = pvs.value[0].k;
+      if(pv.value.length<2) pv.value = pvs.value[0].k;
     }
     getPcode();
   }
@@ -230,7 +230,7 @@ const getPcode = () => {
   pcode.value = "";
   if (pv.value == "") return;
   let tmpdata = data.value.filter((it) => it.cust_ptype == ptype.value && it.province_id == pv.value);
-  console.log({tmpdata})
+  // console.log({tmpdata})
   let tmp = groupBy(
     tmpdata.filter((it) => it.cust_ptype == ptype.value),
     "cust_pcode"
@@ -247,11 +247,14 @@ const getPcode = () => {
       }, 0),
     };
   });
-  if (pcodes.value.length < 2 || tmp2.includes(route.query.pcode) || route.query.pcode=='xxx') {
-    if(route.query.pcode){
+  console.log(tmp2.includes(route.query.pcode));
+  if (pcodes.value.length>0  || tmp2.includes(route.query.pcode) || route.query.pcode=='xxx') {
+    if(route.query.pcode && tmp2.includes(route.query.pcode)){ 
       pcode.value = route.query.pcode
-    }else{
+    }else if(pcodes.value.length<2){
       pcode.value = pcodes.value[0].k;
+    }else if(!tmp2.includes(route.query.pcode)){
+      pcode.value="" 
     }
     getData2();
   }
