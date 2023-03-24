@@ -3,7 +3,7 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style="padding: 0px 0px;
+          style=" padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -421,7 +421,7 @@
     <div style="width: 100%">
       <div style="width: 50%; float: left">
         <div style="width: 21%; float: left; text-align: right">(</div>
-        <div class="underline" style="width: 71%; float: left;text-align:center;">&nbsp;&nbsp;{{[detail.thiname2,detail.thiname3].join(',')}}</div>
+        <div class="underline" style="width: 71%; float: left;text-align:center;">&nbsp;&nbsp;{{Array.from(new Set([detail.thiname1,detail.thiname2,detail.thiname3])).filter((it,i)=>it!==''&&it!==null).join(',')}}</div>
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
       <div style="width: 50%; float: left">

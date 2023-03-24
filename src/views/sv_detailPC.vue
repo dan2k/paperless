@@ -3,7 +3,7 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style="padding: 0px 0px;
+          style=" padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -421,7 +421,7 @@
     <div style="width: 100%">
       <div style="width: 50%; float: left">
         <div style="width: 21%; float: left; text-align: right">(</div>
-        <div class="underline" style="width: 71%; float: left;text-align:center;">&nbsp;{{[detail.thiname2,detail.thiname3].join(',')}}</div>
+        <div class="underline" style="width: 71%; float: left;text-align:center;">&nbsp;{{Array.from(new Set([detail.thiname1,detail.thiname2,detail.thiname3])).filter((it,i)=>it!==''&&it!==null).join(',')}}</div>
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
       <div style="width: 50%; float: left">
@@ -448,16 +448,16 @@
    import { onMounted,ref } from 'vue';
    import {useService} from './service.js'
    import { errAlert,okAlert } from "@/helpers";
-   const {router,route,authStore,getJobDetail}=useService()
+   const {router,route,authStore,appStore,getJobDetail}=useService()
    const detail=ref([])
    const tags=ref([])
    const docs=ref([])
    const doc2s=ref([])
    const open=(jobid)=>{
-        window.open(`/pdf/${jobid}`)
+        window.open(`${import.meta.env.VITE_PRIVATE_BASE_URL}pdf/${jobid}`)
     }
     onMounted(async () => {
-      // console.log(route.query)
+      appStore.title = "รายละเอียด";
       if(route.query.error){
         if(route.query.error=='false'){//อนุมัติผ่าน
             await okAlert("อนุมัติรายการเรียบร้อยแล้ว")

@@ -6,7 +6,7 @@
           class="form-select form-select-sm"
           v-model="type"
           aria-label="Default select example"
-          @change="getData()"
+          @change="changeType()"
         >
           <option value="0" selected>SERVICE</option>
           <option value="1">PM</option>
@@ -162,6 +162,10 @@ const open = (t,jobid) => {
     query: { type: type.value, ptype: ptype.value, pv: pv.value, pcode: pcode.value },
   });
 };
+const changeType=()=>{
+  router.replace({query:null})
+  getData()
+}
 const getData = async () => {
   ptypes.value.length = 0;
   pvs.value.length = 0;
