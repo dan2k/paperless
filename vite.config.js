@@ -45,6 +45,20 @@ export default defineConfig(async ({ command, mode }) => {
             return `js/${fileName}/[name].[hash].js`
           }
         }
+      },
+      terserOptions:{
+        compress: {
+          // กำหนดการบีบอัดไฟล์
+          drop_console: true,
+          drop_debugger: true,
+          ecma: 2015,
+          unsafe_arrows: true,
+          unsafe_comps: true,
+          unsafe_math: true,
+          unsafe_methods: true,
+          unsafe_proto: true,
+          unsafe_undefined: true,
+        },
       }
     }
   }
