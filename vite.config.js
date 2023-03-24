@@ -46,7 +46,7 @@ export default defineConfig(async ({ command, mode }) => {
           }
         }
       },
-      minify:"terser",
+      /*minify:"terser",
       terserOptions:{
         compress: {
           // กำหนดการบีบอัดไฟล์
@@ -60,7 +60,7 @@ export default defineConfig(async ({ command, mode }) => {
           unsafe_proto: true,
           unsafe_undefined: true,
         },
-      }
+      }*/
     }
   }
 })
