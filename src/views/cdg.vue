@@ -253,7 +253,8 @@ const getPcode = () => {
   });
   console.log(tmp2.includes(route.query.pcode));
   if (pcodes.value.length>0  || tmp2.includes(route.query.pcode) || route.query.pcode=='xxx') {
-    if(route.query.pcode && tmp2.includes(route.query.pcode)){ 
+    if(route.query.pcode && tmp2.includes(route.query.pcode)||(pcodes.value.length>0 && route.query.pcode=='xxx')){ 
+      
       pcode.value = route.query.pcode
     }else if(pcodes.value.length<2){
       pcode.value = pcodes.value[0].k;
@@ -267,7 +268,7 @@ const getData2 = () => {
   data2.value.length = 0;
   if (pcode.value == "") return;
   if (pcode.value == "xxx") {
-    data2.value = data.value.filter((it) => it.cust_ptype == ptype.value);
+    data2.value = data.value.filter((it) => it.cust_ptype == ptype.value && it.province_id==pv.value);
   } else {
     data2.value = data.value.filter(
       (it) => it.cust_ptype == ptype.value && it.cust_pcode == pcode.value

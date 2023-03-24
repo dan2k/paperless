@@ -3,7 +3,7 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style=" padding: 0px 0px;
+          style="padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -360,7 +360,7 @@
             <div style="width: 100%; float: left; text-align: left">หมายเลขเครื่อง</div>
           </div>
           <div class="underline" style="width: 70%; float: left; text-align: left">
-            &nbsp;{{ tags[0]?.sno }}
+            &nbsp;{{ tags[0]?.ret_sno }}
           </div>
         </div>
         <div style="float: right; width: 18%">
