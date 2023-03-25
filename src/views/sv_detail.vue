@@ -3,7 +3,8 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style="          padding: 0px 0px;
+          style="
+            padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -435,7 +436,11 @@
       <div style="width: 50%; float: left">
         <div style="width: 21%; float: left; text-align: right">(</div>
         <div class="underline" style="width: 71%; float: left; text-align: center">
-          &nbsp;{{ Array.from(new Set([detail.thiname1,detail.thiname2,detail.thiname3])).filter((it,i)=>it!==''&&it!==null).join(',') }}
+          &nbsp;{{
+            Array.from(new Set([detail.thiname1, detail.thiname2, detail.thiname3]))
+              .filter((it, i) => it)
+              .join(",")
+          }}
         </div>
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
@@ -456,30 +461,16 @@
       <button class="btn btn-primary btn-sm me-1" @click="open(detail.sv_no)">
         พิมพ์
       </button>
-      <button
-        class="btn btn-primary btn-sm me-1"
-        @click="gotoCdg()"
-      >
-        หน้าแรก
-      </button>
+      <button class="btn btn-primary btn-sm me-1" @click="gotoCdg()">หน้าแรก</button>
     </div>
   </div>
 </template>
 <script setup>
 import { onMounted } from "vue";
 import { useService } from "./service.js";
-const {
-  detail,
-  tags,
-  docs,
-  doc2s,
-  open,
-  approve,
-  initDetail,
-  gotoCdg,
-} = useService();
+const { detail, tags, docs, doc2s, open, approve, initDetail, gotoCdg } = useService();
 onMounted(async () => {
-  initDetail()
+  initDetail();
 });
 </script>
 <style scoped>

@@ -3,7 +3,7 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style="            padding: 0px 0px;
+          style="           padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -437,7 +437,7 @@
         <div class="underline" style="width: 71%; float: left; text-align: center">
           &nbsp;{{
             Array.from(new Set([detail.thiname1, detail.thiname2, detail.thiname3]))
-              .filter((it, i) => it !== "" && it !== null)
+              .filter((it, i) => it )
               .join(",")
           }}
         </div>
