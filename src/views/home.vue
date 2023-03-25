@@ -6,7 +6,7 @@
   const store=useAuthStore();
   const router=useRouter();
   const level=store.userData.sur_level;
-  const user_type=store.userData.user_type;
+  const user_type=Number(store.userData.user_type);
   onMounted(() => {
       let path='';
       
