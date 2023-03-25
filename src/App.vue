@@ -122,6 +122,10 @@
                 <a class="nav-link" href="javascript:void(0)" @click="$router.replace({path:`/pdf`})"
                   >PDF</a>
               </li> -->
+              <li class="nav-item" v-if="mode!=='development'">
+                <a class="nav-link" href="#" @click="home()"
+                  ><i class="fa-solid fa-house"></i></a>
+              </li>
               <li class="nav-item" v-if="store.isLogin">
                 <a class="nav-link" href="#" @click="logout"
                   ><i class="fa-solid fa-right-from-bracket"></i
@@ -145,11 +149,15 @@ import { useAuthStore,useAppStore } from "@/store";
 const store = useAuthStore();
 const store2 = useAppStore();
 // const toggle = ref(false);
+const mode=import.meta.env.MODE;
 onMounted(()=>{
   store2.setTitle="หน้าหลัก"
   store2.toggle=!store.isLogin;
 
 })
+const home = ()=>{
+  window.location.href='/mpsicc/cdg';
+}
 const logout = () => {
   if(import.meta.env.MODE=="development"){
     store.logout();

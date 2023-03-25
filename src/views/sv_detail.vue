@@ -510,6 +510,7 @@ div.underline {
   border-bottom-style: dotted;
   border-bottom-width: 1px;
   border-bottom-color: gray;
+  text-decoration: none !important;
 }
 div.dservice {
   margin-top: 20px;
@@ -561,6 +562,7 @@ td,
 th {
   border: 1px solid #ddd;
   text-align: left;
+  text-decoration: none !important;
 }
 
 table {
