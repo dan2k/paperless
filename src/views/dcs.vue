@@ -221,10 +221,13 @@
                 <span class="fw-semibold">ผู้รับผิดชอบ:&nbsp;</span
                 ><span class="fw-light">{{ i.thiname }} </span>
               </div>
+              <div class="line my-1"></div>
+              <div clas="col-12"><button class="btn btn-primary btn-sm float-end" @click="open(i.sv_no)">พิมพ์</button></div>
             </div>
           </div>
         </div>
         <div class="ms-2 me-auto w-100">
+
           <div class="fw-bold mt-2">
             รวมทั้งหมด <span class="float-end">{{ sums }} รายการ</span>
           </div>
@@ -250,6 +253,7 @@ const {
   serverItemsLength,
   getDCSInfo,
   loadFromServer,
+  open,
 } = useService();
 const dcs = ref(null);
 let custptype = route.query.custptype ?? authStore.userData.ses_placetype;
