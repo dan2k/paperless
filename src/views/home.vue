@@ -1,17 +1,13 @@
 <template></template>
 <script setup>
   import { onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useAuthStore } from '../store';
-  const store=useAuthStore();
-  const router=useRouter();
-  const level=store.userData.sur_level;
-  const user_type=Number(store.userData.user_type);
+  import {useService} from "./service"
+  const {router,authStore}=useService()
+  const level=authStore.userData.sur_level;
+  const user_type=Number(authStore.userData.user_type);
   onMounted(() => {
       let path='';
-      
       if(user_type===1){
-        
         switch(Number(level)){
           case 1: path='/dcs';break;
           case 2: path='/pcs';break;
@@ -21,7 +17,7 @@
       }else{
         path='/cdg';
       }
-      console.log({path})
+      // console.log({path})
       router.replace({path});
   })
 </script>

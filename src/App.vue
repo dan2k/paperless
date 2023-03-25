@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     
-    <!-- <nav id="sidebar" :class="{ activex: store2.toggle }" :style="{display:store.isLogin?'':'none'}">
+    <!-- <nav id="sidebar" :class="{ activex: appStore.toggle }" :style="{display:authStore.isLogin?'':'none'}">
       <div class="sidebar-header">
         <h3>MPSICC</h3>
       </div>
@@ -69,12 +69,12 @@
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-50 mb-1">
         <div class="container-fluid">
           <!-- <button
-            v-if="store.isLogin"          
+            v-if="authStore.isLogin"          
             type="button"
             id="sidebarCollapse"
             class="btn btn-info"
-            @click="store2.toggle = !store2.toggle"
-            :class="{ activex: store2.toggle }"
+            @click="appStore.toggle = !appStore.toggle"
+            :class="{ activex: appStore.toggle }"
           >
             <span></span>
             <span></span>
@@ -101,8 +101,8 @@
             id="navbarSupportedContent"
           >
             <div class="col text-center text-light pt-3">
-              <h3>{{ store2.title }}</h3>
-              <h6 v-if="store.isLogin"><i class="fa-solid fa-user"></i> คุณ {{ store.userData.ses_empfname }} {{ store.userData.ses_emplname }}</h6>
+              <h3>{{ appStore.title }}</h3>
+              <h6 v-if="authStore.isLogin"><i class="fa-solid fa-user"></i> คุณ {{ authStore.userData.ses_empfname }} {{ authStore.userData.ses_emplname }}</h6>
             </div>
             <ul class="navbar-nav ml-auto">
               <!-- <li class="nav-item">
@@ -114,11 +114,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Page</a>
               </li> -->
-              <!-- <li class="nav-item" v-if="store.isLogin">
+              <!-- <li class="nav-item" v-if="authStore.isLogin">
                 <a class="nav-link" href="javascript:void(0)" @click="$router.replace({path:`/ddopa`})"
                   >D.DOPA</a>
               </li> -->
-              <!-- <li class="nav-item" v-if="store.isLogin">
+              <!-- <li class="nav-item" v-if="authStore.isLogin">
                 <a class="nav-link" href="javascript:void(0)" @click="$router.replace({path:`/pdf`})"
                   >PDF</a>
               </li> -->
@@ -126,7 +126,7 @@
                 <a class="nav-link" href="#" @click="home()"
                   ><i class="fa-solid fa-house"></i></a>
               </li>
-              <li class="nav-item" v-if="store.isLogin">
+              <li class="nav-item" v-if="authStore.isLogin">
                 <a class="nav-link" href="#" @click="logout"
                   ><i class="fa-solid fa-right-from-bracket"></i
                 ></a>
@@ -144,15 +144,14 @@
   </div>
 </template>
 <script setup>
-import { ref,onMounted } from "vue";
-import { useAuthStore,useAppStore } from "@/store";
-const store = useAuthStore();
-const store2 = useAppStore();
+import { onMounted } from "vue";
+import {useService} from "./views/service"
+const{authStore,appStore}=useService()
 // const toggle = ref(false);
 const mode=import.meta.env.MODE;
 onMounted(()=>{
-  store2.setTitle="หน้าหลัก"
-  store2.toggle=!store.isLogin;
+  appStore.setTitle="หน้าหลัก"
+  appStore.toggle=!authStore.isLogin;
 
 })
 const home = ()=>{
@@ -160,11 +159,11 @@ const home = ()=>{
 }
 const logout = () => {
   if(import.meta.env.MODE=="development"){
-    store.logout();
-    store2.toggle=true;
+    authStore.logout();
+    appStore.toggle=true;
   }else{
-    store.$reset();
-    store2.$reset();
+    authStore.$reset();
+    appStore.$reset();
     window.location.href="/mpsicc/cdg/logout.php"
   }
 };
