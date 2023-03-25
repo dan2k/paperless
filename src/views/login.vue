@@ -17,6 +17,7 @@ const store2=useAppStore();
 const router = useRouter();
 const mode=import.meta.env.MODE //development
 onMounted(async () => {
+  await store.checkLogin()
   store2.title="เข้าสู่ระบบ"
   if (store.isLogin) {
     await store.checkLogin();

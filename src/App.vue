@@ -151,8 +151,14 @@ onMounted(()=>{
 
 })
 const logout = () => {
-  store.logout();
-  store2.toggle=true;
+  if(import.meta.env.MODE=="development"){
+    store.logout();
+    store2.toggle=true;
+  }else{
+    store.$reset();
+    store2.$reset();
+    window.location.href="/mpsicc/cdg/logout.php"
+  }
 };
 </script>
 <style >
