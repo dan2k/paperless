@@ -11,8 +11,8 @@
       let path='';
       
       if(user_type===1){
-        // console.log(level)
-        switch(level){
+        
+        switch(Number(level)){
           case 1: path='/dcs';break;
           case 2: path='/pcs';break;
           case 3: path='/rcs';break;
@@ -21,6 +21,7 @@
       }else{
         path='/cdg';
       }
+      console.log({path})
       router.replace({path});
   })
 </script>
