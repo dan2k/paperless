@@ -3,7 +3,7 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style="           padding: 0px 0px;
+          style="          padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -458,17 +458,7 @@
       </button>
       <button
         class="btn btn-primary btn-sm me-1"
-        @click="
-          $router.push({
-            path: `/cdg`,
-            query: {
-              type: $route.query.type,
-              ptype: $route.query.ptype,
-              pv: $route.query.pv,
-              pcode: $route.query.pcode,
-            },
-          })
-        "
+        @click="gotoCdg()"
       >
         หน้าแรก
       </button>
@@ -476,81 +466,20 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useService } from "./service.js";
-import { errAlert, okAlert } from "@/helpers";
-const { router, route, authStore, getJobDetail } = useService();
-const detail = ref([]);
-const tags = ref([]);
-const docs = ref([]);
-const doc2s = ref([]);
-const open = (jobid) => {
-  window.open(`${import.meta.env.VITE_PRIVATE_BASE_URL}pdf/${jobid}`)
-};
+const {
+  detail,
+  tags,
+  docs,
+  doc2s,
+  open,
+  approve,
+  initDetail,
+} = useService();
 onMounted(async () => {
-  // console.log(route.query)
-  if (route.query.error) {
-    if (route.query.error == "false") {
-      //อนุมัติผ่าน
-      await okAlert("อนุมัติรายการเรียบร้อยแล้ว");
-    } else {
-      await errAlert(`ไม่สามารถอนุมัติรายการได้กรุณาลองใหม่อีกครั้ง ${route.query.msg}`);
-    }
-    router.push({
-      path: `/cdg`,
-      query: {
-        type: route.query.type,
-        ptype: route.query.ptype,
-        pv: route.query.pv,
-        pcode: route.query.pcode,
-      },
-    });
-    return;
-  }
-  let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
-  detail.value = data[0];
-  tags.value = tag;
-  docs.value = doc;
-  doc2s.value = doc2;
+  initDetail()
 });
-const approve = async () => {
-  const inputOptions = new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        5: "พอใจมาก",
-        4: "พอใจ",
-        3: "ปานกลาง",
-        2: "ไม่พอใจ",
-        1: "ไม่พอใจมาก",
-      });
-    }, 10);
-  });
-  const { value: satisfaction } = await Swal.fire({
-    title: "กรุณาเลือกระดับความพึงพอใจ",
-    input: "radio",
-    inputOptions: inputOptions,
-    inputValidator: (value) => {
-      if (!value) {
-        return "ท่านยังไม่ได้เลือกระดับความพึงพอใจ";
-      }
-    },
-    showCancelButton: true,
-    cancelButtonText: "ยกเลิก",
-    confirmButtonText: "ตกลง",
-  });
-  if (satisfaction) {
-    // alert(satisfaction);
-    let uri = window.location.href;
-    gotoImauth(route.params.jobid, satisfaction, uri);
-  }
-};
-const gotoImauth = (jobid, s, uri) => {
-  let empid = authStore.userData.ses_empid;
-  let state = btoa(`approve|${jobid}|${s}|${uri}|${empid}`);
-  window.location.href =
-    "https://imauth.bora.dopa.go.th/api/v1/oauth2/auth/?response_type=code&client_id=TGFNQU56RDNMcDRrWDRlNHhEUHNLNVNLOE8waU5wZ1Y=&redirect_uri=https://www.controldata.co.th/mpsicc/ddopa&scope=pid%20th_fullname%20dob&state=" +
-    state;
-};
 </script>
 <style scoped>
 .swal2-label {

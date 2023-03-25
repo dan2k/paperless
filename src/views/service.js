@@ -2,6 +2,14 @@ import { useAppStore,useAuthStore } from "@/store"
 import { useRoute,useRouter } from "vue-router";
 import { api, errAlert,okAlert,start,close } from "@/helpers";
 import { ref } from "vue";
+import {
+  saraban_normal,
+  saraban_bold,
+  saraban_bolditalic,
+  saraban_italic,
+} from "./sarabunnew.js";
+import { jsPDF } from "jsPDF";
+
 export const useService=()=>{
     const authStore=useAuthStore();
     const appStore=useAppStore();
@@ -30,7 +38,10 @@ export const useService=()=>{
     const items = ref([]);
     const loading = ref(false);
     const serverItemsLength = ref(0);
-
+    const detail=ref([])
+   const tags=ref([])
+   const docs=ref([])
+   const doc2s=ref([])
     const getDCSInfo = async (custptype,custpcode) => {
         try {
           let rs = await api.get(`/paperless/v1/getDCSInfo/${custptype}/${custpcode}`);
@@ -121,6 +132,128 @@ export const useService=()=>{
       }
       close()
     }
+    const open=(jobid)=>{
+      window.open(`${import.meta.env.VITE_PRIVATE_BASE_URL}pdf/${jobid}`)
+    }
+    const gotoImauth=(jobid,s,uri)=>{
+      let empid=authStore.userData.ses_empid
+      let state=btoa(`approve|${jobid}|${s}|${uri}|${empid}`)
+      window.location.href="https://imauth.bora.dopa.go.th/api/v1/oauth2/auth/?response_type=code&client_id=TGFNQU56RDNMcDRrWDRlNHhEUHNLNVNLOE8waU5wZ1Y=&redirect_uri=https://www.controldata.co.th/mpsicc/ddopa&scope=pid%20th_fullname%20dob&state="+state; 
+    }
+    const approve=async ()=>{
+      const inputOptions = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            '5': 'พอใจมาก',
+            '4': 'พอใจ',
+            '3': 'ปานกลาง',
+            '2': 'ไม่พอใจ',
+            '1': 'ไม่พอใจมาก',
+          })
+        }, 10)
+      })
+      const { value: satisfaction } = await Swal.fire({
+        title: 'กรุณาเลือกระดับความพึงพอใจ',
+        input: 'radio',
+        inputOptions: inputOptions,
+        inputValidator: (value) => {
+          if (!value) {
+            return 'ท่านยังไม่ได้เลือกระดับความพึงพอใจ'
+          }
+        },
+        showCancelButton: true,
+        cancelButtonText:'ยกเลิก',
+        confirmButtonText:'ตกลง',
+      })
+      if(satisfaction){
+        // alert(satisfaction);
+        let uri=window.location.href;
+        gotoImauth(route.params.jobid,satisfaction,uri)
+      }
+    }
+    const gotoCdg=()=>{
+      router.push({
+        path: `/cdg`,
+        query: {
+          type: route.query.type,
+          ptype: route.query.ptype,
+          pv: route.query.pv,
+          pcode: route.query.pcode,
+        },
+      })
+    }
+    const initDetail=async ()=>{
+      appStore.title = "รายละเอียด";
+      if (route.query.error) {
+        if (route.query.error == "false") {
+          //อนุมัติผ่าน
+          await okAlert("อนุมัติรายการเรียบร้อยแล้ว");
+        } else {
+          await errAlert(`ไม่สามารถอนุมัติรายการได้กรุณาลองใหม่อีกครั้ง ${route.query.msg}`);
+        }
+        router.push({
+          path: `/cdg`,
+          query: {
+            type: route.query.type,
+            ptype: route.query.ptype,
+            pv: route.query.pv,
+            pcode: route.query.pcode,
+          },
+        });
+        return;
+      }
+      let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
+      detail.value = data[0];
+      tags.value = tag;
+      docs.value = doc;
+      doc2s.value = doc2;
+    }
+    const initPdf=async ()=>{
+      let {data,doc,doc2,tag}=await getJobDetail(route.params.jobid)
+      detail.value=data[0];
+      tags.value=tag;
+      docs.value=doc;
+      doc2s.value=doc2;
+      generatePDF()
+    }
+    const isShow=ref(false);
+    const generatePDF =async () => {
+      isShow.value=true;
+      const doc = new jsPDF({
+        orientation: "p",
+        format: "a4",
+        unit: "px",
+        lineHeight: 2,
+        putOnlyUsedFonts: true,
+      }); // create jsPDF object
+      doc.addFileToVFS("sarabun-normal.ttf", saraban_normal);
+      doc.addFont("sarabun-normal.ttf", "sarabun", "normal");
+      doc.addFileToVFS("sarabun-bold.ttf", saraban_bold);
+      doc.addFont("sarabun-bold.ttf", "sarabun", "bold");
+      doc.addFileToVFS("sarabun-bolditalic.ttf", saraban_bolditalic);
+      doc.addFont("sarabun-bolditalic.ttf", "sarabun", "bolditalic");
+      doc.addFileToVFS("sarabun-italic.ttf", saraban_italic);
+      doc.addFont("sarabun-italic.ttf", "sarabun", "italic");
+      const pdfElement = document.getElementById("pdf"); // HTML element to be converted to PDF
+      await doc.html(pdfElement, {
+        callback: (pdf) => {
+          // pdf.addFileToVFS('sarabun-normal.ttf', saraban_normal)
+          // pdf.addFont('sarabun-normal.ttf', 'sarabun', 'normal');
+          // pdf.setFont('sarabun', 'normal');
+          // console.log(pdf.getFileFromVFS('sarabun-normal.ttf'));
+          // console.log(pdf.getFontList());
+          // pdf.save('test.pdf')
+          pdf.output("dataurlnewwindow");
+          // const myPdfData = pdf.output('datauristring/dataurlstring')
+          window.close()
+          isShow.value=false;
+        },
+        filename:'test.pdf',
+        margin: 0, // optional: page margin
+        // optional: other HTMLOptions
+      });
+      
+    };
     return {
         authStore,
         appStore,
@@ -134,6 +267,11 @@ export const useService=()=>{
         loading,
         serverItemsLength,
         serverOptions,
+        detail,
+        docs,
+        doc2s,
+        tags,
+        isShow,
         getDCSInfo,
         loadFromServer,
         getSumDcs,
@@ -141,6 +279,11 @@ export const useService=()=>{
         getSumRcs,
         getCdgJob,
         getJobDetail,
+        open,
+        approve,
+        gotoCdg,
+        initDetail,
+        initPdf,
     }
 
 }

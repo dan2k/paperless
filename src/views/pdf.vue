@@ -439,67 +439,12 @@
   <!-- <div class="btn btn-primary" @click="generatePDF()">pdf</div> -->
 </template>
 <script setup>
-import { ref,onMounted } from "vue";
-import { jsPDF } from "jsPDF";
+import { onMounted } from "vue";
 import {useService} from './service.js'
-import {
-  saraban_normal,
-  saraban_bold,
-  saraban_bolditalic,
-  saraban_italic,
-} from "./sarabunnew.js";
-const isShow=ref(false);
-const {route,getJobDetail}=useService()
-const detail=ref([])
-const tags=ref([])
-const docs=ref([])
-const doc2s=ref([])
+const {isShow,detail,tags,docs,doc2s,initPdf}=useService()
 onMounted(async ()=>{
-  let {data,doc,doc2,tag}=await getJobDetail(route.params.jobid)
-  detail.value=data[0];
-  tags.value=tag;
-  docs.value=doc;
-  doc2s.value=doc2;
-  generatePDF()
+  initPdf()
 })
-const generatePDF =async () => {
-  isShow.value=true;
-  const doc = new jsPDF({
-    orientation: "p",
-    format: "a4",
-    unit: "px",
-    lineHeight: 2,
-    putOnlyUsedFonts: true,
-  }); // create jsPDF object
-  doc.addFileToVFS("sarabun-normal.ttf", saraban_normal);
-  doc.addFont("sarabun-normal.ttf", "sarabun", "normal");
-  doc.addFileToVFS("sarabun-bold.ttf", saraban_bold);
-  doc.addFont("sarabun-bold.ttf", "sarabun", "bold");
-  doc.addFileToVFS("sarabun-bolditalic.ttf", saraban_bolditalic);
-  doc.addFont("sarabun-bolditalic.ttf", "sarabun", "bolditalic");
-  doc.addFileToVFS("sarabun-italic.ttf", saraban_italic);
-  doc.addFont("sarabun-italic.ttf", "sarabun", "italic");
-  const pdfElement = document.getElementById("pdf"); // HTML element to be converted to PDF
-  await doc.html(pdfElement, {
-    callback: (pdf) => {
-      // pdf.addFileToVFS('sarabun-normal.ttf', saraban_normal)
-      // pdf.addFont('sarabun-normal.ttf', 'sarabun', 'normal');
-      // pdf.setFont('sarabun', 'normal');
-      // console.log(pdf.getFileFromVFS('sarabun-normal.ttf'));
-      // console.log(pdf.getFontList());
-      // pdf.save('test.pdf')
-      pdf.output("dataurlnewwindow");
-      // const myPdfData = pdf.output('datauristring/dataurlstring')
-      window.close()
-      isShow.value=false;
-    },
-    filename:'test.pdf',
-    margin: 0, // optional: page margin
-    // optional: other HTMLOptions
-  });
-  
-};
-
 </script>
 <style scoped>
 #pdf {
