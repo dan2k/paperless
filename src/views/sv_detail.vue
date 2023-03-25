@@ -476,6 +476,7 @@ const {
   open,
   approve,
   initDetail,
+  gotoCdg,
 } = useService();
 onMounted(async () => {
   initDetail()
