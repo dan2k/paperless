@@ -114,10 +114,10 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Page</a>
               </li> -->
-              <li class="nav-item" v-if="store.isLogin">
+              <!-- <li class="nav-item" v-if="store.isLogin">
                 <a class="nav-link" href="javascript:void(0)" @click="$router.replace({path:`/ddopa`})"
                   >D.DOPA</a>
-              </li>
+              </li> -->
               <!-- <li class="nav-item" v-if="store.isLogin">
                 <a class="nav-link" href="javascript:void(0)" @click="$router.replace({path:`/pdf`})"
                   >PDF</a>
