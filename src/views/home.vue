@@ -7,7 +7,8 @@
   const user_type=Number(authStore.userData.user_type);
   onMounted(() => {
       let path='';
-      if(user_type===1){
+      
+      if(Number(user_type)===1){
         switch(Number(level)){
           case 1: path='/dcs';break;
           case 2: path='/pcs';break;
@@ -17,7 +18,7 @@
       }else{
         path='/cdg';
       }
-      // console.log({path})
+      console.log({path})
       router.replace({path});
   })
 </script>
