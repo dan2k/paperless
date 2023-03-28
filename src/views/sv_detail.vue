@@ -450,6 +450,20 @@
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
     </div>
+    <qrcode
+            value="www.google.co.th"
+            style="position: absolute; bottom: 25px; right:10px;"
+            :width="100"
+            :height="100"
+            :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
+            :imageOptions="{ hideBackgroundDots: true, imageSize: 0.4, margin: 0 }"
+            :dotsOptions="{
+              type: 'square',
+              color: '#000000',
+            }"
+            imgclass="img-qr"
+            myclass="my-qur"
+          />
     <div
       style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 142px"
     ></div>
@@ -468,12 +482,17 @@
 <script setup>
 import { onMounted } from "vue";
 import { useService } from "./service.js";
+import qrcode from "qrcode-vue3";
 const { detail, tags, docs, doc2s, open, approve, initDetail, gotoCdg } = useService();
 onMounted(async () => {
   initDetail();
 });
 </script>
-<style scoped>
+<style >
+.img-qr{
+  width:70px !important;
+  height:70px !important;
+}
 .swal2-label {
   font-size: 10px !important;
 }

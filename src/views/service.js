@@ -223,18 +223,21 @@ export const useService = () => {
     docs.value = doc;
     doc2s.value = doc2;
   };
-  const initPdf = async () => {
+  const init=async ()=>{// use for pdf.vue
     let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
     detail.value = data[0];
     tags.value = tag;
     docs.value = doc;
     doc2s.value = doc2;
+  }
+  const initPdf = async () => {//use for pdf.vue
+    await init()
     generatePDF();
   };
   const isShow = ref(false);
   const generatePDF = async () => {
     isShow.value = true;
-    const doc = new jsPDF({
+    const doc = await new jsPDF({
       orientation: "p",
       format: "a4",
       unit: "px",
@@ -258,6 +261,7 @@ export const useService = () => {
         // console.log(pdf.getFileFromVFS('sarabun-normal.ttf'));
         // console.log(pdf.getFontList());
         // pdf.save('test.pdf')
+        // pdf.addImage(img.value?.imageUrl, 'PNG', 320, 453,30,30);
         pdf.output("dataurlnewwindow");
         // const myPdfData = pdf.output('datauristring/dataurlstring')
         window.close();

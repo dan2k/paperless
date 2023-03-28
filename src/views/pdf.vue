@@ -403,7 +403,7 @@
       </div>
     </div>
     <div
-      style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 3px"
+      style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 25px"
     ></div>
     <div style="width: 100%">
       <div style="width: 50%; float: left">
@@ -430,8 +430,22 @@
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
     </div>
+    <qrcode 
+      value="www.google.co.th"
+      :width="100"
+      :height="100"
+      :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
+      :imageOptions="{ hideBackgroundDots: true, imageSize: 0.4, margin:0 }"
+      :dotsOptions="{
+          type: 'square',
+          color: '#000000',              
+      }"
+      style="position: absolute; bottom: 20px; right:5px;"
+      imgclass="img-qr"
+      myclass="my-qur"
+          />
     <div
-      style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 142px"
+      style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 120px"
     ></div>
     <div class="ft" >CDG GROUP,CONTROLDATA (THAILAND) LTD. MOI SITE</div>
     
@@ -441,12 +455,17 @@
 <script setup>
 import { onMounted } from "vue";
 import {useService} from './service.js'
+import qrcode from "qrcode-vue3";
 const {isShow,detail,tags,docs,doc2s,initPdf}=useService()
 onMounted(async ()=>{
   initPdf()
 })
 </script>
-<style scoped>
+<style >
+.img-qr{
+  width:40px !important;
+  height:40px !important;
+}
 #pdf {
   font-family: "saraban";
 }

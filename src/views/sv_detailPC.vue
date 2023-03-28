@@ -3,7 +3,8 @@
     <div style="width: 100%">
       <div style="width: 30%; float: left">
         <div
-          style="           padding: 0px 0px;
+          style="
+            padding: 0px 0px;
             margin-left: 25px;
             font-weight: bold;
             font-size: 20px;
@@ -425,7 +426,10 @@
       </div>
       <div style="width: 50%; float: right">
         <div style="width: 21%; float: left; text-align: right">ลูกค้า :</div>
-        <div class="underline" style="width: 78%; float: left">&nbsp;</div>
+        <div class="underline" style="width: 78%; float: left; position: relative">
+          &nbsp;
+          
+        </div>
       </div>
     </div>
     <div
@@ -437,7 +441,7 @@
         <div class="underline" style="width: 71%; float: left; text-align: center">
           &nbsp;{{
             Array.from(new Set([detail.thiname1, detail.thiname2, detail.thiname3]))
-              .filter((it, i) => it )
+              .filter((it, i) => it)
               .join(",")
           }}
         </div>
@@ -449,6 +453,20 @@
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
     </div>
+    <qrcode
+            value="www.google.co.th"
+            style="position: absolute; bottom: 25px; right:10px;"
+            :width="100"
+            :height="100"
+            :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
+            :imageOptions="{ hideBackgroundDots: true, imageSize: 0.4, margin: 0 }"
+            :dotsOptions="{
+              type: 'square',
+              color: '#000000',
+            }"
+            imgclass="img-qr"
+            myclass="my-qur"
+          />
     <div
       style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 142px"
     ></div>
@@ -460,34 +478,25 @@
       <button class="btn btn-primary btn-sm me-1" @click="open(detail.sv_no)">
         พิมพ์
       </button>
-      <button
-        class="btn btn-primary btn-sm"
-        @click="gotoCdg()"
-      >
-        หน้าแรก
-      </button>
+      <button class="btn btn-primary btn-sm" @click="gotoCdg()">หน้าแรก</button>
     </div>
   </div>
 </template>
 <script setup>
 import { onMounted } from "vue";
 import { useService } from "./service.js";
-const {
-  detail,
-  tags,
-  docs,
-  doc2s,
-  open,
-  approve,
-  initDetail,
-  gotoCdg,
-} = useService();
+import qrcode from "qrcode-vue3";
+const { detail, tags, docs, doc2s, open, approve, initDetail, gotoCdg } = useService();
 onMounted(async () => {
-  initDetail()
+  await initDetail();
 });
-
 </script>
-<style>
+<style >
+.img-qr{
+  width:70px !important;
+  height:70px !important;
+}
+
 .swal2-label {
   font-size: 10px !important;
 }
