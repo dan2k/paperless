@@ -1,7 +1,7 @@
 <template>
   <div style="font-family: sarabun" class="mainx">
-    <div style="width: 100%">
-      <div style="width: 30%; float: left">
+    <div style="width: 100%;">
+      <div style="width: 30%; float: left;">
         <div
           style="
             padding: 0px 0px;
@@ -11,7 +11,7 @@
             letter-spacing: -4px;
           "
         >
-          CDG
+          <img src="/logo_c.png" style="width:30%;height:30%;"/>
         </div>
         <!-- <div style="width: 80%; ">
           Controldata ( Thailand ) Ltd.
@@ -25,8 +25,8 @@
       <div style="width: 47%; float: left; text-align: center; padding-top: 10px">
         <h6>SERVICE REPORT</h6>
       </div>
-      <div style="width: 22%; float: right">
-        <div style="width: 100%; text-align: right; padding-top: 30px">
+      <div style="width: 22%; float: right;">
+        <div style="width: 100%; text-align: right; padding-top: 45px">
           <b>SERVICE ID:</b> {{ detail.sv_no }}
         </div>
       </div>

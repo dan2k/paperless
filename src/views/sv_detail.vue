@@ -6,12 +6,13 @@
           style="
             padding: 0px 0px;
             margin-left: 25px;
-            font-weight: bold;
+            /*font-weight: bold;
             font-size: 20px;
-            letter-spacing: -4px;
+            letter-spacing: -4px;*/
           "
         >
-          CDG
+          <!-- CDG -->
+          <img src="/logo_c.png" style="width:42%;height:42%;"/>
         </div>
         <!-- <div style="width: 80%; ">
           Controldata ( Thailand ) Ltd.
