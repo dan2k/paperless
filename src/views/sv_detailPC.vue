@@ -486,10 +486,11 @@
 import { onMounted } from "vue";
 import { useService } from "./service.js";
 import qrcode from "qrcode-vue3";
-const { detail, tags, docs, doc2s, open, approve, initDetail, gotoCdg } = useService();
+const { route,detail, tags, docs, doc2s, open, approve, initDetail, gotoCdg } = useService();
 onMounted(async () => {
   await initDetail();
 });
+
 </script>
 <style >
 .img-qr{

@@ -51,7 +51,7 @@ export const useService = () => {
     }
   };
   const loadFromServer = async (custptype, custpcode) => {
-    console.log(custptype, custpcode);
+    // console.log(custptype, custpcode);
     start();
     loading.value = true;
     try {
@@ -61,8 +61,11 @@ export const useService = () => {
       items.value = rs.data.data;
       serverItemsLength.value = rs.data.totals;
       if (serverItemsLength.value == 0) {
-        okAlert("ไม่พบข้อมูล");
+        await okAlert("ไม่พบข้อมูล");
+        close();
+        return;
       }
+      
     } catch (err) {
       errAlert(err);
     }
@@ -143,7 +146,7 @@ export const useService = () => {
     }
     close();
   };
-  const open = (jobid) => {
+  const open = async (jobid) => {
     window.open(`${import.meta.env.VITE_PRIVATE_BASE_URL}pdf/${jobid}`);
   };
   const gotoImauth = (jobid, s, uri) => {
@@ -177,6 +180,8 @@ export const useService = () => {
       showCancelButton: true,
       cancelButtonText: "ยกเลิก",
       confirmButtonText: "ตกลง",
+      backdrop:true,
+      allowOutsideClick: false,
     });
     if (satisfaction) {
       // alert(satisfaction);
@@ -200,7 +205,25 @@ export const useService = () => {
     if (route.query.error) {
       if (route.query.error == "false") {
         //อนุมัติผ่าน
-        await okAlert("อนุมัติรายการเรียบร้อยแล้ว");
+        // await okAlert(`คุณ ${route.query.th_fullname} <br/>อนุมัติรายการเรียบร้อยแล้ว`);
+        let rs= await api.get(`/paperless/v1/getApproveName/${route.params.jobid}`);
+        await Swal({
+          html: `คุณ ${rs.data.data[0]?.th_fullname} <br/> อนุมัติรายการเรียบร้อยแล้ว`,
+          icon: 'success',
+          confirmButtonText: 'ตกลง'
+        })/*.then(()=>{
+          return
+          router.push({
+            path: `/cdg`,
+            query: {
+              type: route.query.type,
+              ptype: route.query.ptype,
+              pv: route.query.pv,
+              pcode: route.query.pcode,
+            },
+          });
+        })
+        return;*/
       } else {
         await errAlert(
           `ไม่สามารถอนุมัติรายการได้กรุณาลองใหม่อีกครั้ง ${route.query.msg}`
@@ -229,12 +252,18 @@ export const useService = () => {
     tags.value = tag;
     docs.value = doc;
     doc2s.value = doc2;
+    // let rs= await api.get(`/paperless/v1/getVerify/${route.params.jobid}`);
+    // if(!rs.data.status){
+    //   errAlert("ไม่สามารถ Verify ข้อมูลได้")
+    //   return
+    // }
   }
   const initPdf = async () => {//use for pdf.vue
     await init()
     generatePDF();
   };
   const isShow = ref(false);
+
   const generatePDF = async () => {
     isShow.value = true;
     const doc = await new jsPDF({

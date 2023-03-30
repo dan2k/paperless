@@ -221,8 +221,20 @@
                 <span class="fw-semibold">ผู้รับผิดชอบ:&nbsp;</span
                 ><span class="fw-light">{{ i.thiname }} </span>
               </div>
+              <div class="col-sm-12 col-md-5">
+                <span class="fw-semibold">สถานะ:&nbsp;</span
+                >
+                <span class="fw-light" v-if="i.problem_type=='P1'">{{ i.status_id<8?'กำลังดำเนินการ':'อนุมัติแล้ว' }} </span>
+                <span class="fw-light" v-if="i.problem_type=='P3'">{{ i.status_id<2?'กำลังดำเนินการ':'อนุมัติแล้ว' }} </span>
+              </div>
+              <div v-if="i.sv_approve_flag==1" class="col-sm-12 col-md-5">
+                <span class="fw-semibold">Verify:&nbsp;</span
+                >
+                <span class="fw-light text-success" v-if="i.isVerify">✔</span>
+                <span class="fw-light text-danger" v-if="!i.isVerify">✘</span>
+              </div>
               <div class="line my-1"></div>
-              <div clas="col-12"><button class="btn btn-primary btn-sm float-end" @click="open(i.sv_no)">พิมพ์</button></div>
+              <div clas="col-12"><button class="btn btn-primary btn-sm float-end" @click="open1(i)">พิมพ์</button></div>
             </div>
           </div>
         </div>
@@ -276,6 +288,22 @@ onMounted(async () => {
     await search();
   }
 });
+const open1=async (item)=>{
+    if(item.sv_approve_flag==1 && !item.isVerify){
+      await Swal({
+          title:`<span style="color:red;font-weight:bold;">แจ้งเตือน</span>`,
+          html: `รายการนี้ทำการ   verify signature  ไม่ผ่านอันเนื่องมากจากมีการแก้ไขข้อมูลในฐานข้อมูล`,
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+          backdrop:true,
+          allowOutsideClick: false,
+      }).then(()=>{
+        open(item.sv_no)
+      })
+      return 
+    }
+    open(item.sv_no)
+}
 </script>
 <style scoped>
 .main {
