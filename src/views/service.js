@@ -211,19 +211,7 @@ export const useService = () => {
           html: `คุณ ${rs.data.data[0]?.th_fullname} <br/> อนุมัติรายการเรียบร้อยแล้ว`,
           icon: 'success',
           confirmButtonText: 'ตกลง'
-        })/*.then(()=>{
-          return
-          router.push({
-            path: `/cdg`,
-            query: {
-              type: route.query.type,
-              ptype: route.query.ptype,
-              pv: route.query.pv,
-              pcode: route.query.pcode,
-            },
-          });
         })
-        return;*/
       } else {
         await errAlert(
           `ไม่สามารถอนุมัติรายการได้กรุณาลองใหม่อีกครั้ง ${route.query.msg}`

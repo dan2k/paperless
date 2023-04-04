@@ -195,7 +195,7 @@ const getData = async () => {
     if(route.query.ptype){
       ptype.value = route.query.ptype;
     }else{
-      ptype.value = ptypes.value[0].k;
+      ptype.value = ptypes.value[0]?.k;
     }
     getPV();
   }

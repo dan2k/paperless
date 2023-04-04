@@ -10,6 +10,17 @@ async function beforeEnter(to, from, next) {
 		await store.checkLogin()
 	}
 	if (store.isLogin) {
+		const user_type=Number(store.userData.user_type);
+		let cdg=['/cdg','/svpc','/sv'];
+		let moi=['/dcs','/pcs','/rcs','/cos'];
+		// console.log(to.path)
+		if(user_type==1 && cdg.includes(to.path)){
+			next('/')
+		}
+		if(user_type==2 && moi.includes(to.path)){
+			next('/')
+		}
+
 		next();
 		return;
 	}
