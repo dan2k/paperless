@@ -18,7 +18,7 @@
       }else{
         path='/cdg';
       }
-      console.log({path})
+      // console.log({path})
       router.replace({path});
   })
 </script>
