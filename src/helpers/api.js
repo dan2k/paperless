@@ -4,7 +4,7 @@ import router from "@/route"
 import { useAuthStore } from "@/store"
 const obj = axios.create({
 	baseURL: import.meta.env.VITE_AXIOS_BASE_URL,
-	timeout: 10000,
+	timeout: 100000,
 	params: {}, // do not remove this, its added to add params later in the config
 });
 obj.interceptors.response.use(

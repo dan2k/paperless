@@ -1,10 +1,13 @@
 <template>
+  <Suspense>
+    <template #fallback>Loading...</template>
   <div class="main">
     <filter-bar
       v-if="!$route.query.rg"
       v-model:month="month"
       v-model:year="year"
       v-model:type="type"
+      v-model:options="options"
       @search="search()"
     />
     <h4 v-if="$route.query.rg" class="text-center text-primary"><u>รายงาน {{$route.query.type==0?'service':'PM'}} {{ $route.query.month }}/{{ Number($route.query.year)+543 }}</u></h4>
@@ -63,7 +66,11 @@
               <div class="fw-bold">{{ d.cc }}</div>
               <div>
                 {{ d.province_name }}
-                <span v-if="d.co > 0" class="float-end">
+                <ul v-if="type==1">
+                      <li>จำนวนที่เปิด {{ d.rpm }} รายการ</li>
+                      <li>จำนวนที่ต้องเปิดทั้งหมด {{ d.pm }} รายการ</li>
+                </ul>
+                <span v-if="(d.co>0 && type==0) || (type==1 && d.rpm>0)" class="float-end">
                   <button
                     type="button"
                     class="btn btn-link btn-sm"
@@ -73,7 +80,7 @@
                         query: {
                           rg: rg,
                           groupid: group_id,
-                          cc: d.cc,
+                          cc: d.province_id,
                           type,
                           month,
                           year,
@@ -84,17 +91,20 @@
                     "
                   >
                     <!-- <i class="fa-solid fa-angles-right"></i> -->
-                    รายละเอียด
+                      <span v-if="type==0">จำนวน {{ d.co }} รายการ</span>
+                      <span v-if="type==1">รายละเอียด</span>
                     </button
                 ></span>
               </div>
             </div>
-            <span class="badge bg-primary rounded-pill">{{ d.co }}</span>
+            <!-- <span class="badge bg-primary rounded-pill">{{ d.co }}</span> -->
           </li>
           <li class="py-2 d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto w-100">
               <div class="fw-bold">
-                รวมทั้งหมด <span class="float-end">{{ sums }} รายการ</span>
+                รวมทั้งหมด 
+                  <span v-if="type==0" class="float-end">{{ sums }} รายการ</span>
+                  <span v-if="type==1" class="float-end">{{ sums.rpm }}/{{ sums.pm }} รายการ</span>
               </div>
             </div>
           </li>
@@ -102,11 +112,13 @@
       </div>
     </div>
   </div>
+  </Suspense>
 </template>
 <script setup>
-import FilterBar from "../components/filterbar.vue";
-import { onMounted, ref, computed } from "vue";
+// import FilterBar from "../components/filterbar.vue";
+import { onMounted, ref,reactive,defineAsyncComponent, computed } from "vue";
 import { useService } from "./service";
+const FilterBar = defineAsyncComponent(() => import("../components/filterbar.vue"));
 const {
   route,
   appStore,
@@ -123,12 +135,18 @@ const group_id = route.query.groupid ?? authStore.userData.group_id;
 const data = ref([]);
 const dcs = ref(null);
 const isRoute = ref(false);
+const options=reactive({groupid:group_id,level:3,rg:rg})
 const search = async () => {
+  data.value.length=0;
   data.value = await getSumPcs(rg, group_id, type.value, year.value, month.value);
 };
 
 const sums = computed(() => {
-  return data.value.reduce((p, it) => p + Number(it.co), 0);
+  if(type.value==0){
+    return data.value.reduce((p, it) => p + Number(it.co), 0);
+  }else{
+    return {pm:data.value.reduce((p, it) => p + Number(it.pm), 0),rpm:data.value.reduce((p, it) => p + Number(it.rpm), 0)};
+  }
 });
 onMounted(async () => {
   isRoute.value = route.query.rg ? true : false;

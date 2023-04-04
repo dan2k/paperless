@@ -1,10 +1,13 @@
 <template>
+   <Suspense>
+    <template #fallback>Loading...</template>
   <div class="main">
     <filter-bar
       v-if="!$route.query.pcs"
       v-model:month="month"
       v-model:year="year"
       v-model:type="type"
+      v-model:options="options"
       @search="search()"
     />
     <h4 v-if="$route.query.pcs" class="text-center text-primary"><u>รายงาน {{$route.query.type==0?'service':'PM'}} {{ $route.query.month }}/{{ Number($route.query.year)+543 }}</u></h4>
@@ -247,13 +250,16 @@
       </div>
     </div>
   </div>
+  </Suspense>
 </template>
 <script setup>
-import FilterBar from "../components/filterbar.vue";
-import { onMounted, ref, watch } from "vue";
+// import FilterBar from "../components/filterbar.vue";
+import { onMounted, ref, watch ,reactive,defineAsyncComponent} from "vue";
 // import datatable from "vue3-easy-data-table";
 // import "vue3-easy-data-table/dist/style.css";
 import { useService } from "./service";
+const FilterBar = defineAsyncComponent(() => import("../components/filterbar.vue"));
+
 const {
   route,
   appStore,
@@ -271,11 +277,14 @@ const dcs = ref(null);
 let custptype = route.query.custptype ?? authStore.userData.ses_placetype;
 let custpcode = route.query.custpcode ?? authStore.userData.ses_placecode;
 const isRoute = ref(false);
+const group_id = route.query.groupid ?? authStore.userData.group_id;
+const options=reactive({groupid:group_id,level:1,custptype,custpcode})
 const sums = ref(0);
 watch(items, (n) => {
   sums.value = items.value.length;
 });
 const search = async () => {
+  items.value.length=0
   await loadFromServer(custptype, custpcode);
 };
 onMounted(async () => {

@@ -111,6 +111,17 @@ export const useService = () => {
     }
     close();
   };
+  const getSum=async(groupid,year,month,level,rg,pv,custptype,custpcode)=>{
+    start()
+    try{
+      let rs = await api.get(`/paperless/v1/getSum/${groupid}/${year}/${month}/${level}/${rg}/${pv}/${custptype}/${custpcode}`)
+      close()
+      return {svs:rs.data.data['service_count'],pms:rs.data.data['pm_count'],rpms:rs.data.data['real_pm_count']}
+    }catch(err){
+      errAlert(err)
+    }
+    close()
+  }
   //ใช้ในไฟล์ cdg.vue
   const getCdgJob = async (type, newplacecode) => {
     start();
@@ -312,6 +323,7 @@ export const useService = () => {
     getSumDcs,
     getSumPcs,
     getSumRcs,
+    getSum,
     getCdgJob,
     getJobDetail,
     open,

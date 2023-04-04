@@ -4,6 +4,7 @@
       <div class="col-sm-12 col-md-2">
         <label for="month" class="form-label">เดือน:</label>
         <select
+          :disabled="loading"
           id="month"
           class="form-select form-select-sm"
           :value="month"
@@ -13,6 +14,7 @@
               $emit('update:month', $event.target.value);
             },
           }"
+          @change="getSum2()"
         >
           <option v-for="m in months" :value="m.id" :selected="m.id === month">
             {{ m.text }}
@@ -22,6 +24,7 @@
       <div class="col-sm-12 col-md-2">
         <label for="year" class="form-label">ปี:</label>
         <select
+          :disabled="loading"
           id="year"
           class="form-select form-select-sm"
           :value="year"
@@ -40,6 +43,7 @@
       <div class="col-sm-12 col-md-2">
         <label for="type" class="form-label">ประเภท:</label>
         <select
+          :disabled="loading"
           id="year"
           class="form-select form-select-sm"
           :value="type"
@@ -58,6 +62,7 @@
       <div class="col-sm-12 col-md-1">
         <label for="type" class="form-label">&nbsp;&nbsp;</label>
         <input
+          :disabled="loading"
           type="button"
           value="ค้นหา"
           class="form-control btn btn-outline-primary btn-sm"
@@ -70,8 +75,10 @@
 </template>
 
 <script setup>
-// import {  defineEmits } from "vue";
-defineProps({
+import {  ref,onMounted } from "vue";
+import { useService } from "@/views/service";
+const { getSum } = useService();
+const props=defineProps({
   year: {
     type: String,
     required: true,
@@ -84,6 +91,19 @@ defineProps({
     type: Number,
     required: true,
   },
+  
+  options:{
+    type:Object,
+    required:false,
+    default:{
+      level:1,
+      groupid:8,
+      rg:1,
+      pv:10,
+      custptype:1,
+      custpcode:'1001',
+    }
+  }
 });
 
 const years = [
@@ -111,11 +131,21 @@ const months = [
   { id: "11", text: "พฤศจิกายน" },
   { id: "12", text: "ธันวาคม" },
 ];
-const types = [
-  { id: "0", text: "Service" },
-  { id: "1", text: "PM" },
-];
-
+const types = ref([])
+const loading=ref(true)
+const getSum2=async ()=>{
+  loading.value=true;
+  console.log(props.options)
+  let {svs,pms,rpms}=await  getSum(props.options.groupid,props.year,props.month,props.options.level,props.options.rg,props.options.pv,props.options.custptype,props.options.custpcode)
+  types.value=[
+      { id: "0", text: `Service [${svs}]` },
+      { id: "1", text: `PM [${rpms}/${pms}]` },
+  ];  
+  loading.value=false;
+}
+onMounted(async () => {
+    getSum2()
+})
 const emit = defineEmits(["search","update:year","update:month","update:type","update"]);
 const search=()=>{
     emit('search')
