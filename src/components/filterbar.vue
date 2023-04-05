@@ -14,7 +14,7 @@
               $emit('update:month', $event.target.value);
             },
           }"
-          @change="getSum2()"
+          
         >
           <option v-for="m in months" :value="m.id" :selected="m.id === month">
             {{ m.text }}
@@ -34,6 +34,7 @@
               $emit('update:year', $event.target.value);
             },
           }"
+          
         >
           <option v-for="y in years" :value="y.id" :selected="y.id === year">
             {{ y.text }}
@@ -53,6 +54,7 @@
               $emit('update:type', $event.target.value);
             },
           }"
+          @change="$emit('chan')"
         >
         <option v-for="t in types" :value="t.id" :selected="t.id === type">
             {{ t.text }}
@@ -75,7 +77,7 @@
 </template>
 
 <script setup>
-import {  ref,onMounted } from "vue";
+import {  ref,onMounted,watch,toRef } from "vue";
 import { useService } from "@/views/service";
 const { getSum } = useService();
 const props=defineProps({
@@ -134,19 +136,29 @@ const months = [
 const types = ref([])
 const loading=ref(true)
 const getSum2=async ()=>{
+
+  emit('chan')
   loading.value=true;
-  console.log(props.options)
-  let {svs,pms,rpms}=await  getSum(props.options.groupid,props.year,props.month,props.options.level,props.options.rg,props.options.pv,props.options.custptype,props.options.custpcode)
+  let {svs,pms,rpms}= await  getSum(props.options.groupid,props.year,props.month,props.options.level,props.options.rg,props.options.pv,props.options.custptype,props.options.custpcode)
   types.value=[
       { id: "0", text: `Service [${svs}]` },
       { id: "1", text: `PM [${rpms}/${pms}]` },
   ];  
   loading.value=false;
 }
+const monthx=toRef(props,'month')
+const yearx=toRef(props,'year')
+watch(monthx,(n,o)=>{
+  getSum2()
+})
+watch(yearx,(n,o)=>{
+  getSum2()
+})
 onMounted(async () => {
+    
     getSum2()
 })
-const emit = defineEmits(["search","update:year","update:month","update:type","update"]);
+const emit = defineEmits(["search","update:year","update:month","update:type","update","chan"]);
 const search=()=>{
     emit('search')
 }

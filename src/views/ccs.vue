@@ -7,6 +7,7 @@
         v-model:type="type"
         v-model:options="options"
         @search="search()"
+        @chan="data.length=0"
       />
 
       <div class="row justify-content-md-center" v-if="data.length">
@@ -18,10 +19,10 @@
             >
               <div class="ms-2 me-auto w-100">
                 <div>
-                  {{ d.desc }}
+                  <span :class="{'text-danger':(type==1&&d.rpm!=d.pm)}">{{ d.desc }}</span>
                    <ul v-if="type==1">
-                      <li>จำนวนที่เปิด {{ d.rpm }} รายการ</li>
-                      <li>จำนวนที่ต้องเปิดทั้งหมด {{ d.pm }} รายการ</li>
+                      <li class="text-success">จำนวนที่เปิด {{ d.rpm }} รายการ</li>
+                      <li class="text-primary">จำนวนที่ต้องเปิดทั้งหมด {{ d.pm }} รายการ</li>
                    </ul>
                   <span v-if="(d.co>0 && type==0) || (type==1 && d.rpm>0)" class="float-end">
                     <button
@@ -55,7 +56,7 @@
                 <div class="fw-bold">
                   รวมทั้งหมด 
                   <span v-if="type==0" class="float-end">{{ sums }} รายการ</span>
-                  <span v-if="type==1" class="float-end">{{ sums.rpm }}/{{ sums.pm }} รายการ</span>
+                  <span v-if="type==1" class="float-end"><span class="text-success">{{ sums.rpm }}</span>/<span class="text-primary">{{ sums.pm }}</span> รายการ</span>
                 </div>
               </div>
             </li>

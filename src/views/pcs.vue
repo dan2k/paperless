@@ -4,14 +4,15 @@
 
     <div class="main">
       <filter-bar
-        v-if="!$route.query.rg"
+        v-if="level==2"
         v-model:month="month"
         v-model:year="year"
         v-model:type="type"
         v-model:options="options"
         @search="search()"
+        @chan="data.length=0"
       />
-      <h4 v-if="$route.query.rg" class="text-center text-primary"><u>รายงาน {{$route.query.type==0?'service':'PM'}} {{ $route.query.month }}/{{ Number($route.query.year)+543 }}</u></h4>
+      <h4 v-if="level!=2" class="text-center text-primary"><u>รายงาน {{$route.query.type==0?'service':'PM'}} {{ $route.query.month }}/{{ Number($route.query.year)+543 }}</u></h4>
       <div class="row justify-content-md-center" v-if="data?.length">
         <div class="col-sm-12 col-md-7">
           <div class="text-primary d-flex justify-content-between px-2">
@@ -81,7 +82,7 @@
               </nav>
             </div>
             <button
-              v-if="isRoute && $route.query.rg"
+              v-if="isRoute && level!=2"
               @click="
                 $router.push({
                   path: `/rcs`,
@@ -110,12 +111,12 @@
               class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
             >
               <div class="ms-2 me-auto w-100">
-                <div class="fw-bold">{{ d.cust_pcode }}</div>
+                <div :class="{'text-danger':(type==1&&d.rpm!=d.pm)}" class="fw-bold">{{ d.cust_pcode }}</div>
                 <div>
-                  {{ d.cust_pdesc }}
+                  <span :class="{'text-danger':(type==1&&d.rpm!=d.pm)}">{{ d.cust_pdesc }}</span>
                   <ul v-if="type==1">
-                      <li>จำนวนที่เปิด {{ d.rpm }} รายการ</li>
-                      <li>จำนวนที่ต้องเปิดทั้งหมด {{ d.pm }} รายการ</li>
+                    <li class="text-success">จำนวนที่เปิด {{ d.rpm }} รายการ</li>
+                    <li class="text-primary">จำนวนที่ต้องเปิดทั้งหมด {{ d.pm }} รายการ</li>
                 </ul>
                   <span v-if="(d.co>0 && type==0) || (type==1 && d.rpm>0)" class="float-end">
                     <button
@@ -154,7 +155,7 @@
                 <div class="fw-bold">
                   รวมทั้งหมด 
                   <span v-if="type==0" class="float-end">{{ sums }} รายการ</span>
-                  <span v-if="type==1" class="float-end">{{ sums.rpm }}/{{ sums.pm }} รายการ</span>
+                  <span v-if="type==1" class="float-end"><span class="text-success">{{ sums.rpm }}</span>/<span class="text-primary">{{ sums.pm }}</span> รายการ</span>
                 </div>
               </div>
             </li>
@@ -185,6 +186,7 @@ const group_id = route.query.groupid ?? authStore.userData.group_id;
 const data = ref([]);
 const dcs = ref(null);
 const isRoute = ref(false);
+const level=authStore.userData.sur_level;
 const options=reactive({groupid:group_id,level:2,pv:cc})
 const search = async () => {
   data.value.length=0
