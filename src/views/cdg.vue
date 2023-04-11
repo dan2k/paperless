@@ -251,7 +251,7 @@ const getPcode = () => {
       }, 0),
     };
   });
-  console.log(tmp2.includes(route.query.pcode));
+  // console.log(tmp2.includes(route.query.pcode));
   if (pcodes.value.length>0  || tmp2.includes(route.query.pcode) || route.query.pcode=='xxx') {
     if(route.query.pcode && tmp2.includes(route.query.pcode)||(pcodes.value.length>0 && route.query.pcode=='xxx')){ 
       
