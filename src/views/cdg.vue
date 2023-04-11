@@ -119,14 +119,8 @@
           <div class="line my-1"></div>
           <div class="col-12 col-md-12">
             <button
-              class="btn btn-primary btn-sm d-block d-md-none float-end"
-              @click="open('mobile',d.sv_no)"
-            >
-              <i class="fa-regular fa-file-lines"></i>&nbsp;รายละเอียด
-            </button>
-            <button
-              class="btn btn-primary btn-sm d-none d-md-block float-end"
-              @click="open('pc',d.sv_no)"
+              class="btn btn-primary btn-sm  float-end"
+              @click="open(d.sv_no)"
             >
               <i class="fa-regular fa-file-lines"></i>&nbsp;รายละเอียด
             </button>
@@ -154,11 +148,17 @@ onMounted(async () => {
   await getData();
   // console.log(data.value);
 });
-const open = (t,jobid) => {
+/* const open = (t,jobid) => {
   let x = t == "mobile" ? "" : "pc";
   // window.open(`/sv${x}`);
   router.push({
     path: `/sv${x}/${jobid}`,
+    query: { type: type.value, ptype: ptype.value, pv: pv.value, pcode: pcode.value },
+  });
+}; */
+const open = (jobid) => {
+  router.push({
+    path: `/svpc/${jobid}`,
     query: { type: type.value, ptype: ptype.value, pv: pv.value, pcode: pcode.value },
   });
 };
