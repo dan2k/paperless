@@ -457,7 +457,7 @@
 <script setup>
 import { onMounted } from "vue";
 import {useService} from './service.js'
-import qrcode from "qrcode-vue3";
+// import qrcode from "qrcode-vue3";
 const {isShow,detail,tags,docs,doc2s,initPdf}=useService()
 onMounted(async ()=>{
   initPdf()
