@@ -432,10 +432,10 @@
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
     </div>
-    <qrcode 
+    <!-- <qrcode 
       value="www.google.co.th"
-      :width="100"
-      :height="100"
+      :width="90"
+      :height="90"
       :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
       :imageOptions="{ hideBackgroundDots: true, imageSize: 0.4, margin:0 }"
       :dotsOptions="{
@@ -445,9 +445,9 @@
       style="position: absolute; bottom: 20px; right:5px;"
       imgclass="img-qr"
       myclass="my-qur"
-          />
+          /> -->
     <div
-      style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 120px"
+      style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 118px"
     ></div>
     <div class="ft" >CDG GROUP,CONTROLDATA (THAILAND) LTD. MOI SITE</div>
     
@@ -547,11 +547,11 @@ td {
 .ft{
 	width:96%;
 	position:absolute;
-	bottom:7px;
+	bottom:10px;
 	border-top-style:solid;
 	border-top-width:1px;
 	text-align:right;
-    z-index:990;
+  z-index:990;
 }
 .l{
   /* ความสูงของตัวอักษร เท่ากับความสูงของเส้นประ */
