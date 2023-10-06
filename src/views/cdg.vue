@@ -173,7 +173,6 @@ const getData = async () => {
   data2.value.length = 0;
   data.value = await getCdgJob(type.value, authStore.userData.ses_newplacecode);
   if (!data.value) return;
-  
   let tmp = groupBy(data.value, "cust_ptype");
   let tmp2=[];
 
@@ -206,7 +205,8 @@ const getPV = () => {
   data2.value.length = 0;
   pv.value = "";
   if (ptype.value == "") return;
-  let tmp = groupBy(data.value, "province_id");
+  let tmpx=data.value.filter((it)=>it.cust_ptype==ptype.value)
+  let tmp = groupBy(tmpx, "province_id");
   let tmp2=[];
   pvs.value=tmp2 = Object.keys(tmp);
   pvs.value = pvs.value.map((it, i) => {
