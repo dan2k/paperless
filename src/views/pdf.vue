@@ -277,6 +277,10 @@
           3.ทำการทดสอบ {{ detail.sv_solve_detail3 }} <br />
           <span v-if="detail.flag_takeback==1">4.นำอุปกรณ์กลับศูนย์บริการ</span>
         </span>
+        <div v-if="detail.ptype=='P3'" class="px-4 w-100">
+          <br/>
+          บำรุงรักษาตามสัญญาโครงการ
+        </div>
       </div>
       <div
         style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 3px"

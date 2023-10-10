@@ -64,19 +64,19 @@
           }}</span>
         </div>
       </div>
-      <div class="row d-flex justify-content-between">
+      <div class="row d-flex justify-content-between" v-if="detail.ptype=='P1'">
         <div class="col-12 col-md-5 ps-4 py-1">
-          <span class="fw-bold">สิ้นค้า:</span>&nbsp;<span class="fst-normal">{{
+          <span class="fw-bold">สินค้า:</span>&nbsp;<span class="fst-normal">{{
             detail.type_desc
           }}</span>
         </div>
-        <div class="col-12 col-md-5 ps-4 py-1">
-          <span class="fw-bold">รุ่น:</span>&nbsp;<span class="fst-normal">{{
+        <div class="col-12 col-md-5 ps-4 py-1" >
+          <span class="fw-bold">รุ่น:</span>&nbsp;<span class="fst-normal" >{{
             detail.pno
           }}</span>
         </div>
       </div>
-      <div class="row d-flex justify-content-between">
+      <div class="row d-flex justify-content-between" v-if="detail.ptype=='P1'">
         <div class="col-12 ps-4 py-1">
           <span class="fw-bold">หมายเลขเครื่อง:</span>&nbsp;<span class="fst-normal">{{
             detail.sv_sn
@@ -107,6 +107,10 @@
               <li v-if="detail.flag_takeback == 1">4.นำอุปกรณ์กลับศูนย์บริการ</li>
             </ul>
           </span>
+          <div v-if="detail.ptype=='P3'" class="px-3  w-100">
+            บำรุงรักษาตามสัญญาโครงการ<br/>
+            <br/>
+          </div>
         </div>
       </div>
       <div class="row d-flex justify-content-between">
@@ -181,10 +185,10 @@
         </div>
       </div>
       <div class="row d-flex justify-content-center">
-        <div class="col-12 ps-4 py-1 " v-if="docs.length">
+        <div class="col-12 ps-4 py-1 " >
           <span class="fw-bold"><u>พนักงานผู้รับผิดชอบ</u></span>
         </div>
-        <div class="col-12   py-1" v-if="tags.length">
+        <div class="col-12   py-1" >
           <ul class="mx-2">
             <li v-for=" e in Array.from(new Set([detail.thiname1, detail.thiname2, detail.thiname3]))
               .filter((it, i) => it)">{{ e }}</li>

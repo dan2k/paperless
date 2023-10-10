@@ -217,18 +217,22 @@
                 ><span class="fw-light">{{ i.sv_date }} {{ i.sv_time }}</span>
               </div>
               <div class="col-sm-12 col-md-5">
-                <span class="fw-semibold">วันที่รับแล้วเสร็จ:&nbsp;</span
+                <span class="fw-semibold">วันที่แล้วเสร็จ:&nbsp;</span
                 ><span class="fw-light">{{ i.sv_solve_date }} {{ i.sv_solve_time }}</span>
               </div>
-              <div class="col-sm-12 col-md-5">
+              <div class="col-sm-12 col-md-5" v-if="i.sv_approve_flag==1">
+                <span class="fw-semibold">ชื่อลูกค้า:&nbsp;</span
+                ><span class="fw-light">{{ i.th_fullname }} </span>
+              </div>
+              <div class="col-sm-12 col-md-5" >
                 <span class="fw-semibold">ผู้รับผิดชอบ:&nbsp;</span
                 ><span class="fw-light">{{ i.thiname }} </span>
               </div>
               <div class="col-sm-12 col-md-5">
                 <span class="fw-semibold">สถานะ:&nbsp;</span
                 >
-                <span class="fw-light" v-if="i.problem_type=='P1'">{{ i.status_id<8?'กำลังดำเนินการ':'อนุมัติแล้ว' }} </span>
-                <span class="fw-light" v-if="i.problem_type=='P3'">{{ i.status_id<2?'กำลังดำเนินการ':'อนุมัติแล้ว' }} </span>
+                <span class="fw-light" v-if="i.problem_type=='P1'">{{ i.status_id<8?'รอการอนุมัติ':'อนุมัติแล้ว' }} </span>
+                <span class="fw-light" v-if="i.problem_type=='P3'">{{ i.status_id<2?'รอการอนุมัติ':'อนุมัติแล้ว' }} </span>
               </div>
               <div v-if="i.sv_approve_flag==1" class="col-sm-12 col-md-5">
                 <span class="fw-semibold">Verify:&nbsp;</span
