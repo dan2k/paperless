@@ -21,8 +21,8 @@
                 <div>
                   <span :class="{'text-danger':(type==1&&d.rpm!=d.pm)}">{{ d.desc }}</span>
                    <ul v-if="type==1">
-                      <li class="text-success">จำนวนที่เปิด {{ d.rpm }} รายการ</li>
-                      <li class="text-primary">จำนวนที่ต้องเปิดทั้งหมด {{ d.pm }} รายการ</li>
+                      <li class="text-success">จำนวนสัญญาที่เปิด {{ d.rpm }} รายการ</li>
+                      <li class="text-primary">จำนวนสัญญาที่ต้องเปิดทั้งหมด {{ d.pm }} รายการ</li>
                    </ul>
                   <span v-if="(d.co>0 && type==0) || (type==1 && d.rpm>0)" class="float-end">
                     <button
