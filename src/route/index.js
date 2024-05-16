@@ -32,7 +32,7 @@ const routes = [
 		component: () => import("../views/error.vue"),
 	},
 	{
-		path: "/qrcode",
+		path: "/qrcode/:jobid",
 		name: "qrcode",
 		component: () => import("../views/qrcode.vue"),
 	},
