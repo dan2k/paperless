@@ -20,6 +20,7 @@
     "qrcode-vue3": "^1.4.17",
     "secure-ls": "^1.2.6",
     "vue": "^3.2.45",
+    "vue-qrcode-reader": "^5.5.4",
     "vue-router": "^4.1.6",
     "vue-sweetalert2": "^5.0.5",
     "vue3-easy-data-table": "^1.5.31"

@@ -17,7 +17,6 @@ import "@/assets/js/all.min";
 const app=createApp(App)
 app.config.devtools = true;
 app.use(VueSweetalert2);
-
 window.Swal =  app.config.globalProperties.$swal;
 app.use(storePlugin)
 app.use(router)

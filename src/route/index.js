@@ -32,6 +32,11 @@ const routes = [
 		component: () => import("../views/error.vue"),
 	},
 	{
+		path: "/qrcode",
+		name: "qrcode",
+		component: () => import("../views/qrcode.vue"),
+	},
+	{
 		path: "/",
 		name: "home",
 		component: () => import("../views/home.vue"),
@@ -77,6 +82,12 @@ const routes = [
 		path:"/svpc/:jobid",
 		name:'svpc',
 		component: () => import("../views/sv_detailPC.vue"),
+		beforeEnter: beforeEnter,
+	},
+	{
+		path:"/svpc-dev/:jobid",
+		name:'svpc-dev',
+		component: () => import("../views/sv_detailPC-dev.vue"),
 		beforeEnter: beforeEnter,
 	},
 	
