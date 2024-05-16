@@ -117,8 +117,10 @@
   import { ref, onMounted, onUnmounted,nextTick } from 'vue';
   import { QrcodeStream } from 'vue-qrcode-reader';
   import { api, errAlert, okAlert, start, close } from "@/helpers";
-  import { useAuthStore } from "@/store";
-  const authStore = useAuthStore();
+  // import { useAuthStore } from "@/store";
+  import { useService } from "./service.js";
+  const {authStore,appStore,route,gotoCdg} = useService();
+  // const authStore = useAuthStore();
   const empid = authStore.userData.ses_empid;
   const result=ref('')
   const error=ref('')
@@ -214,7 +216,7 @@
   }
 
   const onDetect= async (detectedCodes)=> {
-    jobid.value='RG066701889';
+    jobid.value=route.params.jobid
     result.value = JSON.stringify(
       detectedCodes.map(code => code.rawValue)  
     )
@@ -229,15 +231,19 @@
       return ;
     }
     let txID=tmp[1];
+    start()
     try{
       let rs= await api.get(`/paperless/v1/getShare/${txID}`);
+      
       if(rs.data?.pid == null || rs.data?.birthdate == null || rs.data?.name ==null){
         error.value='กรุณาแชร์ข้อมูลให้ครบดังนี้ <ul><li>เลขประจำตัวประชาชน</li><li>วัน/เดือน/ปีเกิด</li><li>ชื่อ-นามสกุล ภาษาไทย</li></ul>';
+        close();
         return;
       }
       //create and get consent with get txID
       //`/paperless/v1/consent/${pid}`
       let rs2=await api.post(`paperless/v1/consent/${rs.data.pid}/${jobid.value}`);
+      close();
       let txID2=rs2.data.data.txID; 
       //
       isSatisfy.value=true;
@@ -250,6 +256,7 @@
     }catch(err){
       console.error('There was a problem with your Axios request:', err);
       error.value=err.response.data.message
+      close();
 			return ;
     }
   }
@@ -258,28 +265,38 @@
       return  
     }
     //ต้องตรวจสอบ consent status  ต้องเป็น APPROVED  ถ้ายังไม่ approve จะยังไม่ให้ทำรายการต่อ
+    start();
     try{
       let rs=await api.get(`paperless/v1/consent/${data.value.txID}`);
       if(rs.data.data.status==='DISAPPROVED'){
         error.value="คำขออนุมัติได้ถูกยกเลิกแล้ว"
+        close();
         return;
       }
       if(rs.data.data.status!=='APPROVED'){
         error.value="รอการอนุมัติจากเจ้าหน้าที่"
+        close();
         return;
       }
-      let rs2=api.post(`/paperless/v1/approve/${jobid.value}/${satisfaction.value}/${empid}/${data.value.pid}/${data.value.name}/${data.value.dob}/${data.value.txID}/${rs.data.data.CreateDate}/${rs.data.data.UpdatedDate}`)
+      let rs2=await api.post(`/paperless/v1/approve/${jobid.value}/${satisfaction.value}/${empid}/${data.value.pid}/${data.value.name}/${data.value.dob}/${data.value.txID}/${rs.data.data.CreateDate}/${rs.data.data.UpdatedDate}`)
       console.log(rs2);
+      await Swal({
+          html: `${data.value.name} <br/> อนุมัติรายการเรียบร้อยแล้ว`,
+          icon: 'success',
+          confirmButtonText: 'ตกลง'
+      })
+      gotoCdg()
     }catch(err){
       console.error('There was a problem with your Axios request:', err);
       // error.value=err.response.data.message
       error.value="There was a problem with your Axios request";
+      close();
     }
     console.log(data.value)
 
   }
   onMounted(async () => {
-    
+    appStore.title="อนุมัติการให้บริการ";
   });
   onUnmounted(() => {
   
