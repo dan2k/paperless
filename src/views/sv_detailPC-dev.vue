@@ -199,7 +199,7 @@
 
     <div class="row">
       <div class="col-12 col-md-4 mx-auto text-center">
-        <button class="btn btn-primary btn-sm me-1" @click="approve()">อนุมัติ</button>
+        <button class="btn btn-primary btn-sm me-1" @click="approve2()">อนุมัติ</button>
         <button class="btn btn-primary btn-sm me-1" @click="open(detail.sv_no)">
           พิมพ์
         </button>
@@ -219,12 +219,12 @@ const {
   docs,
   doc2s,
   open,
-  approve,
-  initDetail,
+  approve2,
+  initDetail2,
   gotoCdg,
 } = useService();
 onMounted(async () => {
-  await initDetail();
+  await initDetail2();
 });
 </script>
 <style>

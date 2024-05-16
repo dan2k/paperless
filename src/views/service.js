@@ -200,6 +200,19 @@ export const useService = () => {
       gotoImauth(route.params.jobid, satisfaction, uri);
     }
   };
+  const approve2 = async () => {
+    let jobid=route.params.jobid
+    // console.log(jobid);
+    router.push({
+      path: `/qrcode/${jobid}`,
+      query: {
+        type: route.query.type,
+        ptype: route.query.ptype,
+        pv: route.query.pv,
+        pcode: route.query.pcode,
+      },
+    });
+  };
   const gotoCdg = () => {
     router.push({
       path: `/cdg`,
@@ -239,6 +252,14 @@ export const useService = () => {
       });
       return;
     }
+    let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
+    detail.value = data[0];
+    tags.value = tag;
+    docs.value = doc;
+    doc2s.value = doc2;
+  };
+  const initDetail2 = async () => {
+    appStore.title = "รายละเอียด";
     let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
     detail.value = data[0];
     tags.value = tag;
@@ -328,8 +349,10 @@ export const useService = () => {
     getJobDetail,
     open,
     approve,
+    approve2,
     gotoCdg,
     initDetail,
+    initDetail2,
     initPdf,
   };
 };
