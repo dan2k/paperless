@@ -68,7 +68,7 @@
             </qrcode-stream>
           </div>
           <div class="col-12">
-            <div class="alert alert-primary my-0 text-center" v-if="result">{{ result }}</div>
+            <!-- <div class="alert alert-primary my-0 text-center" v-if="result">{{ result }}</div> -->
             <div class="alert alert-success my-0" v-if="isSatisfy">
               <h5 class="text-center text-primary">*ประเมินความพึงพอใจ*</h5>
               <hr/>
@@ -116,8 +116,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted,nextTick } from 'vue';
   import { QrcodeStream } from 'vue-qrcode-reader';
-  import { api, errAlert, okAlert, start, close } from "@/helpers";
-  // import { useAuthStore } from "@/store";
+  import { api,  start, close } from "@/helpers";
   import { useService } from "./service.js";
   const {authStore,appStore,route,gotoCdg} = useService();
   // const authStore = useAuthStore();
