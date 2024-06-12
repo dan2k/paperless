@@ -1,7 +1,7 @@
 <template>
     <h5 class="text-center">รายงานการบำรุงรักษาระบบคอมพิวเตอร์</h5>
     <div class="container alert alert-info">
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label m-0">โครงการ:</label>
             <select class="form-select form-select-sm m-0" 
                 v-model="contractno"
@@ -37,14 +37,19 @@
     <router-view :contractno="contractno" :year="year" :month="month"></router-view>
 </template>
 <script setup>
-import {ref} from "vue"
+import {ref,onMounted} from "vue"
 import { useRouter,useRoute } from 'vue-router';
+import { useReport } from "./report.js"
 const contractno=ref(null);
 const month=ref(null)
 const year=ref(null)
 const router=useRouter()
+const {appStore}=useReport()
 const change=()=>{
     if(!contractno.value||!year.value|| !month.value) return;
     router.push({name:'report-main'})
 }
+onMounted(()=>{
+    appStore.setTitle("รายงานการบำรุงรักษาระบบคอมพิวเตอร์")
+})
 </script>
