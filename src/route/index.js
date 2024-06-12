@@ -109,6 +109,20 @@ const routes = [
 		component: () => import("../views/login.vue"),
 		// beforeEnter: beforeEnter,
 	},
+	{
+		path: "/report",
+		name: "report",
+		component: () => import("../views/report/index.vue"),
+		beforeEnter: beforeEnter,
+		children:[
+			{
+				path: 'main',
+				name:'report-main',
+				component: ()=>import("@/views/report/main.vue"),
+				beforeEnter: beforeEnter,
+			},
+		],
+	},
 	
 ]
 const router = createRouter({
