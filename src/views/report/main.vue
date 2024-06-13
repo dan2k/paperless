@@ -13,7 +13,11 @@
             <tbody v-if="!isHide">
                 <tr v-for="(equip,index) in equips.data" :key="index" >
                     <td align="center" valign="middle">{{ index+1 }}</td>
-                    <td>{{ equip.rg_desc }}</td>
+                    <td
+                        @click="gotoPcs(equip.rg)"
+                    >
+                        {{ equip.rg_desc }}
+                    </td>
                     <td v-for="cat in equips.cats" :key="cat.cat_id" align="center" valign="middle">
                         {{ equip[cat.cat_id]|0 }}
                     </td>
@@ -47,9 +51,12 @@ const props = defineProps({
         required: true 
       },
 });
-const {regions,getEquip,reportStore}=useReport()
+const {regions,getEquip,reportStore,router}=useReport()
 const equips=ref([]);
 const isHide=ref(true);
+const gotoPcs=(rg)=>{
+    router.push({path:`/report/pcs/${rg}`})
+}
 onMounted(async()=>{
     console.log(1)
     reportStore.isLoading=true;

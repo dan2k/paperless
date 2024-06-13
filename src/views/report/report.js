@@ -1,4 +1,4 @@
-import {useService} from "../service"
+import {useService,router} from "../service"
 import { useReportStore } from "@/store";
 import {api,start,close,errAlert} from '@/helpers'
 import {ref} from "vue";
@@ -36,6 +36,7 @@ export const useReport=()=>{
         appStore,
         regions,
         reportStore,
+        router,
         getContract,
         getEquip,
     }
