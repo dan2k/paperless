@@ -119,10 +119,16 @@ const routes = [
 				path: 'main/:time',
 				name:'report-main',
 				component: ()=>import("@/views/report/main.vue"),
-				beforeEnter: beforeEnter,
+				// beforeEnter: beforeEnter,
 				meta: {
 					watchParam: 'time',
 				  }
+			},
+			{
+				path: 'pcs/:rg',
+				name:'report-pcs',
+				component: ()=>import("@/views/report/pcs.vue"),
+				// beforeEnter: beforeEnter,
 			},
 		],
 	},
