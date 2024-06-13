@@ -18,3 +18,4 @@ export const plugin = (app) => {
 }
 export * from "./auth"
 export * from "./app"
+export * from "./report"

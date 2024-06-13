@@ -1,8 +1,10 @@
 import {useService} from "../service"
+import { useReportStore } from "@/store";
 import {api,start,close,errAlert} from '@/helpers'
 import {ref} from "vue";
 export const useReport=()=>{
-    const{authStore,appStore}=useService()
+    const {authStore,appStore}=useService()
+    const reportStore=useReportStore()
     const regions=ref([
         {rgid:1,rg_desc:"ศูนย์บริหารการทะเบียนภาค 1"},
         {rgid:2,rg_desc:"ศูนย์บริหารการทะเบียนภาค 2"},
@@ -33,6 +35,7 @@ export const useReport=()=>{
     return {
         appStore,
         regions,
+        reportStore,
         getContract,
         getEquip,
     }

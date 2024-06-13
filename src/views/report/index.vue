@@ -6,6 +6,7 @@
             <select class="form-select form-select-sm m-0" 
                 v-model="contractno"
                 @change="change"
+                :disabled="reportStore.isLoading"
             >
                 <option 
                     v-for="con in contractnos" :key="con.contract_no"
@@ -20,6 +21,7 @@
                 <select class="form-select form-select-sm" 
                         v-model="year"
                         @change="change"
+                        :disabled="reportStore.isLoading"
                 >
                     <option v-for="y in years" :key="y.id" :value="y.text">{{ y.text }}</option>
                     
@@ -30,6 +32,7 @@
                 <select class="form-select form-select-sm" 
                     v-model="month"
                     @change="change"
+                    :disabled="reportStore.isLoading"
                 >
                     <option v-for="m in months" :key="m.id" :value="m.text">{{ m.text }}</option>
                 </select>
@@ -65,7 +68,7 @@ const months=ref([
 const month=ref(null)
 const year=ref(null)
 const router=useRouter()
-const {appStore,getContract}=useReport()
+const {appStore,getContract,reportStore}=useReport()
 const change=()=>{
     if(!contractno.value||!year.value|| !month.value) return;
     console.log('yes')
@@ -74,6 +77,8 @@ const change=()=>{
 onMounted(async ()=>{
     appStore.setTitle("รายงานการบำรุงรักษาระบบคอมพิวเตอร์")
     contractnos.value=await getContract()
+    reportStore.isLoading=false;
+    console.log('isLoading',reportStore.isLoading)
     // console.log(contractnos.value);
 })
 </script>

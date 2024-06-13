@@ -47,13 +47,15 @@ const props = defineProps({
         required: true 
       },
 });
-const {regions,getEquip}=useReport()
+const {regions,getEquip,reportStore}=useReport()
 const equips=ref([]);
 const isHide=ref(true);
 onMounted(async()=>{
     console.log(1)
+    reportStore.isLoading=true;
     equips.value=await getEquip(props.contractno)
     isHide.value=false
+    reportStore.isLoading=false;
     console.log({equips})
 })
 
