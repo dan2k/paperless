@@ -130,6 +130,12 @@ const routes = [
 				component: ()=>import("@/views/report/pcs.vue"),
 				// beforeEnter: beforeEnter,
 			},
+			{
+				path: 'dcs/:rg/:pv',
+				name:'report-dcs',
+				component: ()=>import("@/views/report/dcs.vue"),
+				// beforeEnter: beforeEnter,
+			},
 		],
 	},
 	
