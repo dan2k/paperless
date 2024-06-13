@@ -1,9 +1,9 @@
-import {useService,router} from "../service"
+import {useService} from "../service"
 import { useReportStore } from "@/store";
 import {api,start,close,errAlert} from '@/helpers'
 import {ref} from "vue";
 export const useReport=()=>{
-    const {authStore,appStore}=useService()
+    const {authStore,appStore,router,route}=useService()
     const reportStore=useReportStore()
     const regions=ref([
         {rgid:1,rg_desc:"ศูนย์บริหารการทะเบียนภาค 1"},
@@ -24,9 +24,11 @@ export const useReport=()=>{
             errAlert(e)
         }
     }
-    const getEquip=async (contractno)=>{
+    const getEquip=async (contractno,level,pageLevel,rg,pv)=>{
         try{
-            let rs = await api.get(`/paperless/report/v1/getEquip/${contractno}`)
+            let url=`/paperless/report/v1/getEquip/${contractno}/${level}/${pageLevel}/${rg}/${pv}`
+            console.log({url})
+            let rs = await api.get(url)
             return rs.data
         }catch(e){
             errAlert(e)
@@ -34,9 +36,11 @@ export const useReport=()=>{
     }
     return {
         appStore,
+        authStore,
         regions,
         reportStore,
         router,
+        route,
         getContract,
         getEquip,
     }

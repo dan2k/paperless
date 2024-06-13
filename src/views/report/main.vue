@@ -16,7 +16,7 @@
                     <td
                         @click="gotoPcs(equip.rg)"
                     >
-                        {{ equip.rg_desc }}
+                        <span class="btn btn-link link">{{ equip.rg_desc }}</span>
                     </td>
                     <td v-for="cat in equips.cats" :key="cat.cat_id" align="center" valign="middle">
                         {{ equip[cat.cat_id]|0 }}
@@ -32,6 +32,10 @@
 <style scoped>
     .tbrep{
         font-size:12px;
+    }
+    .link{
+        cursor:pointer;
+        font-size:12px !important;
     }
 </style>
 <script setup>
@@ -51,7 +55,7 @@ const props = defineProps({
         required: true 
       },
 });
-const {regions,getEquip,reportStore,router}=useReport()
+const {regions,getEquip,reportStore,router,authStore}=useReport()
 const equips=ref([]);
 const isHide=ref(true);
 const gotoPcs=(rg)=>{
@@ -60,7 +64,9 @@ const gotoPcs=(rg)=>{
 onMounted(async()=>{
     console.log(1)
     reportStore.isLoading=true;
-    equips.value=await getEquip(props.contractno)
+    let level=authStore.userData.sur_level;
+    let pageLevel=1
+    equips.value=await getEquip(props.contractno,level,pageLevel,0,0)
     isHide.value=false
     reportStore.isLoading=false;
     console.log({equips})
