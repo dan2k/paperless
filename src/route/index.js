@@ -116,10 +116,13 @@ const routes = [
 		beforeEnter: beforeEnter,
 		children:[
 			{
-				path: 'main',
+				path: 'main/:time',
 				name:'report-main',
 				component: ()=>import("@/views/report/main.vue"),
 				beforeEnter: beforeEnter,
+				meta: {
+					watchParam: 'time',
+				  }
 			},
 		],
 	},

@@ -36,7 +36,8 @@
             </div>  
         </div>
     </div>
-    <router-view :contractno="contractno" :year="year" :month="month"></router-view>
+    <router-view :contractno="contractno" :year="year" :month="month" :key="$route.params[$route.meta.watchParam]"></router-view>
+    <!-- key="$route.fullPath" -->
 </template>
 <script setup>
 import {ref,onMounted} from "vue"
@@ -67,7 +68,8 @@ const router=useRouter()
 const {appStore,getContract}=useReport()
 const change=()=>{
     if(!contractno.value||!year.value|| !month.value) return;
-    router.push({name:'report-main'})
+    console.log('yes')
+    router.push({path:'/report/main/'+Date.now()})
 }
 onMounted(async ()=>{
     appStore.setTitle("รายงานการบำรุงรักษาระบบคอมพิวเตอร์")

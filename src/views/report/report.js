@@ -22,9 +22,19 @@ export const useReport=()=>{
             errAlert(e)
         }
     }
+    const getEquip=async (contractno)=>{
+        try{
+            let rs = await api.get(`/paperless/report/v1/getEquip/${contractno}`)
+            return rs.data
+        }catch(e){
+            errAlert(e)
+        }
+    }
     return {
         appStore,
         regions,
         getContract,
+        getEquip,
     }
+    
 }
