@@ -1,6 +1,6 @@
 <template>
     <!-- <h5 class="text-center">รายงานการบำรุงรักษาระบบคอมพิวเตอร์</h5> -->
-    <div class="container-fulid alert alert-info">
+    <div class="container-fulid alert alert-info main">
         <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label m-0">โครงการ:</label>
             <select class="form-select form-select-sm m-0" 
@@ -8,6 +8,7 @@
                 @change="change"
                 :disabled="reportStore.isLoading"
             >
+                <option value="">-- เลือกโครงการ--</option>
                 <option 
                     v-for="con in contractnos" :key="con.contract_no"
                     :value="con.contract_no"
@@ -17,23 +18,25 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <label for="exampleInputEmail1" class="form-label m-0">ปี:</label>
+                <label for="exampleInputEmail1" class="form-label mt-1">ปี:</label>
                 <select class="form-select form-select-sm" 
                         v-model="year"
                         @change="change"
                         :disabled="reportStore.isLoading"
                 >
+                <option value="">-- ปี --</option>
                     <option v-for="y in years" :key="y.id" :value="y.text">{{ y.text }}</option>
                     
                 </select>
             </div>
             <div class="col-md-3">
-                <label for="exampleInputEmail1" class="form-label m-0">เดือน:</label>
+                <label for="exampleInputEmail1" class="form-label mt-1">เดือน:</label>
                 <select class="form-select form-select-sm" 
                     v-model="month"
                     @change="change"
                     :disabled="reportStore.isLoading"
                 >
+                <option value="">-- เลือกเดือน--</option>
                     <option v-for="m in months" :key="m.id" :value="m.text">{{ m.text }}</option>
                 </select>
             </div>  
@@ -42,12 +45,23 @@
     <router-view :contractno="contractno" :year="year" :month="month" :key="$route.params[$route.meta.watchParam]"></router-view>
     <!-- key="$route.fullPath" -->
 </template>
+<style scoped>
+    .main{
+        font-size:12px;
+    }
+    input{
+        font-size:12px !important;
+    }
+    label{
+        font-weight:bold !important;
+    }
+</style>
 <script setup>
 import {ref,onMounted} from "vue"
 import { useRouter,useRoute } from 'vue-router';
 import { useReport } from "./report.js"
 const contractnos=ref([]);
-const contractno=ref(null);
+const contractno=ref("");
 const years=ref([
     {id:'2024',text:'2567'}
 ]);
@@ -65,8 +79,8 @@ const months=ref([
     {id:'11',text:'พฤศจิกายน'},
     {id:'12',text:'ธันวาคม'},
 ])
-const month=ref(null)
-const year=ref(null)
+const month=ref("")
+const year=ref("")
 const router=useRouter()
 const {appStore,getContract,reportStore}=useReport()
 const change=()=>{
