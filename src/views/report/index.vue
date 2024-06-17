@@ -1,6 +1,6 @@
 <template>
     <!-- <h5 class="text-center">รายงานการบำรุงรักษาระบบคอมพิวเตอร์</h5> -->
-    <div class="container-fulid alert alert-info main">
+    <div class="container-fulid alert bg-info bg-gradient text-white main">
         <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label m-0">โครงการ:</label>
             <select class="form-select form-select-sm m-0" 
@@ -16,7 +16,7 @@
                 
             </select>
         </div>
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-md-3">
                 <label for="exampleInputEmail1" class="form-label mt-1">ปี:</label>
                 <select class="form-select form-select-sm" 
@@ -49,7 +49,7 @@
     .main{
         font-size:12px;
     }
-    input{
+    select{
         font-size:12px !important;
     }
     label{

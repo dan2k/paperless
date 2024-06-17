@@ -1,7 +1,7 @@
 <template>
     <div class="container-fuld mx-0">
-        <div class="float-start fw-bold" style="cursor:pointer" @click="back()" v-if="!isHide"><span><i class="fa-solid fa-left-long"></i></span></div>
-        <div class="float-end fw-bold" v-if="!isHide">หน่วยงาน: <span>ศูนย์บริหารการทะเบียนภาค {{rg}}</span></div>
+        <div class="float-start fw-bold" style="cursor:pointer" @click="back(rg)" v-if="!isHide"><span><i class="fa-solid fa-left-long"></i></span></div>
+        <div class="float-end fw-bold" v-if="!isHide">หน่วยงาน: <span>{{pv_desc}}</span></div>
         <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">
             <thead class="bg-info bg-gradient text-white">
                 <tr>
@@ -16,9 +16,8 @@
                 <tr v-for="(equip,index) in equips.data" :key="index" >
                     <td align="center" valign="middle">{{ index+1 }}</td>
                     <td
-                        @click="gotoDcs(equip.rg,equip.rg_desc)"
                     >
-                        <span class="btn btn-link link">{{ equip.rg_desc }}</span>
+                        {{ equip.rg_desc }}
                     </td>
                     <td v-for="cat in equips.cats" :key="cat.cat_id" align="center" valign="middle">
                         {{ equip[cat.cat_id]|0 }}
@@ -61,17 +60,16 @@ const {getEquip,reportStore,router,route,authStore}=useReport()
 const equips=ref([]);
 const isHide=ref(true);
 const rg=route.params.rg;
-const gotoDcs=(pv,pv_desc)=>{
-    router.push({path:`/report/dcs/${rg}/${pv}/${pv_desc}`})
-}
-const back=()=>{
-    router.push({path:`/report/main/`+Date.now()})
+const pv=route.params.pv;
+const pv_desc=route.params.pv_desc;
+const back=(rg)=>{
+    router.push({path:`/report/pcs/${rg}`});
 }
  onMounted(async()=>{
     reportStore.isLoading=true;
     let level=authStore.userData.sur_level;
-    let pageLevel=2
-    equips.value=await getEquip(props.contractno,level,pageLevel,rg,0)
+    let pageLevel=3
+    equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
     isHide.value=false
     reportStore.isLoading=false;
     console.log({equips})

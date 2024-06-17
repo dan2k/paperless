@@ -131,7 +131,7 @@ const routes = [
 				// beforeEnter: beforeEnter,
 			},
 			{
-				path: 'dcs/:rg/:pv',
+				path: 'dcs/:rg/:pv/:pv_desc',
 				name:'report-dcs',
 				component: ()=>import("@/views/report/dcs.vue"),
 				// beforeEnter: beforeEnter,

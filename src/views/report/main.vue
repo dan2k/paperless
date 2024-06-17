@@ -1,7 +1,7 @@
 <template>
-    <div class="container-fuld mx-2">
+    <div class="container-fuld mx-0">
         <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">
-            <thead>
+            <thead class="bg-info bg-gradient text-white">
                 <tr>
                     <th width="3%" class="text-center">ลำดับ</th>
                     <th width="10%">หน่วยงาน</th>
