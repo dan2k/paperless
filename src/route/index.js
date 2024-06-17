@@ -136,6 +136,12 @@ const routes = [
 				component: ()=>import("@/views/report/dcs.vue"),
 				// beforeEnter: beforeEnter,
 			},
+			{
+				path: 'docrg/:rg',
+				name:'report-docrg',
+				component: ()=>import("@/views/report/docrg.vue"),
+				// beforeEnter: beforeEnter,
+			},
 		],
 	},
 	
