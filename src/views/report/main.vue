@@ -1,6 +1,6 @@
 <template>
-    <div class="container-fuld mx-0">
-        <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">
+    <div class="container-fluid mx-0 px-0">
+        <table class="table table-bordered tbrep bg-white mx-auto " v-if="!isHide">
             <thead class="bg-info bg-gradient text-white">
                 <tr>
                     <th width="3%" class="text-center">ลำดับ</th>

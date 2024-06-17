@@ -16,6 +16,23 @@ export const useReport=()=>{
         {rgid:8,rg_desc:"ศูนย์บริหารการทะเบียนภาค 8"},
         {rgid:9,rg_desc:"ศูนย์บริหารการทะเบียนภาค 9"},
     ])
+    const years=ref([
+        {id:'2024',text:'2567'}
+    ]);
+    const months=ref([
+        {id:'01',text:'มกราคม'},
+        {id:'02',text:'กุมภาพันธ์'},
+        {id:'03',text:'มีนาคม'},
+        {id:'04',text:'เมษายน'},
+        {id:'05',text:'พฤษภาคม'},
+        {id:'06',text:'มิถุนายน'},
+        {id:'07',text:'กรกฏาคม'},
+        {id:'08',text:'สิงหาคม'},
+        {id:'09',text:'กันยายน'},
+        {id:'10',text:'ตุลาคม'},
+        {id:'11',text:'พฤศจิกายน'},
+        {id:'12',text:'ธันวาคม'},
+    ])
     const getContract=async ()=>{
         try{
             let rs=await api.get(`/paperless/report/v1/getContract`)
@@ -41,6 +58,8 @@ export const useReport=()=>{
         reportStore,
         router,
         route,
+        months,
+        years,
         getContract,
         getEquip,
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fuld mx-0">
+    <div class="container-fluid mx-0 px-0">
         <div class="float-start fw-bold" style="cursor:pointer" @click="back(rg)" v-if="!isHide"><span><i class="fa-solid fa-left-long"></i></span></div>
         <div class="float-end fw-bold" v-if="!isHide">หน่วยงาน: <span>{{pv_desc}}</span></div>
         <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">

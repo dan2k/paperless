@@ -1,6 +1,6 @@
 <template>
     <!-- <h5 class="text-center">รายงานการบำรุงรักษาระบบคอมพิวเตอร์</h5> -->
-    <div class="container-fulid alert bg-info bg-gradient text-white main">
+    <div class="container-fluid alert bg-info bg-gradient text-white main">
         <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label m-0">โครงการ:</label>
             <select class="form-select form-select-sm m-0" 
@@ -62,27 +62,10 @@ import { useRouter,useRoute } from 'vue-router';
 import { useReport } from "./report.js"
 const contractnos=ref([]);
 const contractno=ref("");
-const years=ref([
-    {id:'2024',text:'2567'}
-]);
-const months=ref([
-    {id:'01',text:'มกราคม'},
-    {id:'02',text:'กุมภาพันธ์'},
-    {id:'03',text:'มีนาคม'},
-    {id:'04',text:'เมษายน'},
-    {id:'05',text:'พฤษภาคม'},
-    {id:'06',text:'มิถุนายน'},
-    {id:'07',text:'กรกฏาคม'},
-    {id:'08',text:'สิงหาคม'},
-    {id:'09',text:'กันยายน'},
-    {id:'10',text:'ตุลาคม'},
-    {id:'11',text:'พฤศจิกายน'},
-    {id:'12',text:'ธันวาคม'},
-])
 const month=ref("")
 const year=ref("")
 const router=useRouter()
-const {appStore,getContract,reportStore}=useReport()
+const {appStore,getContract,reportStore,months,years}=useReport()
 const change=()=>{
     if(!contractno.value||!year.value|| !month.value) return;
     console.log('yes')
