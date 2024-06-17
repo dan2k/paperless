@@ -22,7 +22,7 @@
                         {{ equip[cat.cat_id]|0 }}
                     </td>
                     <td></td>
-                    <td align="center" valign="middle"><i class="fa-solid fa-print"></i></td>
+                    <td align="center" valign="middle"><span style="cursor:pointer;" @click="openDocRg(equip.rg)"><i class="fa-solid fa-print"></i></span></td>
                 </tr>
             </tbody>
         </table>    
@@ -71,5 +71,7 @@ onMounted(async()=>{
     reportStore.isLoading=false;
     console.log({equips})
 })
-
+const openDocRg=(rg)=>{
+    router.push({path:`/report/docrg/${rg}`});
+}
 </script>

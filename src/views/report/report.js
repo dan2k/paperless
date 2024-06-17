@@ -11,7 +11,7 @@ export const useReport=()=>{
         {rgid:3,rg_desc:"ศูนย์บริหารการทะเบียนภาค 3"},
         {rgid:4,rg_desc:"ศูนย์บริหารการทะเบียนภาค 4"},
         {rgid:5,rg_desc:"ศูนย์บริหารการทะเบียนภาค 5"},
-        {rgid:5,rg_desc:"ศูนย์บริหารการทะเบียนภาค 6"},
+        {rgid:6,rg_desc:"ศูนย์บริหารการทะเบียนภาค 6"},
         {rgid:7,rg_desc:"ศูนย์บริหารการทะเบียนภาค 7"},
         {rgid:8,rg_desc:"ศูนย์บริหารการทะเบียนภาค 8"},
         {rgid:9,rg_desc:"ศูนย์บริหารการทะเบียนภาค 9"},
@@ -51,6 +51,16 @@ export const useReport=()=>{
             errAlert(e)
         }
     }
+    const getDoc=async (contractno,rg)=>{
+        try{
+            let url=`/paperless/report/v1/getDoc/${contractno}/${rg}`
+            let rs = await api.get(url)
+            return rs.data.data
+        }catch(e){
+            errAlert(e)
+        }
+    }
+    const uuid=ref(0)
     return {
         appStore,
         authStore,
@@ -62,6 +72,7 @@ export const useReport=()=>{
         years,
         getContract,
         getEquip,
+        getDoc,
     }
     
 }

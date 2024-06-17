@@ -1,41 +1,147 @@
 <template>
-    <div class="container-fluid mx-0 px-0">
-        <div class="float-start fw-bold" v-if="!isHide">ชื่อหน่วยงาน: <span>{{pv_desc}}</span></div>
-        <div class="float-end fw-bold" v-if="!isHide">เดือน{{ mmTh.text }} <span>ปี {{yyTh.text}}</span></div>
+  <div class="container-fluid mx-0 px-0">
+    <div class="float-start fw-bold" style="cursor:pointer" @click="back()" v-if="!isHide"><span><i class="fa-solid fa-left-long"></i>&nbsp;&nbsp;</span></div>
+    <div class="float-start fw-bold " v-if="!isHide">
+      ชื่อหน่วยงาน: <span>{{ rg_desc?.rg_desc }}</span>
+    </div>
+    <div class="float-end fw-bold" v-if="!isHide">
+      เดือน{{ mmTh?.text }} <span>ปี {{ yyTh?.text }}</span>
+    </div>
+    <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">
+      <thead class="fw-bold bg-info bg-gradient text-white">
+        <tr>
+          <th width="3%" class="text-center">ลำดับ</th>
+          <th width="40%">รายละเอียด</th>
+          <th width="20%" class="text-center">เกณฑ์ที่กำหนด</th>
+          <th width="20%" class="text-center" colspan="2">การปฏิบัติ</th>
+          <th width="17%" class="text-center">หมายเหตุ</th>
+        </tr>
+      </thead>
+      <tbody v-for="(doc, index) in docs" :key="index">
+        <tr>
+          <td>{{ index + 1 }}</td>
+          <td class="fw-bold">{{ doc.ned_name_display }} <span v-if="doc.brand">ยี่ห้อ {{ doc.brand }}</span> <span v-if="doc.serie">รุ่น {{ doc.serie }}</span></td>
+          <td class="fw-bold">ทั้งหมด {{ doc.vo }} ชุด</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
         
-    </div >
+        <tr>
+          <td></td>
+          <td>- ตรวจสอบสภาพเครื่อง</td>
+          <td>เครื่องไม่ชำรุดเสียหาย</td>
+          <td>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" v-model="doc.opt1" :name="'opt1-'+index" :id="'opt1-'+index+'-'+1" :value="1" :checked="doc.opt1==1">
+                <label class="form-check-label" :for="'opt1-'+index+'-'+1">ไม่ชำรุด</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" v-model="doc.opt1" :name="'opt1-'+index" :id="'opt1-'+index+'-'+2" :value="2" :checked="doc.opt1==2">
+                <label class="form-check-label" :for="'opt1-'+index+'-'+2">ชำรุด</label>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>- ทำความสะอาดตัวเครื่อง</td>
+          <td>ต้องไม่มีฝุ่น</td>
+          <td>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" v-model="doc.opt2" :name="'opt2-'+index" :id="'opt2-'+index+'-'+1" :value="1" :checked="doc.opt2==1">
+                <label class="form-check-label" :for="'opt2-'+index+'-'+1">สะอาด</label>
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" v-model="doc.opt2" :name="'opt2-'+index" :id="'opt2-'+index+'-'+2" :value="2" :checked="doc.opt2==2">
+                <label class="form-check-label" :for="'opt2-'+index+'-'+2">ไม่สะอาด</label>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>- ทดสอบการทำงานของเครื่อง</td>
+          <td>เครื่องสามารถทำงานได้ปกติ</td>
+          <td>
+           <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" v-model="doc.opt3" :name="'opt3-'+index" :id="'opt3-'+index+'-'+1" :value="1" :checked="doc.opt3==1">
+                <label class="form-check-label" :for="'opt3-'+index+'-'+1">ใช้งานได้ปกติ</label>
+            </div>
+           </td>
+          <td>
+          <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" v-model="doc.opt3" :name="'opt3-'+index" :id="'opt3-'+index+'-'+2" :value="2" :checked="doc.opt3==2">
+                <label class="form-check-label" :for="'opt3-'+index+'-'+2">ใช้งานไม่ได้</label>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">
+      กำลังประมวลผล......
+    </div>
+  </div>
 </template>
-<script setup>
-import { ref , defineProps,onMounted} from "vue";
-import { useReport } from "./report.js"
-const props = defineProps({
-      contractno: {
-        type: String,
-        required: true 
-      },
-      month: {
-        type: String,
-        required: true 
-      },
-      year: {
-        type: String,
-        required: true 
-      },
-});
-const {getEquip,reportStore,router,route,authStore,months,years}=useReport()
-const isHide=ref(true);
-const rg=route.params.rg;
-const back=()=>{
-    router.push({path:`/report/main/`+Date.now()});
+<style scoped>
+.tbrep {
+  font-size: 12px;
 }
-const mmTh=ref(null)
-const yyTh=ref(null);
-onMounted(async()=>{
-    mmTh.value=months.filter((it)=>it.id==month)
-    yyTh.value=years.filter((it)=>it.id==year)
-    reportStore.isLoading=true;
-    // equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
-    isHide.value=false
-    reportStore.isLoading=false;
-})
+.link {
+  cursor: pointer;
+  font-size: 12px !important;
+}
+</style>
+<script setup>
+import { ref, defineProps, onMounted } from "vue";
+import { useReport } from "./report.js";
+const props = defineProps({
+  contractno: {
+    type: String,
+    required: true,
+  },
+  month: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: String,
+    required: true,
+  },
+});
+const {
+  regions,
+  getDoc,
+  reportStore,
+  router,
+  route,
+  authStore,
+  months,
+  years,
+} = useReport();
+const isHide = ref(true);
+const docs = ref([]);
+const rg = ref("");
+const rg_desc = ref([]);
+const back = () => {
+  router.push({ path: `/report/main/` + Date.now() });
+};
+const mmTh = ref(null);
+const yyTh = ref(null);
+onMounted(async () => {
+  mmTh.value = months.value.filter((it) => it.id == props.month)[0];
+  yyTh.value = years.value.filter((it) => it.text == props.year)[0];
+  rg.value = route.params.rg;
+  reportStore.isLoading = true;
+  docs.value = await getDoc(props.contractno, rg.value);
+  isHide.value = false;
+  reportStore.isLoading = false;
+  rg_desc.value = regions.value.filter((it) => it.rgid == Number(6))[0];
+});
 </script>

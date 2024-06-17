@@ -37,7 +37,7 @@
                     :disabled="reportStore.isLoading"
                 >
                 <option value="">-- เลือกเดือน--</option>
-                    <option v-for="m in months" :key="m.id" :value="m.text">{{ m.text }}</option>
+                    <option v-for="m in months" :key="m.id" :value="m.id">{{ m.text }}</option>
                 </select>
             </div>  
         </div>
