@@ -89,6 +89,7 @@ export const useReport = () => {
       vertical: "middle",
       horizontal: "center",
     };
+    const lrow = worksheet.lastRow;
     let r = 1;
     data.forEach((it) => {
       let tmp = [];
@@ -100,7 +101,7 @@ export const useReport = () => {
       worksheet.addRow(tmp);
       r++;
     });
-    worksheet.eachRow(function (row, rowNumber) {
+    worksheet.eachRow(async function (row, rowNumber) {
       if (rowNumber > 1) {
         row.height = 30;
       } else {
@@ -108,6 +109,7 @@ export const useReport = () => {
         row.height = 60;
         row.font = { bold: true, color: { argb: "FFFFFFFF" } };
       }
+
       row.eachCell(function (cell, colNumber) {
         cell.border = border;
         cell.alignment = alignment;
@@ -115,12 +117,23 @@ export const useReport = () => {
         if (colNumber > 2 && rowNumber > 1) cell.numFmt = "#,##0";
       });
     });
-    worksheet.getCell("Q1").fill = {
+    // clear สี header ที่เทสีเกินไป 1 column
+    let c = await lrow._cells;
+    let len = c.length;
+    const currentCellReference = await c[len - 1]._address;
+    // แยกตัวอักษรคอลัมน์และเลขแถว
+    const cletter = currentCellReference.match(/[A-Z]+/)[0];
+    const rnumber = parseInt(currentCellReference.match(/\d+/)[0]);
+    // คำนวณ reference ของเซลล์ถัดไป
+    const nextCellReference =String.fromCharCode(cletter.charCodeAt(0) + 1) + "" + rnumber
+    // เข้าถึงเซลล์ถัดไป
+     worksheet.getCell(nextCellReference).fill = {
       type: "pattern",
       pattern: "solid",
       fgColor: { argb: "FFFFFFFF" },
       bgColor: { argb: "FFFFFFFF" },
     };
+
     // สร้างไฟล์ excel
     const buffer = await workbook.xlsx.writeBuffer();
 
