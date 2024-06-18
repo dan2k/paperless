@@ -34,13 +34,13 @@
           <td>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" v-model="doc.opt1" :name="'opt1-'+index" :id="'opt1-'+index+'-'+1" :value="1" :checked="doc.opt1==1">
-                <label class="form-check-label" :for="'opt1-'+index+'-'+1">ไม่ชำรุด</label>
+                <label class="form-check-label pt-1" :for="'opt1-'+index+'-'+1">ไม่ชำรุด</label>
             </div>
           </td>
           <td>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" v-model="doc.opt1" :name="'opt1-'+index" :id="'opt1-'+index+'-'+2" :value="2" :checked="doc.opt1==2">
-                <label class="form-check-label" :for="'opt1-'+index+'-'+2">ชำรุด</label>
+                <label class="form-check-label pt-1" :for="'opt1-'+index+'-'+2">ชำรุด</label>
             </div>
           </td>
           <td></td>
@@ -52,13 +52,13 @@
           <td>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" v-model="doc.opt2" :name="'opt2-'+index" :id="'opt2-'+index+'-'+1" :value="1" :checked="doc.opt2==1">
-                <label class="form-check-label" :for="'opt2-'+index+'-'+1">สะอาด</label>
+                <label class="form-check-label pt-1" :for="'opt2-'+index+'-'+1">สะอาด</label>
             </div>
           </td>
           <td>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" v-model="doc.opt2" :name="'opt2-'+index" :id="'opt2-'+index+'-'+2" :value="2" :checked="doc.opt2==2">
-                <label class="form-check-label" :for="'opt2-'+index+'-'+2">ไม่สะอาด</label>
+                <label class="form-check-label pt-1" :for="'opt2-'+index+'-'+2">ไม่สะอาด</label>
             </div>
           </td>
           <td></td>
@@ -70,13 +70,13 @@
           <td>
            <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" v-model="doc.opt3" :name="'opt3-'+index" :id="'opt3-'+index+'-'+1" :value="1" :checked="doc.opt3==1">
-                <label class="form-check-label" :for="'opt3-'+index+'-'+1">ใช้งานได้ปกติ</label>
+                <label class="form-check-label pt-1" :for="'opt3-'+index+'-'+1">ใช้งานได้ปกติ</label>
             </div>
            </td>
           <td>
           <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" v-model="doc.opt3" :name="'opt3-'+index" :id="'opt3-'+index+'-'+2" :value="2" :checked="doc.opt3==2">
-                <label class="form-check-label" :for="'opt3-'+index+'-'+2">ใช้งานไม่ได้</label>
+                <label class="form-check-label pt-1" :for="'opt3-'+index+'-'+2">ใช้งานไม่ได้</label>
             </div>
           </td>
           <td></td>
@@ -96,6 +96,68 @@
 .link {
   cursor: pointer;
   font-size: 12px !important;
+}
+/* input[type=radio] {
+    appearance: none;
+    background-color: #fff;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+    display: inline-grid;
+    place-content: center; 
+  }
+
+input[type=radio]::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    transform: scale(0);
+    transform-origin: bottom left;
+    background-color: #fff;
+    clip-path: polygon(13% 50%, 34% 66%, 81% 2%, 100% 18%, 39% 100%, 0 71%);
+}
+
+input[type=radio]:checked::before {
+    transform: scale(1.5);
+}
+input[type=radio]:checked{
+    background-color:   #0075FF;
+    border: 2px solid #0075FF;
+} */
+/* Style for the radio button itself */
+input[type="radio"] {
+  -webkit-appearance: none; /* Remove default appearance */
+  appearance: none; /* Remove default appearance */
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc; /* Optional: Add a border */
+  border-radius: 3px; /* Optional: Add rounded corners */
+  margin-right: 5px;
+  background-color: #fff; /* Optional: Set background color */
+  cursor: pointer; /* Set cursor to pointer for clickability */
+}
+
+/* Style for the checkmark (only when checked) */
+input[type="radio"]:checked {
+  background-color: #a9b1a9; /* Set background color when checked */
+  border-color: #a9b1a9; /* Set border color when checked */
+}
+
+/* Style for the checkmark (only when checked) */
+input[type="radio"]:checked::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 13px;
+  border-style: solid;
+  border-width: 0 3px 3px 0;
+  border-color: #fff;
+  transform: rotate(45deg) translate(1px, -7px);
+}
+label{
+    cursor:pointer !important;
 }
 </style>
 <script setup>
