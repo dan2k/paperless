@@ -13,6 +13,7 @@
     "@popperjs/core": "^2.11.6",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.3",
+    "exceljs": "^4.4.0",
     "jspdf": "^2.5.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.30",
@@ -23,8 +24,7 @@
     "vue-qrcode-reader": "^5.5.4",
     "vue-router": "^4.1.6",
     "vue-sweetalert2": "^5.0.5",
-    "vue3-easy-data-table": "^1.5.31",
-    "xlsx-js-style": "^1.2.0"
+    "vue3-easy-data-table": "^1.5.31"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

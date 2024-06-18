@@ -41,7 +41,7 @@
       </tbody>
     </table>
     <div class="w-100 mx-auto text-center">
-      <button class="btn btn-primary btn-sm" @click="exportTableToExcel('tbrep')">
+      <button class="btn btn-primary btn-sm" @click="generateExcel()">
         พิมพ์สรุปจำนวนอุปกรณ์
       </button>
     </div>
@@ -65,7 +65,7 @@
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
 import { useReport } from "./report.js";
-import XLSX from "xlsx-js-style";
+import * as ExcelJS from 'exceljs';
 const props = defineProps({
   contractno: {
     type: String,
@@ -98,51 +98,80 @@ onMounted(async () => {
 const openDocRg = (rg) => {
   router.push({ path: `/report/docrg/${rg}` });
 };
-const exportTableToExcel=(tableID, filename = '')=>{
-    var table = document.getElementById(tableID);
-    var wb = XLSX.utils.book_new();
-    var ws = XLSX.utils.table_to_sheet(table);
 
-    // Extract and apply styles
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let row = range.s.r; row <= range.e.r; row++) {
-        for (let col = range.s.c; col <= range.e.c; col++) {
-            const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
-            if (!ws[cellAddress]) continue;
-            const cell = ws[cellAddress];
-            const htmlCell = table.rows[row].cells[col];
+const generateExcel = async () => {
+      // สร้าง workbook ใหม่
+      const workbook = new ExcelJS.Workbook();
 
-            // Apply header styles
-            if (row === 0) {
-                cell.s = {
-                    fill: {
-                        // fgColor: { rgb: "FF4CAF50" } // Green background
-                    },
-                    font: {
-                        color: { rgb: "FFFFFFFF" } // White font
-                    },
-                    alignment: {
-                        horizontal: 'center'
-                    }
-                };
-            } else {
-                cell.s = {
-                    alignment: {
-                        horizontal: htmlCell.style.textAlign || 'left'
-                    }
-                };
+      // สร้าง worksheet ใหม่
+      const worksheet = workbook.addWorksheet('Sheet1');
+
+      // เพิ่มข้อมูลลงใน worksheet
+      let header=equips.value.cats.map((it)=>it.cat_desc)
+      header=['ลำดับที่','หน่วยงาน',...header]
+    //  console.log({'xxx',header})
+    
+      worksheet.addRow(header);
+       // กำหนดความกว้างของคอลัมน์ 0 เป็น 20
+       worksheet.columns[0].width = 8;
+       worksheet.columns[1].width = 30;
+       let border= {
+            top: {style:'thin', color: {argb:'FF6b6969'}},
+            left: {style:'thin', color: {argb:'FF6b6969'}},
+            bottom: {style:'thin', color: {argb:'FF6b6969'}},
+            right: {style:'thin', color: {argb:'FF6b6969'}}
+        };
+        let fill={
+            type: 'pattern',
+            pattern:'solid',
+            fgColor:{argb:'FF0dcaf0'},
+            bgColor:{argb:'FF0000FF'}
+        };
+        let alignment = { wrapText: true,vertical: 'middle', horizontal: 'center' }
+        
+        let row1 = worksheet.lastRow;
+        // Set a specific row height
+        // row.height = 42.5;
+        // row.border=border;
+        row1.fill=fill;
+        //row เริ่มจาก 1
+        // row=worksheet.getRow(1);
+        let r=2;
+        equips.value.data.forEach((it)=>{
+            let tmp=[];
+            tmp[0]=r-1
+            tmp[1]=it.rg_desc
+            equips.value.cats.forEach((it2,i)=>{
+                tmp[i+2]=it[it2.cat_id]
+            })
+            worksheet.addRow(tmp);
+            r++;
+        })
+        worksheet.eachRow(function (row, rowNumber) {
+            if (rowNumber==0 ) {
+                row.fill=fill;
+                row.height = 42.5;
             }
+            row.eachCell(function (cell, colNumber) {
+                cell.border = border
+                cell.alignment=alignment
+                if (rowNumber>0 && colNumber>1 ) {
+                    cell.numFmt = '#,###';
+                }
+                if(colNumber>1) cell.width=12;
+            });
+        });
+      // สร้างไฟล์ excel
+      const buffer = await workbook.xlsx.writeBuffer();
 
-            // Apply body cell styles if any
-            if (htmlCell.style.backgroundColor) {
-                cell.s.fill = {
-                    fgColor: { rgb: htmlCell.style.backgroundColor.replace('#', 'FF') }
-                };
-            }
-        }
-    }
-
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, filename ? `${filename}.xlsx` : 'tableData.xlsx');
-}
+      // ดาวน์โหลดไฟล์ excel
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'my-excel-file.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
 </script>
