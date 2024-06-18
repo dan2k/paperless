@@ -41,7 +41,7 @@
       </tbody>
     </table>
     <div class="w-100 mx-auto text-center">
-      <button class="btn btn-primary btn-sm" @click="generateExcel()">
+      <button v-if="!isHide" class="btn btn-primary btn-sm" @click="generateExcel(equips.data,equips.cats)">
         พิมพ์สรุปจำนวนอุปกรณ์
       </button>
     </div>
@@ -62,7 +62,6 @@
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
 import { useReport } from "./report.js";
-import * as ExcelJS from "exceljs";
 const props = defineProps({
   contractno: {
     type: String,
@@ -77,7 +76,7 @@ const props = defineProps({
     required: true,
   },
 });
-const { regions, getEquip, reportStore, router, authStore } = useReport();
+const { regions, getEquip, reportStore, router, authStore ,generateExcel} = useReport();
 const equips = ref([]);
 const isHide = ref(true);
 const gotoPcs = (rg) => {
@@ -96,77 +95,4 @@ const openDocRg = (rg) => {
   router.push({ path: `/report/docrg/${rg}` });
 };
 
-const generateExcel = async () => {
-  // สร้าง workbook ใหม่
-  const workbook = new ExcelJS.Workbook();
-  // สร้าง worksheet ใหม่
-  const worksheet = workbook.addWorksheet("Sheet1");
-  // เพิ่มข้อมูลลงใน worksheet
-  let header = equips.value.cats.map((it) => it.cat_desc);
-  header = ["ลำดับที่", "หน่วยงาน", ...header];
-  //  console.log({'xxx',header})
-  worksheet.addRow(header);
-  // กำหนดความกว้างของคอลัมน์ 0 เป็น 20
-  worksheet.columns[0].width = 8;
-  worksheet.columns[1].width = 30;
-  let border = {
-    top: { style: "thin", color: { argb: "FF6b6969" } },
-    left: { style: "thin", color: { argb: "FF6b6969" } },
-    bottom: { style: "thin", color: { argb: "FF6b6969" } },
-    right: { style: "thin", color: { argb: "FF6b6969" } },
-  };
-  let fill = {
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "FF0dcaf0" },
-    bgColor: { argb: "FF0000FF" },
-  };
-  let alignment = { wrapText: true, vertical: "middle", horizontal: "center" };
-  let r = 1;
-  equips.value.data.forEach((it) => {
-    let tmp = [];
-    tmp[0] = r;
-    tmp[1] = it.rg_desc;
-    equips.value.cats.forEach((it2, i) => {
-      tmp[i + 2] = Number(it[it2.cat_id]);
-    });
-    worksheet.addRow(tmp);
-    r++;
-  });
-  worksheet.eachRow(function (row, rowNumber) {
-    if (rowNumber > 1) {
-      row.height = 30;
-    } else {
-      row.fill = fill;
-      row.height = 60;
-      row.font= { bold: true,color: {'argb': 'FFFFFFFF'}}
-    }
-    row.eachCell(function (cell, colNumber) {
-      cell.border = border;
-      cell.alignment = alignment;
-      if (colNumber > 2) cell.width = 18;
-      if(colNumber>2&&rowNumber>1) cell.numFmt='#,##0';
-    });
-  });
-  let cell=worksheet.getCell('Q1').fill={
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "FFFFFFFF" },
-    bgColor: { argb: "FFFFFFFF" },
-  }
-  // สร้างไฟล์ excel
-  const buffer = await workbook.xlsx.writeBuffer();
-
-  // ดาวน์โหลดไฟล์ excel
-  const blob = new Blob([buffer], {
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  });
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", "report.xlsx");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
 </script>
