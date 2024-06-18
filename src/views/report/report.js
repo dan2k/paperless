@@ -71,7 +71,7 @@ export const useReport = () => {
     worksheet.addRow(header);
     // กำหนดความกว้างของคอลัมน์ 0 เป็น 20
     worksheet.columns[0].width = 8;
-    worksheet.columns[1].width = 30;
+    worksheet.columns[1].width = 50;
     let border = {
       top: { style: "thin", color: { argb: "FF6b6969" } },
       left: { style: "thin", color: { argb: "FF6b6969" } },
@@ -89,6 +89,11 @@ export const useReport = () => {
       vertical: "middle",
       horizontal: "center",
     };
+    let alignment2 = {
+        wrapText: true,
+        vertical: "middle",
+        horizontal: "left",
+      };
     const lrow = worksheet.lastRow;
     let r = 1;
     data.forEach((it) => {
@@ -105,34 +110,41 @@ export const useReport = () => {
       if (rowNumber > 1) {
         row.height = 30;
       } else {
-        row.fill = fill;
         row.height = 60;
-        row.font = { bold: true, color: { argb: "FFFFFFFF" } };
       }
 
       row.eachCell(function (cell, colNumber) {
         cell.border = border;
         cell.alignment = alignment;
+        if(rowNumber==1){
+            cell.fill = fill;
+            cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
+            
+        }
         if (colNumber > 2) cell.width = 18;
         if (colNumber > 2 && rowNumber > 1) cell.numFmt = "#,##0";
+        if(rowNumber>1 && colNumber==2){
+            cell.alignment=alignment2;
+            // cell.alignment.horizonal='left'
+        }
       });
     });
-    // clear สี header ที่เทสีเกินไป 1 column
-    let c = await lrow._cells;
-    let len = c.length;
-    const currentCellReference = await c[len - 1]._address;
-    // แยกตัวอักษรคอลัมน์และเลขแถว
-    const cletter = currentCellReference.match(/[A-Z]+/)[0];
-    const rnumber = parseInt(currentCellReference.match(/\d+/)[0]);
-    // คำนวณ reference ของเซลล์ถัดไป
-    const nextCellReference =String.fromCharCode(cletter.charCodeAt(0) + 1) + "" + rnumber
+    // // clear สี header ที่เทสีเกินไป 1 column
+    // let c = await lrow._cells;
+    // let len = c.length;
+    // const currentCellReference = await c[len - 1]._address;
+    // // แยกตัวอักษรคอลัมน์และเลขแถว
+    // const cletter = currentCellReference.match(/[A-Z]+/)[0];
+    // const rnumber = parseInt(currentCellReference.match(/\d+/)[0]);
+    // // คำนวณ reference ของเซลล์ถัดไป
+    // const nextCellReference =String.fromCharCode(cletter.charCodeAt(0) + 1) + "" + rnumber
     // เข้าถึงเซลล์ถัดไป
-     worksheet.getCell(nextCellReference).fill = {
-      type: "pattern",
-      pattern: "solid",
-      fgColor: { argb: "FFFFFFFF" },
-      bgColor: { argb: "FFFFFFFF" },
-    };
+    //  worksheet.getCell(nextCellReference).fill = {
+    //   type: "pattern",
+    //   pattern: "solid",
+    //   fgColor: { argb: "FFFFFFFF" },
+    //   bgColor: { argb: "FFFFFFFF" },
+    // };
 
     // สร้างไฟล์ excel
     const buffer = await workbook.xlsx.writeBuffer();
