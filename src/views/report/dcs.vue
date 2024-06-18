@@ -27,6 +27,11 @@
                 </tr>
             </tbody>
         </table>    
+        <div class="w-100 mx-auto text-center">
+            <button v-if="!isHide" class="btn btn-primary btn-sm" @click="generateExcel(equips.data,equips.cats)">
+                พิมพ์สรุปจำนวนอุปกรณ์
+            </button>
+        </div>
         <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">กำลังประมวลผล......</div>
     </div>
 </template>
@@ -56,7 +61,7 @@ const props = defineProps({
         required: true 
       },
 });
-const {getEquip,reportStore,router,route,authStore}=useReport()
+const {getEquip,reportStore,router,route,authStore,generateExcel}=useReport()
 const equips=ref([]);
 const isHide=ref(true);
 const rg=route.params.rg;

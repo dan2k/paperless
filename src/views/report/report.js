@@ -43,7 +43,7 @@ export const useReport = () => {
   const getEquip = async (contractno, level, pageLevel, rg, pv) => {
     try {
       let url = `/paperless/report/v1/getEquip/${contractno}/${level}/${pageLevel}/${rg}/${pv}`;
-      console.log({ url });
+    //   console.log({ url });
       let rs = await api.get(url);
       return rs.data;
     } catch (e) {
@@ -94,7 +94,7 @@ export const useReport = () => {
         vertical: "middle",
         horizontal: "left",
       };
-    const lrow = worksheet.lastRow;
+    // const lrow = worksheet.lastRow;
     let r = 1;
     data.forEach((it) => {
       let tmp = [];
