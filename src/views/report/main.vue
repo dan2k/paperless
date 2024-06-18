@@ -3,8 +3,6 @@
     <table
       class="table table-bordered tbrep bg-white mx-auto"
       v-if="!isHide"
-      id="tbrep"
-      ref="tbreb"
     >
       <thead class="bg-info bg-gradient text-white">
         <tr>
@@ -82,7 +80,7 @@ const isHide = ref(true);
 const gotoPcs = (rg) => {
   router.push({ path: `/report/pcs/${rg}` });
 };
-const tbreb = ref(null);
+
 onMounted(async () => {
   reportStore.isLoading = true;
   let level = authStore.userData.sur_level;

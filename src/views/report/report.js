@@ -115,12 +115,12 @@ export const useReport = () => {
         if (colNumber > 2 && rowNumber > 1) cell.numFmt = "#,##0";
       });
     });
-    let cell = (worksheet.getCell("Q1").fill = {
+    worksheet.getCell("Q1").fill = {
       type: "pattern",
       pattern: "solid",
       fgColor: { argb: "FFFFFFFF" },
       bgColor: { argb: "FFFFFFFF" },
-    });
+    };
     // สร้างไฟล์ excel
     const buffer = await workbook.xlsx.writeBuffer();
 
