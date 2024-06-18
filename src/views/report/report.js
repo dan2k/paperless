@@ -63,7 +63,7 @@ export const useReport = () => {
     // สร้าง workbook ใหม่
     const workbook = new ExcelJS.Workbook();
     // สร้าง worksheet ใหม่
-    const worksheet = workbook.addWorksheet("Sheet1");
+    const worksheet = workbook.addWorksheet("Sheet1",{views:[{state: 'frozen', xSplit: 2, ySplit:1}]});
     // เพิ่มข้อมูลลงใน worksheet
     let header = cats.map((it) => it.cat_desc);
     header = ["ลำดับที่", "หน่วยงาน", ...header];
