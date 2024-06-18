@@ -26,7 +26,9 @@
                 </tr>
             </tbody>
         </table>    
+        <div class="w-100 mx-auto text-center"><button class="btn btn-primary btn-sm">พิมพ์สรุปจำนวนอุปกรณ์</button></div>
         <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">กำลังประมวลผล......</div>
+
     </div>
 </template>
 <style scoped>

@@ -23,7 +23,8 @@
     "vue-qrcode-reader": "^5.5.4",
     "vue-router": "^4.1.6",
     "vue-sweetalert2": "^5.0.5",
-    "vue3-easy-data-table": "^1.5.31"
+    "vue3-easy-data-table": "^1.5.31",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
