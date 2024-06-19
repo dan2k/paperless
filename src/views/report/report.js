@@ -184,5 +184,6 @@ export const useReport = () => {
     getContract,
     getEquip,
     getDoc,
+    getPm,
   };
 };
