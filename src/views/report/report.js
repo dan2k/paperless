@@ -59,6 +59,15 @@ export const useReport = () => {
       errAlert(e);
     }
   };
+  const getPm = async (contractno, custptype,custpcode,yymm) => {
+    try {
+      let url = `/paperless/report/v1/getPm/${contractno}/${custptype}/${custpcode}/${yymm}`;
+      let rs = await api.get(url);
+      return rs.data;
+    } catch (e) {
+      errAlert(e);
+    }
+  };
   const generateExcel = async (data, cats) => {
     // สร้าง workbook ใหม่
     const workbook = new ExcelJS.Workbook();

@@ -25,7 +25,7 @@
                         :disabled="reportStore.isLoading"
                 >
                 <option value="">-- ปี --</option>
-                    <option v-for="y in years" :key="y.id" :value="y.text">{{ y.text }}</option>
+                    <option v-for="y in years" :key="y.id" :value="y.id">{{ y.text }}</option>
                     
                 </select>
             </div>

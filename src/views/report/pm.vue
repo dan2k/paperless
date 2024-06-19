@@ -31,13 +31,16 @@ const props = defineProps({
         required: true 
       },
 });
-const {reportStore,router,route,authStore,generateExcel}=useReport()
+const {reportStore,router,route,authStore,getPm}=useReport()
 const isHide=ref(true);
 const rg=route.params.rg;
 const pv=route.params.pv;
 const pv_desc=route.params.pv_desc;
 const custptype=route.params.custptype;
 const custpcode=route.params.custpcode;
+const yymm=props.year+''+props.month;
+const contractno=props.contractno;
+const pms=ref([]);
 const back=()=>{
     router.push({path:`/report/dcs/${rg}/${pv}/${pv_desc}`});
 }
@@ -46,6 +49,7 @@ const back=()=>{
     // let level=authStore.userData.sur_level;
     // let pageLevel=3
     // equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
+    pms.value=await getPm(conractno,custptype,cuspcode,yymm)
     isHide.value=false
     reportStore.isLoading=false;
     // console.log({equips})
