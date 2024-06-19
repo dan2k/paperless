@@ -23,7 +23,7 @@
                         {{ equip[cat.cat_id]|0 }}
                     </td>
                     <td></td>
-                    <td align="center" valign="middle" @click="gotoPm(equip.cust_ptype,equip.cust_pcode)"><i class="fa-solid fa-print"></i></td>
+                    <td align="center" valign="middle" @click="gotoPm(equip.cust_ptype,equip.rg)"><i class="fa-solid fa-print"></i></td>
                 </tr>
             </tbody>
         </table>    
