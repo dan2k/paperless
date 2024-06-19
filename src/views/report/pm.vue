@@ -41,6 +41,7 @@ const custpcode=route.params.custpcode;
 const yymm=props.year+''+props.month;
 const contractno=props.contractno;
 const pms=ref([]);
+const data=ref([])
 const back=()=>{
     router.push({path:`/report/dcs/${rg}/${pv}/${pv_desc}`});
 }
@@ -49,7 +50,14 @@ const back=()=>{
     // let level=authStore.userData.sur_level;
     // let pageLevel=3
     // equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
-    pms.value=await getPm(conractno,custptype,cuspcode,yymm)
+    pms.value=await getPm(contractno,custptype,custpcode,yymm)
+    // console.log(pms.value.data)
+    let tmp_type=await Object.keys(pms.value.data);
+    for(let i=0;i<tmp_type.length;i++){
+        let tmp2=pms.value.data[tmp_type[i]][0].type_desc;
+        data.value[i]={type_id:tmp_type[i],type_desc:tmp2,data:pms.value.data[tmp_type[i]]}
+    }
+    console.log(data.value)
     isHide.value=false
     reportStore.isLoading=false;
     // console.log({equips})
