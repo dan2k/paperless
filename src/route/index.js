@@ -143,7 +143,7 @@ const routes = [
 				// beforeEnter: beforeEnter,
 			},
 			{
-				path: 'pm/:rg/:pv/:pv_desc/:custptype/:custpcode',
+				path: 'pm/:rg/:pv/:pv_desc/:custptype/:custpcode/:custdesc',
 				name:'report-pm',
 				component: ()=>import("@/views/report/pm.vue"),
 				// beforeEnter: beforeEnter,

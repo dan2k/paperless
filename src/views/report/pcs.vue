@@ -2,14 +2,14 @@
     <div class="container-fluid mx-0 px-0">
         <div class="float-start fw-bold" style="cursor:pointer" @click="back()" v-if="!isHide"><span><i class="fa-solid fa-left-long"></i></span></div>
         <div class="float-end fw-bold" v-if="!isHide">หน่วยงาน: <span>ศูนย์บริหารการทะเบียนภาค {{rg}}</span></div>
-        <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">
+        <table class="table table-bordered table-hover tbrep bg-white mx-auto" v-if="!isHide">
             <thead class="bg-info bg-gradient text-white">
                 <tr>
                     <th width="3%" class="text-center">ลำดับ</th>
                     <th width="10%">หน่วยงาน</th>
                     <th v-for="cat in equips.cats" :key="cat.cat_id" :width="(72/equips.cats.length)+'%'" class="text-center">{{ cat.cat_desc }}</th>
                     <th width="13%" class="text-center">ผู้อนุมัติ</th>
-                    <th width="2%" class="text-center">#</th>
+                    <!-- <th width="2%" class="text-center">#</th> -->
                 </tr>
             </thead>
             <tbody v-if="!isHide">
@@ -24,7 +24,7 @@
                         {{ equip[cat.cat_id]|0 }}
                     </td>
                     <td></td>
-                    <td align="center" valign="middle"><i class="fa-solid fa-print"></i></td>
+                    <!-- <td align="center" valign="middle"><i class="fa-solid fa-print"></i></td> -->
                 </tr>
             </tbody>
         </table>    

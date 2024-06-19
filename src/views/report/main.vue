@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid mx-0 px-0">
     <table
-      class="table table-bordered tbrep bg-white mx-auto"
+      class="table table-bordered table-hover tbrep bg-white mx-auto"
       v-if="!isHide"
     >
       <thead class="bg-info bg-gradient text-white">

@@ -14,7 +14,7 @@
           <td colspan="11" style="border: none">
             <div>
               <center>
-                <font face="AngsanaUPC" size="3">ใบรายงานการบำรุงรักษาคอมพิวเตอร์ </font>
+                <font face="AngsanaUPC" size="3">ใบรายงานการบำรุงรักษาคอมพิวเตอร์  {{ custdesc }}</font>
               </center>
             </div>
             <div>
@@ -407,6 +407,7 @@ const pv = route.params.pv;
 const pv_desc = route.params.pv_desc;
 const custptype = route.params.custptype;
 const custpcode = route.params.custpcode;
+const custdesc = route.params.custdesc;
 const yymm = props.year + "" + props.month;
 const contractno = props.contractno;
 const pms = ref([]);

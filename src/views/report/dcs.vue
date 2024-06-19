@@ -2,7 +2,7 @@
     <div class="container-fluid mx-0 px-0">
         <div class="float-start fw-bold" style="cursor:pointer" @click="back(rg)" v-if="!isHide"><span><i class="fa-solid fa-left-long"></i></span></div>
         <div class="float-end fw-bold" v-if="!isHide">หน่วยงาน: <span>{{pv_desc}}</span></div>
-        <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">
+        <table class="table table-bordered table-hover tbrep bg-white mx-auto" v-if="!isHide">
             <thead class="bg-info bg-gradient text-white">
                 <tr>
                     <th width="3%" class="text-center">ลำดับ</th>
@@ -23,7 +23,7 @@
                         {{ equip[cat.cat_id]|0 }}
                     </td>
                     <td></td>
-                    <td align="center" valign="middle" @click="gotoPm(equip.cust_ptype,equip.rg)"><i class="fa-solid fa-print"></i></td>
+                    <td style="cursor:pointer" align="center" valign="middle" @click="gotoPm(equip.cust_ptype,equip.rg,equip.rg_desc)"><i class="fa-solid fa-print"></i></td>
                 </tr>
             </tbody>
         </table>    
@@ -70,8 +70,8 @@ const pv_desc=route.params.pv_desc;
 const back=(rg)=>{
     router.push({path:`/report/pcs/${rg}`});
 }
-const gotoPm=(custptype,custpcode)=>{
-    router.push({path:`/report/pm/${rg}/${pv}/${pv_desc}/${custptype}/${custpcode}`})
+const gotoPm=(custptype,custpcode,custdesc)=>{
+    router.push({path:`/report/pm/${rg}/${pv}/${pv_desc}/${custptype}/${custpcode}/${custdesc}`})
 }
  onMounted(async()=>{
     reportStore.isLoading=true;
