@@ -142,6 +142,12 @@ const routes = [
 				component: ()=>import("@/views/report/docrg.vue"),
 				// beforeEnter: beforeEnter,
 			},
+			{
+				path: 'pm/:rg/:pv/:pv_desc/:custptype/:custpcode',
+				name:'report-pm',
+				component: ()=>import("@/views/report/pm.vue"),
+				// beforeEnter: beforeEnter,
+			},
 		],
 	},
 	
