@@ -23,7 +23,7 @@
                         {{ equip[cat.cat_id]|0 }}
                     </td>
                     <td></td>
-                    <td align="center" valign="middle"><i class="fa-solid fa-print"></i></td>
+                    <td align="center" valign="middle" @click="gotoPm(equip.cust_ptype,equip.cust_pcode)"><i class="fa-solid fa-print"></i></td>
                 </tr>
             </tbody>
         </table>    
@@ -69,6 +69,9 @@ const pv=route.params.pv;
 const pv_desc=route.params.pv_desc;
 const back=(rg)=>{
     router.push({path:`/report/pcs/${rg}`});
+}
+const gotoPm=(custptype,custpcode)=>{
+    router.push({path:`/report/pm/${rg}/${pv}/${pv_desc}/${custptype}/${custpcode}`})
 }
  onMounted(async()=>{
     reportStore.isLoading=true;
