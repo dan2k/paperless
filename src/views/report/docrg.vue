@@ -47,12 +47,11 @@
             <div class="form-check form-check-inline">
               <input
                 class="form-check-input"
-                type="radio"
-                v-model="doc.opt1"
+                type="checkbox"
                 :name="'opt1-' + index"
                 :id="'opt1-' + index + '-' + 1"
                 :value="1"
-                :checked="doc.opt1 == 1"
+                
               />
               <label class="form-check-label pt-1" :for="'opt1-' + index + '-' + 1"
                 >ไม่ชำรุด</label
@@ -63,12 +62,11 @@
             <div class="form-check form-check-inline">
               <input
                 class="form-check-input"
-                type="radio"
-                v-model="doc.opt1"
+                type="checkbox"
                 :name="'opt1-' + index"
                 :id="'opt1-' + index + '-' + 2"
                 :value="2"
-                :checked="doc.opt1 == 2"
+                
               />
               <label class="form-check-label pt-1" :for="'opt1-' + index + '-' + 2"
                 >ชำรุด</label
@@ -85,12 +83,11 @@
             <div class="form-check form-check-inline">
               <input
                 class="form-check-input"
-                type="radio"
-                v-model="doc.opt2"
+                type="checkbox"
                 :name="'opt2-' + index"
                 :id="'opt2-' + index + '-' + 1"
                 :value="1"
-                :checked="doc.opt2 == 1"
+                
               />
               <label class="form-check-label pt-1" :for="'opt2-' + index + '-' + 1"
                 >สะอาด</label
@@ -101,12 +98,11 @@
             <div class="form-check form-check-inline">
               <input
                 class="form-check-input"
-                type="radio"
-                v-model="doc.opt2"
+                type="checkbox"
                 :name="'opt2-' + index"
                 :id="'opt2-' + index + '-' + 2"
                 :value="2"
-                :checked="doc.opt2 == 2"
+                
               />
               <label class="form-check-label pt-1" :for="'opt2-' + index + '-' + 2"
                 >ไม่สะอาด</label
@@ -123,12 +119,11 @@
             <div class="form-check form-check-inline">
               <input
                 class="form-check-input"
-                type="radio"
-                v-model="doc.opt3"
+                type="checkbox"
                 :name="'opt3-' + index"
                 :id="'opt3-' + index + '-' + 1"
                 :value="1"
-                :checked="doc.opt3 == 1"
+                
               />
               <label class="form-check-label pt-1" :for="'opt3-' + index + '-' + 1"
                 >ใช้งานได้ปกติ</label
@@ -139,12 +134,10 @@
             <div class="form-check form-check-inline">
               <input
                 class="form-check-input"
-                type="radio"
-                v-model="doc.opt3"
+                type="checkbox"
                 :name="'opt3-' + index"
                 :id="'opt3-' + index + '-' + 2"
                 :value="2"
-                :checked="doc.opt3 == 2"
               />
               <label class="form-check-label pt-1" :for="'opt3-' + index + '-' + 2"
                 >ใช้งานไม่ได้</label
@@ -360,8 +353,6 @@
 
 /* ############################################# */
 @media print {
- 
-
   body * {
     visibility: hidden;
   }
@@ -373,68 +364,47 @@
   #print {
     position: absolute;
     top: 10px;
-    left: 1px;
+    left: 0px !important;
   }
   #print .noprint {
     visibility: hidden;
     display: none;
   }
-}
-@page {
-  size: A4;
-  margin-top: 7mm;
-  margin-bottom: 5mm;
-  margin-left: 2mm;
-  margin-right: 2mm;
-  counter-increment: page;
-  counter-reset: page 1;
-  @top-right {
-    content: "Page " counter(page) " of " counter(pages);
+  tbody td,tbody  tr {
+	border-bottom-color: #fff;
+	border-bottom-style: none;
+	border-bottom-width: 0;
+	border-top-color: #fff;
+	border-top-style: none;
+	border-top-width: 0;
+ }
+ tbody:nth-last-child(1)  tr:nth-last-child(1) {
+	border-bottom-color: #dee2e6;
+	border-bottom-style: solid;
+	border-bottom-width: 1;
+ }
+  @page {
+    margin-top: 7mm;
+    margin-bottom: 5mm;
+    margin-left: 8.128mm !important;
+    margin-right: 8.128mm !important;
+    counter-increment: page;
+    counter-reset: page 1;
+    @top-right {
+      content: "Page " counter(page) " of " counter(pages);
+    }
   }
 }
 /*################################################*/
 .tbrep {
   font-size: 12px;
+  border-collapse: collapse;
 }
 .link {
   cursor: pointer;
   font-size: 12px !important;
 }
 
-/* Style for the radio button itself */
-input[type="radio"] {
-  -webkit-appearance: none; /* Remove default appearance */
-  appearance: none; /* Remove default appearance */
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #ccc; /* Optional: Add a border */
-  border-radius: 3px; /* Optional: Add rounded corners */
-  margin-right: 5px;
-  background-color: #fff; /* Optional: Set background color */
-  cursor: pointer; /* Set cursor to pointer for clickability */
-}
-
-/* Style for the checkmark (only when checked) */
-input[type="radio"]:checked {
-  background-color: #a9b1a9; /* Set background color when checked */
-  border-color: #a9b1a9; /* Set border color when checked */
-}
-
-/* Style for the checkmark (only when checked) */
-input[type="radio"]:checked::before {
-  content: "";
-  display: block;
-  width: 6px;
-  height: 13px;
-  border-style: solid;
-  border-width: 0 3px 3px 0;
-  border-color: #fff;
-  transform: rotate(45deg) translate(1px, -7px);
-}
-label {
-  cursor: pointer !important;
-}
 </style>
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
@@ -485,6 +455,9 @@ onMounted(async () => {
   rg_desc.value = regions.value.filter((it) => it.rgid == Number(6))[0];
 });
 const print = () => {
-  window.print();
+  window.scrollTo(0,0);
+  setTimeout(() => {
+      window.print();
+  }, 2000);
 };
 </script>
