@@ -283,7 +283,6 @@ export const useService = () => {
     generatePDF();
   };
   const isShow = ref(false);
-
   const generatePDF = async () => {
     isShow.value = true;
     const doc = await new jsPDF({
@@ -315,6 +314,43 @@ export const useService = () => {
         // const myPdfData = pdf.output('datauristring/dataurlstring')
         window.close();
         isShow.value = false;
+      },
+      filename: "test.pdf",
+      margin: 0, // optional: page margin
+      // optional: other HTMLOptions
+    });
+  };
+  const generatePDF2 = async () => {
+    //isShow.value = true;
+    const doc = await new jsPDF({
+      orientation: "p",
+      format: "a4",
+      unit: "px",
+      lineHeight: 2,
+      putOnlyUsedFonts: true,
+    }); // create jsPDF object
+    doc.addFileToVFS("sarabun-normal.ttf", saraban_normal);
+    doc.addFont("sarabun-normal.ttf", "sarabun", "normal");
+    doc.addFileToVFS("sarabun-bold.ttf", saraban_bold);
+    doc.addFont("sarabun-bold.ttf", "sarabun", "bold");
+    doc.addFileToVFS("sarabun-bolditalic.ttf", saraban_bolditalic);
+    doc.addFont("sarabun-bolditalic.ttf", "sarabun", "bolditalic");
+    doc.addFileToVFS("sarabun-italic.ttf", saraban_italic);
+    doc.addFont("sarabun-italic.ttf", "sarabun", "italic");
+    const pdfElement = document.getElementById("pdf"); // HTML element to be converted to PDF
+    await doc.html(pdfElement, {
+      callback: (pdf) => {
+        // pdf.addFileToVFS('sarabun-normal.ttf', saraban_normal)
+        // pdf.addFont('sarabun-normal.ttf', 'sarabun', 'normal');
+        // pdf.setFont('sarabun', 'normal');
+        // console.log(pdf.getFileFromVFS('sarabun-normal.ttf'));
+        // console.log(pdf.getFontList());
+        // pdf.save('test.pdf')
+        // pdf.addImage(img.value?.imageUrl, 'PNG', 320, 453,30,30);
+        pdf.output("dataurlnewwindow");
+        // const myPdfData = pdf.output('datauristring/dataurlstring')
+        //window.close();
+       // isShow.value = false;
       },
       filename: "test.pdf",
       margin: 0, // optional: page margin
@@ -354,5 +390,6 @@ export const useService = () => {
     initDetail,
     initDetail2,
     initPdf,
+    generatePDF2
   };
 };

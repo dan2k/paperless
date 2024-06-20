@@ -4,7 +4,7 @@ import { api, start, close, errAlert } from "@/helpers";
 import { ref } from "vue";
 import * as ExcelJS from "exceljs";
 export const useReport = () => {
-  const { authStore, appStore, router, route } = useService();
+  const { authStore, appStore, router, route,generatePDF2 } = useService();
   const reportStore = useReportStore();
   const regions = ref([
     { rgid: 1, rg_desc: "ศูนย์บริหารการทะเบียนภาค 1" },
@@ -185,5 +185,6 @@ export const useReport = () => {
     getEquip,
     getDoc,
     getPm,
+    generatePDF2,
   };
 };

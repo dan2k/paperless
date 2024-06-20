@@ -1,46 +1,78 @@
 <template>
-  <div class="container-fluid mx-0 px-0">
-    <div class="float-start fw-bold" style="cursor:pointer" @click="back()" v-if="!isHide"><span><i class="fa-solid fa-left-long"></i>&nbsp;&nbsp;</span></div>
-    <div class="float-start fw-bold " v-if="!isHide">
+  <div class="container-fluid mx-0 px-0" id="print">
+    <div
+      class="float-start fw-bold noprint"
+      style="cursor: pointer"
+      @click="back()"
+      v-if="!isHide"
+    >
+      <span><i class="fa-solid fa-left-long"></i>&nbsp;&nbsp;</span>
+    </div>
+    <div class="float-start fw-bold" v-if="!isHide">
       ชื่อหน่วยงาน: <span>{{ rg_desc?.rg_desc }}</span>
     </div>
     <div class="float-end fw-bold" v-if="!isHide">
       เดือน{{ mmTh?.text }} <span>ปี {{ yyTh?.text }}</span>
     </div>
-    <table class="table table-bordered tbrep bg-white mx-auto" v-if="!isHide">
+
+    <table class="table table-bordered tbrep bg-white mx-auto caption-top" v-if="!isHide">
       <thead class="fw-bold bg-info bg-gradient text-white">
         <tr>
-          <th width="3%" class="text-center">ลำดับ</th>
-          <th width="40%">รายละเอียด</th>
-          <th width="20%" class="text-center">เกณฑ์ที่กำหนด</th>
-          <th width="20%" class="text-center" colspan="2">การปฏิบัติ</th>
-          <th width="17%" class="text-center">หมายเหตุ</th>
+          <th width="2%" class="text-center">ลำดับ</th>
+          <th width="35%">รายละเอียด</th>
+          <th width="21%" class="text-center">เกณฑ์ที่กำหนด</th>
+          <th width="30%" class="text-center" colspan="2">การปฏิบัติ</th>
+          <th width="15%" class="text-center">หมายเหตุ</th>
         </tr>
       </thead>
       <tbody v-for="(doc, index) in docs" :key="index">
         <tr>
-          <td>{{ index + 1 }}</td>
-          <td class="fw-bold">{{ doc.ned_name_display }} <span v-if="doc.brand">ยี่ห้อ {{ doc.brand }}</span> <span v-if="doc.serie">รุ่น {{ doc.serie }}</span></td>
+          <td align="center">{{ index + 1 }}</td>
+          <td class="fw-bold">
+            {{ doc.ned_name_display }}
+            <span v-if="doc.brand">ยี่ห้อ {{ doc.brand }}</span>
+            <span v-if="doc.serie">รุ่น {{ doc.serie }}</span>
+          </td>
           <td class="fw-bold">ทั้งหมด {{ doc.vo }} ชุด</td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
-        
+
         <tr>
           <td></td>
           <td>- ตรวจสอบสภาพเครื่อง</td>
           <td>เครื่องไม่ชำรุดเสียหาย</td>
           <td>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" v-model="doc.opt1" :name="'opt1-'+index" :id="'opt1-'+index+'-'+1" :value="1" :checked="doc.opt1==1">
-                <label class="form-check-label pt-1" :for="'opt1-'+index+'-'+1">ไม่ชำรุด</label>
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="doc.opt1"
+                :name="'opt1-' + index"
+                :id="'opt1-' + index + '-' + 1"
+                :value="1"
+                :checked="doc.opt1 == 1"
+              />
+              <label class="form-check-label pt-1" :for="'opt1-' + index + '-' + 1"
+                >ไม่ชำรุด</label
+              >
             </div>
           </td>
           <td>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" v-model="doc.opt1" :name="'opt1-'+index" :id="'opt1-'+index+'-'+2" :value="2" :checked="doc.opt1==2">
-                <label class="form-check-label pt-1" :for="'opt1-'+index+'-'+2">ชำรุด</label>
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="doc.opt1"
+                :name="'opt1-' + index"
+                :id="'opt1-' + index + '-' + 2"
+                :value="2"
+                :checked="doc.opt1 == 2"
+              />
+              <label class="form-check-label pt-1" :for="'opt1-' + index + '-' + 2"
+                >ชำรุด</label
+              >
             </div>
           </td>
           <td></td>
@@ -51,14 +83,34 @@
           <td>ต้องไม่มีฝุ่น</td>
           <td>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" v-model="doc.opt2" :name="'opt2-'+index" :id="'opt2-'+index+'-'+1" :value="1" :checked="doc.opt2==1">
-                <label class="form-check-label pt-1" :for="'opt2-'+index+'-'+1">สะอาด</label>
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="doc.opt2"
+                :name="'opt2-' + index"
+                :id="'opt2-' + index + '-' + 1"
+                :value="1"
+                :checked="doc.opt2 == 1"
+              />
+              <label class="form-check-label pt-1" :for="'opt2-' + index + '-' + 1"
+                >สะอาด</label
+              >
             </div>
           </td>
           <td>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" v-model="doc.opt2" :name="'opt2-'+index" :id="'opt2-'+index+'-'+2" :value="2" :checked="doc.opt2==2">
-                <label class="form-check-label pt-1" :for="'opt2-'+index+'-'+2">ไม่สะอาด</label>
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="doc.opt2"
+                :name="'opt2-' + index"
+                :id="'opt2-' + index + '-' + 2"
+                :value="2"
+                :checked="doc.opt2 == 2"
+              />
+              <label class="form-check-label pt-1" :for="'opt2-' + index + '-' + 2"
+                >ไม่สะอาด</label
+              >
             </div>
           </td>
           <td></td>
@@ -68,28 +120,279 @@
           <td>- ทดสอบการทำงานของเครื่อง</td>
           <td>เครื่องสามารถทำงานได้ปกติ</td>
           <td>
-           <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" v-model="doc.opt3" :name="'opt3-'+index" :id="'opt3-'+index+'-'+1" :value="1" :checked="doc.opt3==1">
-                <label class="form-check-label pt-1" :for="'opt3-'+index+'-'+1">ใช้งานได้ปกติ</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="doc.opt3"
+                :name="'opt3-' + index"
+                :id="'opt3-' + index + '-' + 1"
+                :value="1"
+                :checked="doc.opt3 == 1"
+              />
+              <label class="form-check-label pt-1" :for="'opt3-' + index + '-' + 1"
+                >ใช้งานได้ปกติ</label
+              >
             </div>
-           </td>
+          </td>
           <td>
-          <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" v-model="doc.opt3" :name="'opt3-'+index" :id="'opt3-'+index+'-'+2" :value="2" :checked="doc.opt3==2">
-                <label class="form-check-label pt-1" :for="'opt3-'+index+'-'+2">ใช้งานไม่ได้</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="doc.opt3"
+                :name="'opt3-' + index"
+                :id="'opt3-' + index + '-' + 2"
+                :value="2"
+                :checked="doc.opt3 == 2"
+              />
+              <label class="form-check-label pt-1" :for="'opt3-' + index + '-' + 2"
+                >ใช้งานไม่ได้</label
+              >
             </div>
           </td>
           <td></td>
         </tr>
       </tbody>
     </table>
-    
+    <div class="w-100 mx-auto text-center noprint">
+      <!-- <button v-if="!isHide" class="btn btn-primary btn-sm" @click="generatePDF2()">
+        print
+      </button> -->
+      <button v-if="!isHide" class="btn btn-primary btn-sm" @click="print()">
+        พิมพ์
+      </button>
+    </div>
+    <!-- <div id="pdf" style="font-family: sarabun" class="mainx noprint">
+      <div class="divTable">
+        <div class="divTableHeading">
+          <div class="divTableRow hhead">
+            <div class="divTableHead" style="border-right-width: 0px;border-bottom-width: 0px;text-align:center">ลำดับที่</div>
+            <div class="divTableHead" style="border-right-width: 0px;border-bottom-width: 0px;text-align:center">รายละเอียด</div>
+            <div class="divTableHead" style="border-right-width: 0px;border-bottom-width: 0px;text-align:center">เกณฑ์ที่กำหนด</div>
+            <div class="divTableHead" style="border-right-width: 0px;border-bottom-width: 0px;text-align:center">การปฏิบัติ</div>
+            <div class="divTableHead" style="border-bottom-width: 0px;text-align:center">หมายเหตุ</div>
+          </div>
+        </div>
+        <div class="divTableBody">
+          <div class="divTableRow hhead" >
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;text-align:center">1</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              เครื่องคอมพิวเตอร์โน้ตบุ๊ก สำหรับงานประมวลผล ยี่ห้อ Lenovo รุ่น V330
+            </div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">ทั้งหมด 80 ชุด</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"></div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+          <div class="divTableRow">
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;- ตรวจสอบสภาพเครื่อง</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;เครื่องไม่ชำรุดเสียหาย</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"> ☐ ไม่ชำรุด</div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"> ☐ ชำรุด</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+          <div class="divTableRow">
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;- ทำความสะอาดตัวเครื่อง</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">ต้องไม่มีฝุ่น&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+                <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"> ☐ สะอาด</div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"> ☐ ไม่สะอาด</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+          <div class="divTableRow">
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">- ทดสอบการทำงานของเครื่อง&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">เครื่องสามารถใช้งานได้ตามปกติ&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"> ☐ ใช้งานได้ปกติ</div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"> ☐ ใช้งานไม่ได้</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+          <div class="divTableRow hhead" >
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;text-align:center">2</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              เครื่องคอมพิวเตอร์โน้ตบุ๊ก สำหรับงานประมวลผล ยี่ห้อ Lenovo รุ่น V330
+            </div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">ทั้งหมด 80 ชุด</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"></div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+          <div class="divTableRow">
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;- ตรวจสอบสภาพเครื่อง</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;เครื่องไม่ชำรุดเสียหาย</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"> ☐ ไม่ชำรุด</div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"> ☐ ชำรุด</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+          <div class="divTableRow">
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;- ทำความสะอาดตัวเครื่อง</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">ต้องไม่มีฝุ่น&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+                <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"> ☐ สะอาด</div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"> ☐ ไม่สะอาด</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+          <div class="divTableRow">
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">- ทดสอบการทำงานของเครื่อง&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">เครื่องสามารถใช้งานได้ตามปกติ&nbsp;</div>
+            <div class="divTableCell" style="border-right-width: 0px;border-bottom-width: 0px;">
+              <div class="divTable" style="width:100%;height:100%;">
+                <div class="divTableBody">
+                  <div class="divTableRow">
+                    <div class="divTableCell" style="width:50%;border-width:0px;border-right-width:1px;"> ☐ ใช้งานได้ปกติ</div>
+                    <div class="divTableCell" style="width:50%;border-width:0px;"> ☐ ใช้งานไม่ได้</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divTableCell" style="border-bottom-width: 0px;">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">
       กำลังประมวลผล......
     </div>
   </div>
 </template>
-<style scoped>
+<style>
+/* .mainx {
+  position: relative;
+  font-size: 6px;
+  width: 447px;
+  margin: 0px 0px;
+  padding: 12px;
+  background-color: #fff;
+}
+.divTable{
+	display: table;
+	width: 100%;
+    font-size:6px;
+}
+.divTableRow {
+	display: table-row;
+}
+.hhead{
+    height:20px;
+    
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 0px;
+    margin:0px;
+    height:12px;
+    vertical-align: middle;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+} */
+
+/* ############################################# */
+@media print {
+ 
+
+  body * {
+    visibility: hidden;
+  }
+  #print * {
+    /* force-browsers-to-print-background */
+    -webkit-print-color-adjust: exact !important;
+    visibility: visible;
+  }
+  #print {
+    position: absolute;
+    top: 10px;
+    left: 1px;
+  }
+  #print .noprint {
+    visibility: hidden;
+    display: none;
+  }
+}
+@page {
+  size: A4;
+  margin-top: 7mm;
+  margin-bottom: 5mm;
+  margin-left: 2mm;
+  margin-right: 2mm;
+  counter-increment: page;
+  counter-reset: page 1;
+  @top-right {
+    content: "Page " counter(page) " of " counter(pages);
+  }
+}
+/*################################################*/
 .tbrep {
   font-size: 12px;
 }
@@ -97,34 +400,7 @@
   cursor: pointer;
   font-size: 12px !important;
 }
-/* input[type=radio] {
-    appearance: none;
-    background-color: #fff;
-    width: 15px;
-    height: 15px;
-    border: 2px solid #ccc;
-    border-radius: 2px;
-    display: inline-grid;
-    place-content: center; 
-  }
 
-input[type=radio]::before {
-    content: "";
-    width: 10px;
-    height: 10px;
-    transform: scale(0);
-    transform-origin: bottom left;
-    background-color: #fff;
-    clip-path: polygon(13% 50%, 34% 66%, 81% 2%, 100% 18%, 39% 100%, 0 71%);
-}
-
-input[type=radio]:checked::before {
-    transform: scale(1.5);
-}
-input[type=radio]:checked{
-    background-color:   #0075FF;
-    border: 2px solid #0075FF;
-} */
 /* Style for the radio button itself */
 input[type="radio"] {
   -webkit-appearance: none; /* Remove default appearance */
@@ -156,8 +432,8 @@ input[type="radio"]:checked::before {
   border-color: #fff;
   transform: rotate(45deg) translate(1px, -7px);
 }
-label{
-    cursor:pointer !important;
+label {
+  cursor: pointer !important;
 }
 </style>
 <script setup>
@@ -186,6 +462,7 @@ const {
   authStore,
   months,
   years,
+  generatePDF2,
 } = useReport();
 const isHide = ref(true);
 const docs = ref([]);
@@ -198,12 +475,16 @@ const mmTh = ref(null);
 const yyTh = ref(null);
 onMounted(async () => {
   mmTh.value = months.value.filter((it) => it.id == props.month)[0];
-  yyTh.value = years.value.filter((it) => it.text == props.year)[0];
+  yyTh.value = years.value.filter((it) => it.id == props.year)[0];
   rg.value = route.params.rg;
+  console.log(rg);
   reportStore.isLoading = true;
   docs.value = await getDoc(props.contractno, rg.value);
   isHide.value = false;
   reportStore.isLoading = false;
   rg_desc.value = regions.value.filter((it) => it.rgid == Number(6))[0];
 });
+const print = () => {
+  window.print();
+};
 </script>
