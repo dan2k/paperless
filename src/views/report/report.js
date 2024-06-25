@@ -4,7 +4,7 @@ import { api, start, close, errAlert } from "@/helpers";
 import { ref } from "vue";
 import * as ExcelJS from "exceljs";
 export const useReport = () => {
-  const { authStore, appStore, router, route,generatePDF2 } = useService();
+  const { authStore, appStore, router, route } = useService();
   const reportStore = useReportStore();
   const regions = ref([
     { rgid: 1, rg_desc: "ศูนย์บริหารการทะเบียนภาค 1" },
@@ -54,7 +54,7 @@ export const useReport = () => {
     try {
       let url = `/paperless/report/v1/getDoc/${contractno}/${rg}`;
       let rs = await api.get(url);
-      return rs.data.data;
+      return {data:rs.data.data,contract:rs.data.contracts};
     } catch (e) {
       errAlert(e);
     }
@@ -185,6 +185,6 @@ export const useReport = () => {
     getEquip,
     getDoc,
     getPm,
-    generatePDF2,
+
   };
 };
