@@ -36,7 +36,7 @@
               <tbody class="fw-bold bg-info bg-gradient text-white">
                 <tr>
                   <th width="2%" class="text-center">ลำดับ</th>
-                  <th width="35%">รายละเอียด</th>
+                  <th width="35%" class="text-center">รายละเอียด</th>
                   <th width="21%" class="text-center">เกณฑ์ที่กำหนด</th>
                   <th width="30%" class="text-center" colspan="2">การปฏิบัติ</th>
                   <th width="12%" class="text-center">หมายเหตุ</th>
@@ -48,16 +48,16 @@
       </thead>
       <tbody v-for="(doc, index) in docs" :key="index">
         <tr>
-          <td align="center" width="4%">{{ index + 1 }}</td>
+          <td align="center" width="5%">{{ index + 1 }}</td>
           <td class="fw-bold" width="34%">
             {{ doc.ned_name_display }}
             <span v-if="doc.brand">ยี่ห้อ {{ doc.brand }}</span>
             <span v-if="doc.serie">รุ่น {{ doc.serie }}</span>
           </td>
           <td class="fw-bold" width="19%">ทั้งหมด {{ doc.vo }} ชุด</td>
-          <td width="15%"></td>
-          <td width="15%"></td>
-          <td width="15%"></td>
+          <td width="16%"></td>
+          <td width="16%"></td>
+          <td width="11%"></td>
         </tr>
 
         <tr>
@@ -164,6 +164,28 @@
         </tr>
       </tbody>
     </table>
+    
+    
+    <div class="footer w-100 mt-5 p-0">
+        <div class="w-100" style="height:100px;">&nbsp;</div>
+        <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
+        <div class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>จพง.ปค.ชก</div>
+        <br><br>
+        <table class="w-100 mx-auto">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
+                        <div class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>จ.ปค.ชง.</div>
+                    </td>
+                    <td align="center">
+                        <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
+                        <div class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>จ.ปค.ชง.</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="w-100 mx-auto text-center noprint">
       <button v-if="!isHide" class="btn btn-primary btn-sm" @click="print()">
         พิมพ์
@@ -183,6 +205,9 @@
 .link {
   cursor: pointer;
   font-size: 12px !important;
+}
+.footer{
+    display:none;
 }
 @media print {
   header {
@@ -221,7 +246,7 @@
     border-top-width: 0;
   }
   .tbrep1{
-    width:98% !important;
+    width:99% !important;
   }
   .tbrep1 thead tr {
     border: 0 none #fff;
@@ -247,7 +272,12 @@
   /* .tbrep1  thead tr:nth-child(2) th:nth-child(1) {
     border: 1 solid #c7c5c5 !important;
   } */
-
+  .footer {
+    position: static; /* <-- Key line */
+    font-size:12px;
+    display:inline;
+  }
+  
   @page {
     size: "A4";
     margin-top: 7mm;
