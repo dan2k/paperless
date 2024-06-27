@@ -277,7 +277,6 @@
     font-size:12px;
     display:inline;
   }
-  
   @page {
     size: "A4";
     margin-top: 7mm;
@@ -289,8 +288,10 @@
     @top-right {
       content: "Page " counter(page) " of " counter(pages);
     }
-  }
+  }    
+  
 }
+
 </style>
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
