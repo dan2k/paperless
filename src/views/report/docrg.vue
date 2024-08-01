@@ -72,6 +72,7 @@
                 :name="'opt1-' + index"
                 :id="'opt1-' + index + '-' + 1"
                 :value="1"
+                checked
               />
               <label class="form-check-label pt-1" :for="'opt1-' + index + '-' + 1"
                 >ไม่ชำรุด</label
@@ -106,6 +107,7 @@
                 :name="'opt2-' + index"
                 :id="'opt2-' + index + '-' + 1"
                 :value="1"
+                checked
               />
               <label class="form-check-label pt-1" :for="'opt2-' + index + '-' + 1"
                 >สะอาด</label
@@ -140,6 +142,7 @@
                 :name="'opt3-' + index"
                 :id="'opt3-' + index + '-' + 1"
                 :value="1"
+                checked
               />
               <label class="form-check-label pt-1" :for="'opt3-' + index + '-' + 1"
                 >ใช้งานได้ปกติ</label
