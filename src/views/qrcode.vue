@@ -118,6 +118,7 @@
   import { QrcodeStream } from 'vue-qrcode-reader';
   import { api,  start, close } from "@/helpers";
   import { useService } from "./service.js";
+  // import axios from "axios";
   const {authStore,appStore,route,gotoCdg} = useService();
   // const authStore = useAuthStore();
   const empid = authStore.userData.ses_empid;
@@ -231,8 +232,12 @@
     }
     let txID=tmp[1];
     start()
+    // const controller = new AbortController();
+    // const CancelToken = axios.CancelToken;
+    // const source = CancelToken.source();
     try{
-      let rs= await api.get(`/paperless/v1/getShare/${txID}`);
+      
+      let rs= await api.get(`/paperless/v1/getShare/${txID}`,{ timeout: 1000*60*3});
       
       if(rs.data?.pid == null || rs.data?.birthdate == null || rs.data?.name ==null){
         error.value='กรุณาแชร์ข้อมูลให้ครบดังนี้ <ul><li>เลขประจำตัวประชาชน</li><li>วัน/เดือน/ปีเกิด</li><li>ชื่อ-นามสกุล ภาษาไทย</li></ul>';
@@ -241,7 +246,7 @@
       }
       //create and get consent with get txID
       //`/paperless/v1/consent/${pid}`
-      let rs2=await api.post(`paperless/v1/consent/${rs.data.pid}/${jobid.value}`);
+      let rs2=await api.post(`paperless/v1/consent/${rs.data.pid}/${jobid.value}`,{timeout: 1000*60*3});
       close();
       let txID2=rs2.data.data.txID; 
       //
@@ -253,8 +258,15 @@
         txID:txID2,
       }
     }catch(err){
-      console.error('There was a problem with your Axios request:', err);
-      error.value=err.response.data.message
+        // console.log(err)
+        if (err?.code=='ECONNABORTED' || err?.code=='ERR_BAD_RESPONSE') {
+          console.log('Request canceled', err.message);
+          error.value=err.message
+        } else {
+          // console.error('Error:', error);
+          console.error('There was a problem with your Axios request:', err);
+          error.value=err.response?.data.message
+        }
       close();
 			return ;
     }
