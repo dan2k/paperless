@@ -289,7 +289,7 @@
         close();
         return;
       }
-      let rs2=await api.post(`/paperless/v1/approve/${jobid.value}/${satisfaction.value}/${empid}/${data.value.pid}/${data.value.name}/${data.value.dob}/${data.value.txID}/${rs.data.data.CreateDate}/${rs.data.data.UpdatedDate}`)
+      let rs2=await api.post(`/paperless/v1/approve/${jobid.value}/${satisfaction.value}/${empid}/${data.value.pid}/${data.value.name}/${data.value.dob}/${data.value.txID}/${rs.data.data.CreateDateFormatted}/${rs.data.data.UpdatedDateFormatted}`)
       console.log(rs2);
       await Swal({
           html: `${data.value.name} <br/> อนุมัติรายการเรียบร้อยแล้ว`,
