@@ -31,7 +31,7 @@
             <button v-if="!isHide" class="btn btn-primary btn-sm mx-2" @click="generateExcel(equips.data,equips.cats)">
                 พิมพ์สรุปจำนวนอุปกรณ์
             </button>
-            <button v-if="!isHide" :disabled="isDisabledApprove" class="btn btn-primary btn-sm" @click="approve(contractno,mm,year,route.params.pv,'P')">
+            <button v-if="!isHide" :disabled="isDisabledApprove" class="btn btn-primary btn-sm" @click="save()">
                 ยืนยันการบำรุงรักษา
             </button>
         </div>
@@ -64,7 +64,7 @@ const props = defineProps({
         required: true 
       },
 });
-const {checkPid,getApprove,getEquip,reportStore,router,route,authStore,generateExcel}=useReport()
+const {approve,checkPid,getApprove,getEquip,reportStore,router,route,authStore,generateExcel}=useReport()
 const equips=ref([]);
 const pid=authStore.userData.ses_empid;
 const isDisabledApprove=ref(true);
@@ -79,6 +79,10 @@ const back=(rg)=>{
 const gotoPm=(custptype,custpcode,custdesc)=>{
     router.push({path:`/report/pm/${rg}/${pv}/${pv_desc}/${custptype}/${custpcode}/${custdesc}`})
 }
+const save= async ()=>{
+    await approve(props.contractno,pid,pageLevel,pv,props.month,props.year)
+    isDisabledApprove.value=true;
+}
  onMounted(async()=>{
     reportStore.isLoading=true;
     let level=authStore.userData.sur_level;
@@ -86,6 +90,7 @@ const gotoPm=(custptype,custpcode,custdesc)=>{
     equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
     approves.value=await getApprove(props.contractno,pageLevel,pv,props.month,props.year)
     let tmp=await checkPid(props.contractno,pid,pageLevel,pv,props.month,props.year)
+    console.log({tmp})
     isDisabledApprove.value=tmp?.isDisabled;
     if(equips.value.data.length!=approves.value.data.length) isDisabledApprove.value=true;
     equips.value.data.map((ob)=>{

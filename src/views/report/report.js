@@ -68,6 +68,24 @@ export const useReport = () => {
       errAlert(e);
     }
   }
+  const approve = async(contractno,pid,pageLevel,pcode,mm,yyyy)=>{
+    start();
+    let status=false;
+    try{
+      let url = `/paperless/report/v1/approve/${contractno}/${pid}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
+      let rs = await api.post(url);
+      await Swal({
+            html: `${data.value.name} <br/> อนุมัติรายการเรียบร้อยแล้ว`,
+            icon: 'success',
+            confirmButtonText: 'ตกลง'
+      })
+      status=true;
+    }catch(e){
+      errAlert(e);
+    }
+    close();
+    return status
+  }
   const getDoc = async (contractno, rg) => {
     try {
       let url = `/paperless/report/v1/getDoc/${contractno}/${rg}`;
@@ -205,6 +223,7 @@ export const useReport = () => {
     getPm,
     getApprove,
     checkPid,
+    approve,
 
   };
 };
