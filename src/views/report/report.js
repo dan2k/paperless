@@ -50,6 +50,24 @@ export const useReport = () => {
       errAlert(e);
     }
   };
+  const getApprove = async(contractno,pageLevel,pcode,mm,yyyy)=>{
+    try{
+      let url = `/paperless/report/v1/getApprove/${contractno}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
+      let rs = await api.get(url);
+      return rs.data;
+    }catch(e){
+      errAlert(e);
+    }
+  }
+  const checkPid = async(pid,pageLevel,pcode,mm,yyyy)=>{
+    try{
+      let url = `/paperless/report/v1/checkPid/${pid}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
+      let rs = await api.get(url);
+      return rs.data;
+    }catch(e){
+      errAlert(e);
+    }
+  }
   const getDoc = async (contractno, rg) => {
     try {
       let url = `/paperless/report/v1/getDoc/${contractno}/${rg}`;
@@ -185,6 +203,8 @@ export const useReport = () => {
     getEquip,
     getDoc,
     getPm,
+    getApprove,
+    checkPid,
 
   };
 };

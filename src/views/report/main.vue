@@ -84,8 +84,9 @@ const gotoPcs = (rg) => {
 onMounted(async () => {
   reportStore.isLoading = true;
   let level = authStore.userData.sur_level;
+  let rg = authStore.userData.section_id;
   let pageLevel = 1;
-  equips.value = await getEquip(props.contractno, level, pageLevel, 0, 0);
+  equips.value = await getEquip(props.contractno, level, pageLevel, rg, 0);
   isHide.value = false;
   reportStore.isLoading = false;
 });

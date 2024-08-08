@@ -76,7 +76,13 @@ const back=()=>{
     reportStore.isLoading=true;
     let level=authStore.userData.sur_level;
     let pageLevel=2
-    equips.value=await getEquip(props.contractno,level,pageLevel,rg,0)
+    let pv=0;
+    if(level==3 || level==4){
+        pv=0;
+    }else{
+        pv=authStore.userData.cc;
+    }
+    equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
     isHide.value=false
     reportStore.isLoading=false;
     console.log({equips})
