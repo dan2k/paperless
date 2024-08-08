@@ -1,6 +1,6 @@
 import { useService } from "../service";
 import { useReportStore } from "@/store";
-import { api, start, close, errAlert } from "@/helpers";
+import { api, start, close, errAlert,confAlert } from "@/helpers";
 import { ref } from "vue";
 import * as ExcelJS from "exceljs";
 export const useReport = () => {
@@ -69,13 +69,16 @@ export const useReport = () => {
     }
   }
   const approve = async(contractno,pid,pageLevel,pcode,mm,yyyy)=>{
-    start();
     let status=false;
+    let {isConfirmed}=await confAlert('คุณต้องการยืนยันข้อมูลหรือไม่')
+    if(!isConfirmed) return status;
+    start();
+    
     try{
       let url = `/paperless/report/v1/approve/${contractno}/${pid}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
-      let rs = await api.post(url);
+      await api.post(url);
       await Swal({
-            html: `${data.value.name} <br/> อนุมัติรายการเรียบร้อยแล้ว`,
+            html: `อนุมัติรายการเรียบร้อยแล้ว`,
             icon: 'success',
             confirmButtonText: 'ตกลง'
       })

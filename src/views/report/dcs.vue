@@ -80,8 +80,10 @@ const gotoPm=(custptype,custpcode,custdesc)=>{
     router.push({path:`/report/pm/${rg}/${pv}/${pv_desc}/${custptype}/${custpcode}/${custdesc}`})
 }
 const save= async ()=>{
-    await approve(props.contractno,pid,pageLevel,pv,props.month,props.year)
-    isDisabledApprove.value=true;
+    let pageLevel=3
+    let status=await approve(props.contractno,pid,pageLevel,pv,props.month,props.year)
+    console.log({status})
+    isDisabledApprove.value=status;
 }
  onMounted(async()=>{
     reportStore.isLoading=true;
@@ -92,7 +94,7 @@ const save= async ()=>{
     let tmp=await checkPid(props.contractno,pid,pageLevel,pv,props.month,props.year)
     console.log({tmp})
     isDisabledApprove.value=tmp?.isDisabled;
-    if(equips.value.data.length!=approves.value.data.length) isDisabledApprove.value=true;
+    if(equips.value?.data.length!=approves.value?.data.length) isDisabledApprove.value=true;
     equips.value.data.map((ob)=>{
         let t=approves.value.data.filter((ob2,i2)=>ob.cust_ptype==ob2.cust_ptype && ob.rg==ob2.cust_pcode)
         ob.approve=t.length?t[0].th_fullname:false;
