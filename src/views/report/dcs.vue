@@ -85,8 +85,8 @@ const gotoPm=(custptype,custpcode,custdesc)=>{
     let pageLevel=3
     equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
     approves.value=await getApprove(props.contractno,pageLevel,pv,props.month,props.year)
-    let tmp=await checkPid(pid,pageLevel,pv,props.month,props.year)
-    isDisabledApprove.value=!tmp.data?.length
+    let tmp=await checkPid(props.contractno,pid,pageLevel,pv,props.month,props.year)
+    isDisabledApprove.value=tmp?.isDisabled;
     if(equips.value.data.length!=approves.value.data.length) isDisabledApprove.value=true;
     equips.value.data.map((ob)=>{
         let t=approves.value.data.filter((ob2,i2)=>ob.cust_ptype==ob2.cust_ptype && ob.rg==ob2.cust_pcode)

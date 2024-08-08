@@ -59,9 +59,9 @@ export const useReport = () => {
       errAlert(e);
     }
   }
-  const checkPid = async(pid,pageLevel,pcode,mm,yyyy)=>{
+  const checkPid = async(contractno,pid,pageLevel,pcode,mm,yyyy)=>{
     try{
-      let url = `/paperless/report/v1/checkPid/${pid}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
+      let url = `/paperless/report/v1/checkPid/${contractno}/${pid}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
       let rs = await api.get(url);
       return rs.data;
     }catch(e){
