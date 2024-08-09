@@ -166,6 +166,11 @@
           <td></td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6">&nbsp;</td>
+        </tr>
+      </tfoot>
     </table>
     
     
@@ -238,12 +243,14 @@
     visibility: hidden;
     display: none;
   }
+
   
   tbody td,
   tbody tr {
     border-bottom-color: #fff;
     border-bottom-style: none;
     border-bottom-width: 0;
+    
     border-top-color: #fff;
     border-top-style: none;
     border-top-width: 0;
@@ -272,6 +279,16 @@
     border-bottom-style: solid;
     border-bottom-width: 1;
   }
+  tfoot td,
+  tfoot tr {
+    border:#fff solid 0;
+    border-top-color: #000;
+    border-top-style: solid;
+    border-top-width: 1;
+  }
+    
+
+
   /* .tbrep1  thead tr:nth-child(2) th:nth-child(1) {
     border: 1 solid #c7c5c5 !important;
   } */
@@ -280,6 +297,8 @@
     font-size:12px;
     display:inline;
   }
+
+  
   @page {
     size: "A4";
     margin-top: 7mm;
@@ -353,9 +372,6 @@ onMounted(async () => {
 
 });
 const print = () => {
-  window.scrollTo(0, 0);
-  setTimeout(() => {
-    window.print();
-  }, 2000);
+  window.print();
 };
 </script>
