@@ -68,6 +68,15 @@ export const useReport = () => {
       errAlert(e);
     }
   }
+  const getOfficer = async(region,mm,yyyy)=>{
+    try{
+      let url = `/paperless/report/v1/officer/${region}/${mm}/${yyyy}`;
+      let rs = await api.get(url);
+      return rs.data;
+    }catch(e){
+      errAlert(e);
+    }
+  }
   const approve = async(contractno,pid,pageLevel,pcode,mm,yyyy)=>{
     let status=false;
     let {isConfirmed}=await confAlert('คุณต้องการยืนยันข้อมูลหรือไม่')
@@ -227,6 +236,7 @@ export const useReport = () => {
     getApprove,
     checkPid,
     approve,
+    getOfficer
 
   };
 };

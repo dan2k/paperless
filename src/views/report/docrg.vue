@@ -172,18 +172,18 @@
     <div class="footer w-100 mt-5 p-0">
         <div class="w-100" style="height:100px;">&nbsp;</div>
         <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
-        <div class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>จพง.ปค.ชก</div>
+        <div class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==1)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==1)[0]?.position_desc}}</div>
         <br><br>
         <table class="w-100 mx-auto">
             <tbody>
                 <tr>
                     <td align="center">
                         <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
-                        <div class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>จ.ปค.ชง.</div>
+                        <div class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==2)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==2)[0]?.position_desc}}</div>
                     </td>
                     <td align="center">
                         <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
-                        <div class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>จ.ปค.ชง.</div>
+                        <div class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==3)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==3)[0]?.position_desc}}</div>
                     </td>
                 </tr>
             </tbody>
@@ -322,6 +322,7 @@ const {
   authStore,
   months,
   years,
+  getOfficer,
 } = useReport();
 const isHide = ref(true);
 const docs = ref([]);
@@ -333,6 +334,8 @@ const back = () => {
 const mmTh = ref(null);
 const yyTh = ref(null);
 const contract = ref({});
+const officers=ref([]);
+
 onMounted(async () => {
   mmTh.value = months.value.filter((it) => it.id == props.month)[0];
   yyTh.value = years.value.filter((it) => it.id == props.year)[0];
@@ -343,9 +346,11 @@ onMounted(async () => {
   docs.value = tmp.data;
   contract.value = tmp.contract;
   console.log(tmp);
+  officers.value= await getOfficer(rg.value,props.month,props.year)
   isHide.value = false;
   reportStore.isLoading = false;
   rg_desc.value = regions.value.filter((it) => it.rgid == Number(6))[0];
+
 });
 const print = () => {
   window.scrollTo(0, 0);
