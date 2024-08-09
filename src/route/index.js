@@ -35,6 +35,7 @@ const routes = [
 		path: "/qrcode/:jobid",
 		name: "qrcode",
 		component: () => import("../views/qrcode.vue"),
+		beforeEnter: beforeEnter,	
 	},
 	{
 		path: "/",
@@ -78,16 +79,16 @@ const routes = [
 		component: () => import("../views/sv_detail.vue"),
 		beforeEnter: beforeEnter,
 	},
+	// {
+	// 	path:"/svpc/:jobid",
+	// 	name:'svpc',
+	// 	component: () => import("../views/sv_detailPC.vue"),
+	// 	beforeEnter: beforeEnter,
+	// },
 	{
 		path:"/svpc/:jobid",
-		name:'svpc',
-		component: () => import("../views/sv_detailPC.vue"),
-		beforeEnter: beforeEnter,
-	},
-	{
-		path:"/svpc-dev/:jobid",
 		name:'svpc-dev',
-		component: () => import("../views/sv_detailPC-dev.vue"),
+		component: () => import("../views/sv_detailPC-new.vue"),
 		beforeEnter: beforeEnter,
 	},
 	
