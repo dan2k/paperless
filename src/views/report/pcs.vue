@@ -23,14 +23,17 @@
                     <td v-for="cat in equips.cats" :key="cat.cat_id" align="center" valign="middle">
                         {{ equip[cat.cat_id]|0 }}
                     </td>
-                    <td></td>
+                    <td align="center" valign="middle">{{ equip.approve?equip.approve:'-' }}</td>
                     <!-- <td align="center" valign="middle"><i class="fa-solid fa-print"></i></td> -->
                 </tr>
             </tbody>
         </table>    
         <div class="w-100 mx-auto text-center">
-            <button v-if="!isHide" class="btn btn-primary btn-sm" @click="generateExcel(equips.data,equips.cats)">
+            <button v-if="!isHide" class="btn btn-primary btn-sm mx-2" @click="generateExcel(equips.data,equips.cats)">
                 พิมพ์สรุปจำนวนอุปกรณ์
+            </button>
+            <button v-if="!isHide" :disabled="isDisabledApprove" class="btn btn-primary btn-sm" @click="save()">
+                ยืนยันการบำรุงรักษา
             </button>
         </div>
         <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">กำลังประมวลผล......</div>
@@ -62,8 +65,11 @@ const props = defineProps({
         required: true 
       },
 });
-const {getEquip,reportStore,router,route,authStore,generateExcel}=useReport()
+const {approve,checkPid,getApprove,getEquip,reportStore,router,route,authStore,generateExcel}=useReport()
 const equips=ref([]);
+const pid=authStore.userData.ses_empid;
+const isDisabledApprove=ref(true);
+const approves=ref([]);
 const isHide=ref(true);
 const rg=route.params.rg;
 const gotoDcs=(pv,pv_desc)=>{
@@ -71,6 +77,12 @@ const gotoDcs=(pv,pv_desc)=>{
 }
 const back=()=>{
     router.push({path:`/report/main/`+Date.now()})
+}
+const save= async ()=>{
+    let pageLevel=2
+    let status=await approve(props.contractno,pid,pageLevel,pv,props.month,props.year)
+    console.log({status})
+    isDisabledApprove.value=status;
 }
  onMounted(async()=>{
     reportStore.isLoading=true;
@@ -83,9 +95,19 @@ const back=()=>{
         pv=authStore.userData.cc;
     }
     equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
+    approves.value=await getApprove(props.contractno,pageLevel,rg,props.month,props.year)
+    let tmp=await checkPid(props.contractno,pid,pageLevel,rg,props.month,props.year)
+    console.log({tmp})
+    isDisabledApprove.value=tmp?.isDisabled;
+    if(equips.value?.data.length!=approves.value?.data.length) isDisabledApprove.value=true;
+    equips.value.data.map((ob)=>{
+        let t=approves.value.data.filter((ob2,i2)=>ob.cust_ptype==ob2.cust_ptype && ob.rg==ob2.cust_pcode)
+        ob.approve=t.length?t[0].th_fullname:false;
+        return ob
+    })
     isHide.value=false
     reportStore.isLoading=false;
-    console.log({equips})
+    console.log({equips,approves})
 })
  
 </script>
