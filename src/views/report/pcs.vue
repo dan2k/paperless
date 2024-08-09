@@ -80,7 +80,7 @@ const back=()=>{
 }
 const save= async ()=>{
     let pageLevel=2
-    let status=await approve(props.contractno,pid,pageLevel,pv,props.month,props.year)
+    let status=await approve(props.contractno,pid,pageLevel,rg,props.month,props.year)
     console.log({status})
     isDisabledApprove.value=status;
 }
