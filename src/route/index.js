@@ -151,6 +151,13 @@ const routes = [
 			},
 		],
 	},
+	{
+		path: "/admin",
+		name: "admin",
+		component: () => import("../views/report/index.vue"),
+		beforeEnter: beforeEnter,
+	},
+	
 	
 ]
 const router = createRouter({
