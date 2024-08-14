@@ -154,8 +154,19 @@ const routes = [
 	{
 		path: "/admin",
 		name: "admin",
-		component: () => import("../views/report/index.vue"),
+		component: () => import("../views/admin/index.vue"),
 		beforeEnter: beforeEnter,
+		children:[
+			{
+				path: '',
+				component: ()=>import("@/views/admin/manage-approve.vue"),
+			},
+			{
+				path: 'manage-approve',
+				name:'manage-approve',
+				component: ()=>import("@/views/admin/manage-approve.vue"),
+			},
+		],
 	},
 	
 	
