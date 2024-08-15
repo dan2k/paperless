@@ -22,8 +22,21 @@ export const useAdmin = () => {
   const getPlace=async (placetype,sectionid)=>{
     start()
     try{
-      let url = `/paperless/admin/v1/manage-approve/${placetype.trim()}/${sectionid}`;
+      let url = `/paperless/admin/v1/place/${placetype.trim()}/${sectionid}`;
       console.log({url});
+      let rs = await api.get(url);
+      close()
+      return rs.data;
+    }catch(e){
+      errAlert(e);
+    }
+    close()
+  }
+  const getOffice=async (custptype,custpcode)=>{
+    if(!custptype || !custpcode) return;
+    start()
+    try{
+      let url = `/paperless/admin/v1/office/${custptype}/${custpcode}`;
       let rs = await api.get(url);
       close()
       return rs.data;
@@ -39,5 +52,6 @@ export const useAdmin = () => {
     router,
     route,
     getPlace,
+    getOffice,
   };
 };

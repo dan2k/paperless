@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid ">
         <nav>
-            <RouterLink to="/admin/manage-approve">จัดการผู้อนุมัติ</RouterLink>
+            <RouterLink to="/admin/manage-approve"><i class="fa-solid fa-gear"></i> จัดการผู้อนุมัติ</RouterLink>
         </nav>
         <hr/>
         <router-view ></router-view>
