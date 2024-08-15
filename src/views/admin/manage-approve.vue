@@ -128,7 +128,7 @@
 	}
 	.tabledata tbody tr > *:first-child {
 		/* margin-top: 4%; */
-		background-color: #212529;
+		background-color: rgb(13, 202, 240);
 		color: white;
 		text-align: left;
 	}
