@@ -166,6 +166,11 @@ const routes = [
 				name:'manage-approve',
 				component: ()=>import("@/views/admin/manage-approve.vue"),
 			},
+			{
+				path: 'add-approve/:custptype/:custpcode',
+				name:'add-approve',
+				component: ()=>import("@/views/admin/add-approve.vue"),
+			},
 		],
 	},
 	

@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="tableresponsive" v-if="offices">
-      <div class="float-end text-primary" style="cursor:pointer"><i class="fa-solid fa-user-plus"></i>&nbsp;</div>
+      <div class="float-end text-primary" style="cursor:pointer" @click="add()"><i class="fa-solid fa-user-plus"></i>&nbsp;</div>
       <table class="tabledata ">
         <thead class="bg-info text-white">
           <tr>
@@ -147,7 +147,7 @@
 <script setup>
 import { useAdmin } from "./admin";
 import { onMounted, ref} from "vue";
-const { authStore, getPlace,getOffice } = useAdmin();
+const { authStore, getPlace,getOffice,router } = useAdmin();
 const placetype = authStore.userData.ses_placetype;
 const sectionid = authStore.userData.section_id;
 const places = ref([]);
@@ -162,4 +162,7 @@ onMounted(async () => {
   places.value = await getPlace(placetype, sectionid);
   console.log(places.value);
 });
+const add=(custptype,custpcode)=>{
+    router.push({name:'add-approve',params:{custptype:place.value?.cust_ptype,custpcode:place.value?.cust_pcode}})
+}
 </script>
