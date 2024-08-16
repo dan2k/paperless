@@ -72,6 +72,7 @@ const isDisabledApprove=ref(true);
 const approves=ref([]);
 const isHide=ref(true);
 const rg=route.params.rg;
+const officerid=ref(null)
 const gotoDcs=(pv,pv_desc)=>{
     router.push({path:`/report/dcs/${rg}/${pv}/${pv_desc}`})
 }
@@ -80,7 +81,7 @@ const back=()=>{
 }
 const save= async ()=>{
     let pageLevel=2
-    let status=await approve(props.contractno,pid,pageLevel,rg,props.month,props.year)
+    let status=await approve(props.contractno,officerid.value,pageLevel,rg,props.month,props.year)
     console.log({status})
     isDisabledApprove.value=status;
 }
@@ -97,6 +98,7 @@ const save= async ()=>{
     equips.value=await getEquip(props.contractno,level,pageLevel,rg,pv)
     approves.value=await getApprove(props.contractno,pageLevel,rg,props.month,props.year)
     let tmp=await checkPid(props.contractno,pid,pageLevel,rg,props.month,props.year)
+    officerid.value=tmp.officer_id
     console.log({tmp})
     isDisabledApprove.value=tmp?.isDisabled;
     if(equips.value?.data.length!=approves.value?.data.length) isDisabledApprove.value=true;

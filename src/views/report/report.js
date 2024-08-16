@@ -77,14 +77,14 @@ export const useReport = () => {
       errAlert(e);
     }
   }
-  const approve = async(contractno,pid,pageLevel,pcode,mm,yyyy)=>{
+  const approve = async(contractno,officerid,pageLevel,pcode,mm,yyyy)=>{
     let status=false;
     let {isConfirmed}=await confAlert('คุณต้องการยืนยันข้อมูลหรือไม่')
     if(!isConfirmed) return status;
     start();
     
     try{
-      let url = `/paperless/report/v1/approve/${contractno}/${pid}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
+      let url = `/paperless/report/v1/approve/${contractno}/${officerid}/${pageLevel}/${pcode}/${mm}/${yyyy}`;
       await api.post(url);
       await Swal({
             html: `อนุมัติรายการเรียบร้อยแล้ว`,
