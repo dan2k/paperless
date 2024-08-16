@@ -147,7 +147,7 @@
 <script setup>
 import { useAdmin } from "./admin";
 import { onMounted, ref} from "vue";
-const { authStore, getPlace,getOffice,router } = useAdmin();
+const { authStore, getPlace,getOffice,router,route } = useAdmin();
 const placetype = authStore.userData.ses_placetype;
 const sectionid = authStore.userData.section_id;
 const places = ref([]);
@@ -161,6 +161,14 @@ onMounted(async () => {
 
   places.value = await getPlace(placetype, sectionid);
   console.log(places.value);
+  if(route.query?.custptype && route.query?.custpcode){
+       let tmp=places.value.data.filter((ob,i)=>ob.cust_ptype==route.query.custptype && ob.cust_pcode==route.query.custpcode)     
+       if(tmp.length>0){
+          place.value=tmp[0]
+          changePlace()
+       }  
+
+  }
 });
 const add=(custptype,custpcode)=>{
     router.push({name:'add-approve',params:{custptype:place.value?.cust_ptype,custpcode:place.value?.cust_pcode}})

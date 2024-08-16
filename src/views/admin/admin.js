@@ -1,5 +1,5 @@
 import { useService } from "../service";
-import { api, start, close, errAlert,confAlert } from "@/helpers";
+import { api, start, close, errAlert,confAlert,okAlert } from "@/helpers";
 import { ref } from "vue";
 
 export const useAdmin = () => {
@@ -45,7 +45,66 @@ export const useAdmin = () => {
     }
     close()
   }
-
+  const getUser=async (custptype,custpcode)=>{
+    if(!custptype || !custpcode) return;
+    start()
+    try{
+      let url = `/paperless/admin/v1/user/${custptype}/${custpcode}`;
+      let rs = await api.get(url);
+      close()
+      return rs.data;
+    }catch(e){
+      errAlert(e);
+    }
+    close()
+  }
+  const getPosition=async ()=>{
+    start()
+    try{
+      let url = `/paperless/admin/v1/position`;
+      let rs = await api.get(url);
+      close()
+      return rs.data;
+    }catch(e){
+      errAlert(e);
+    }
+    close()
+  }
+  const addOfficer=async (user,level,position,custptype,custpcode,dstart,dend)=>{
+    start()
+    try{
+      let url = `/paperless/admin/v1/office`;
+      let data={
+        pid:user.user_id,
+        sex:user.sex,
+        title:user.title_name,
+        fname:user.user_fname,
+        lname:user.user_lname,
+        level,
+        position:position.position_id,
+        dstart,
+        dend,
+        custptype,
+        custpcode,
+        empid:authStore.userData.ses_empid,
+      }
+       let rs = await api.post(url,data);
+      close()
+      if(rs.data.status){
+        await okAlert("บันทึกข้อมูลเรียบร้อยแล้ว",()=>{
+          router.push({name:'manage-approve',query:{custptype,custpcode}})
+        })
+      } 
+    }catch(e){
+      console.log(e)
+      if(e.response.status==404){
+        errAlert(e.response.data.msg);
+        return;  
+      }
+      errAlert(e);
+    }
+    close()
+  }
   return {
     appStore,
     authStore,
@@ -53,5 +112,9 @@ export const useAdmin = () => {
     route,
     getPlace,
     getOffice,
+    getUser,
+    getPosition,
+    addOfficer,
+    errAlert,
   };
 };
