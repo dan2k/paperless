@@ -125,7 +125,7 @@
             await errAlert("กรุณาระบุช่วงเวลาการทำงานให้ครบถ้วน")
             return ;
         }
-        addOfficer(user.value,level.value,position.value,route.params.custptype,route.params.custpcode,format(date.value[0]),format(date.value[0]))
+        addOfficer(user.value,level.value,position.value,route.params.custptype,route.params.custpcode,format(date.value[0]),format(date.value[1]))
 
     }
     const back=()=>{

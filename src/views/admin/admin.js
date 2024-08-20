@@ -45,6 +45,18 @@ export const useAdmin = () => {
     }
     close()
   }
+  const getOfficer=async (officerid)=>{
+    start()
+    try{
+      let url = `/paperless/admin/v1/office/${officerid}`;
+      let rs = await api.get(url);
+      close()
+      return rs.data;
+    }catch(e){
+      errAlert(e);
+    }
+    close()
+  }
   const getUser=async (custptype,custpcode)=>{
     if(!custptype || !custpcode) return;
     start()
@@ -105,6 +117,41 @@ export const useAdmin = () => {
     }
     close()
   }
+  const editOfficer=async (officerid,user,level,position,custptype,custpcode,dstart,dend)=>{
+    start()
+    try{
+      let url = `/paperless/admin/v1/office/${officerid}`;
+      let data={
+        pid:user.user_id,
+        sex:user.sex,
+        title:user.title_name,
+        fname:user.user_fname,
+        lname:user.user_lname,
+        level,
+        position:position.position_id,
+        dstart,
+        dend,
+        custptype,
+        custpcode,
+        empid:authStore.userData.ses_empid,
+      }
+       let rs = await api.put(url,data);
+      close()
+      if(rs.data.status){
+        await okAlert("ปรับปรุงข้อมูลเรียบร้อยแล้ว",()=>{
+          router.push({name:'manage-approve',query:{custptype,custpcode}})
+        })
+      } 
+    }catch(e){
+      console.log(e)
+      if(e.response.status==404){
+        errAlert(e.response.data.msg);
+        return;  
+      }
+      errAlert(e);
+    }
+    close()
+  }
   const deleteOfficer=async (officerid,custptype,custpcode)=>{
     let {isConfirmed}=await confAlert("คุณต้องการลบรายการนี้หรือไม่")
     if(!isConfirmed) return 'no';
@@ -142,5 +189,7 @@ export const useAdmin = () => {
     addOfficer,
     errAlert,
     deleteOfficer,
+    getOfficer,
+    editOfficer
   };
 };

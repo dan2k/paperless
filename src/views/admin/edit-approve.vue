@@ -90,13 +90,14 @@
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
     import { useAdmin } from "./admin";
-    const {route,router,getUser,getPosition,addOfficer,errAlert} = useAdmin();
+    const {route,router,getOfficer,getUser,getPosition,editOfficer,errAlert} = useAdmin();
     const date = ref();
     const users=ref([]);
     const user=ref("");
     const level=ref("");
     const positions=ref([])
     const position=ref("")
+    const officer=ref([])
     const format=(date) => {
 		const day = date.getDate();
 		const month = date.getMonth() + 1;
@@ -104,9 +105,18 @@
 		return `${year}-${month}-${day}`;
 	}
     onMounted(async ()=>{
-        date.value=[new Date(),new Date()];
+        
         users.value=await getUser(route.params.custptype,route.params.custpcode)
         positions.value= await getPosition()
+        let tmp=await getOfficer(route.params.officerid)
+        officer.value=tmp.data[0];
+        tmp=users.value.data.filter((ob,i)=>ob.user_id==officer.value.pid )
+        user.value=tmp[0]
+        level.value=officer.value.level ;
+        tmp=positions.value.data.filter((ob,i)=>ob.position_id==officer.value.position_id)
+        position.value=tmp[0]
+        
+        date.value=[new Date(officer.value.start),new Date(officer.value.end)];
     })
     const save=async ()=>{
         if(!level.value){
@@ -125,7 +135,7 @@
             await errAlert("กรุณาระบุช่วงเวลาการทำงานให้ครบถ้วน")
             return ;
         }
-        addOfficer(user.value,level.value,position.value,route.params.custptype,route.params.custpcode,format(date.value[0]),format(date.value[0]))
+        editOfficer(route.params.officerid,user.value,level.value,position.value,route.params.custptype,route.params.custpcode,format(date.value[0]),format(date.value[1]))
 
     }
     const back=()=>{
