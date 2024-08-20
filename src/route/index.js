@@ -171,6 +171,11 @@ const routes = [
 				name:'add-approve',
 				component: ()=>import("@/views/admin/add-approve.vue"),
 			},
+			{
+				path: 'edit-approve/:officerid/:custptype/:custpcode',
+				name:'edit-approve',
+				component: ()=>import("@/views/admin/edit-approve.vue"),
+			},
 		],
 	},
 	

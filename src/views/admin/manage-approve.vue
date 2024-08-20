@@ -39,8 +39,8 @@
             <td data-title="ตำแหน่ง">{{ o.position_desc }}</td>
             <td data-title="ประเภท">{{ o.level_desc }}</td>
             <td data-title="#">
+                <span style="cursor:pointer" class="mx-1" @click="edit(o.officer_id,o.cust_ptype,o.cust_pcode)"><i class="fa-solid fa-pen text-info"></i></span>
                 <span style="cursor:pointer" class="mx-1" @click="del(o.officer_id,o.cust_ptype,o.cust_pcode)"><i class="fa-solid fa-trash text-danger"></i></span>
-                <span style="cursor:pointer" class="mx-1"><i class="fa-solid fa-pen text-info"></i></span>
             </td>
           </tr>
         </tbody>
@@ -134,4 +134,7 @@ const del=async (officerid,custptype,custpcode)=>{
   if(tmp=='no') return;
   offices.value=tmp;
 }
+const edit=async (officerid,custptype,custpcode)=>{
+  router.push({name:'edit-approve',params:{officerid,custptype,custpcode}})
+};
 </script>
