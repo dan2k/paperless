@@ -105,6 +105,31 @@ export const useAdmin = () => {
     }
     close()
   }
+  const deleteOfficer=async (officerid,custptype,custpcode)=>{
+    let {isConfirmed}=await confAlert("คุณต้องการลบรายการนี้หรือไม่")
+    if(!isConfirmed) return 'no';
+    start()
+    try{
+      let url = `/paperless/admin/v1/office/${officerid}`;
+       let rs = await api.delete(url);
+      close()
+      if(rs.data.status){
+        await okAlert("ลบข้อมูลเรียบร้อยแล้ว",()=>{
+          //
+        })
+        return await getOffice(custptype,custpcode)
+      } 
+    }catch(e){
+      console.log(e)
+      if(e.response.status==404){
+        errAlert(e.response.data.msg);
+        return;  
+      }
+      errAlert(e);
+    }
+    close()
+  }
+  
   return {
     appStore,
     authStore,
@@ -116,5 +141,6 @@ export const useAdmin = () => {
     getPosition,
     addOfficer,
     errAlert,
+    deleteOfficer,
   };
 };

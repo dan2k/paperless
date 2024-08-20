@@ -13,7 +13,7 @@
     </div>
     <div class="tableresponsive" v-if="offices">
       <div class="float-end text-primary" style="cursor:pointer" @click="add()"><i class="fa-solid fa-user-plus"></i>&nbsp;</div>
-      <table class="tabledata ">
+      <table class="tabledata bg-white">
         <thead class="bg-info text-white">
           <tr>
             <th>ลำดับ</th>
@@ -39,7 +39,7 @@
             <td data-title="ตำแหน่ง">{{ o.position_desc }}</td>
             <td data-title="ประเภท">{{ o.level_desc }}</td>
             <td data-title="#">
-                <span style="cursor:pointer" class="mx-1"><i class="fa-solid fa-trash text-danger"></i></span>
+                <span style="cursor:pointer" class="mx-1" @click="del(o.officer_id,o.cust_ptype,o.cust_pcode)"><i class="fa-solid fa-trash text-danger"></i></span>
                 <span style="cursor:pointer" class="mx-1"><i class="fa-solid fa-pen text-info"></i></span>
             </td>
           </tr>
@@ -75,51 +75,7 @@
 }
 
 @media only screen and (max-width: 430px) {
-  /* .tableresponsive table,
-  .tableresponsive thead,
-  .tableresponsive tbody,
-  .tableresponsive th,
-  .tableresponsive td,
-  .tableresponsive tr {
-    display: block;
-  }
-
-  .tableresponsive thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  .tableresponsive tr {
-    border: 1px solid #ccc;
-  }
-
-  .tableresponsive td {
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 45% !important;
-    white-space: normal;
-    text-align: left !important;
-  }
-
-  .tableresponsive td:before {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    width: 50%;
-    padding-right: 10px;
-    white-space: nowrap;
-    text-align: left;
-    font-weight: bold;
-  }
-
-  .tableresponsive td:before {
-    content: attr(data-title) "\003A\00a0\00a0";
-	float: left;
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: 1em;
-  } */
+ 
   .tabledata thead {
 		display: none;
 	}
@@ -147,7 +103,7 @@
 <script setup>
 import { useAdmin } from "./admin";
 import { onMounted, ref} from "vue";
-const { authStore, getPlace,getOffice,router,route } = useAdmin();
+const { authStore,deleteOfficer, getPlace,getOffice,router,route } = useAdmin();
 const placetype = authStore.userData.ses_placetype;
 const sectionid = authStore.userData.section_id;
 const places = ref([]);
@@ -172,5 +128,10 @@ onMounted(async () => {
 });
 const add=(custptype,custpcode)=>{
     router.push({name:'add-approve',params:{custptype:place.value?.cust_ptype,custpcode:place.value?.cust_pcode}})
+}
+const del=async (officerid,custptype,custpcode)=>{
+  let tmp=await deleteOfficer(officerid,custptype,custpcode)
+  if(tmp=='no') return;
+  offices.value=tmp;
 }
 </script>
