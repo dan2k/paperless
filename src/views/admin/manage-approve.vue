@@ -126,7 +126,7 @@ onMounted(async () => {
 
   }
 });
-const add=(custptype,custpcode)=>{
+const add=()=>{
     router.push({name:'add-approve',params:{custptype:place.value?.cust_ptype,custpcode:place.value?.cust_pcode}})
 }
 const del=async (officerid,custptype,custpcode)=>{
