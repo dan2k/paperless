@@ -161,6 +161,7 @@ const mode=import.meta.env.MODE;
 onMounted(()=>{
   appStore.setTitle="หน้าหลัก"
   appStore.toggle=!authStore.isLogin;
+  console.log(authStore.userData);
 })
 const home = ()=>{
   window.location.href='/mpsicc/cdg';
