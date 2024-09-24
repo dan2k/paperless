@@ -72,7 +72,7 @@ const change=()=>{
     router.push({path:'/report/main/'+Date.now()})
 }
 onMounted(async ()=>{
-    appStore.setTitle("รายงานการบำรุงรักษาระบบคอมพิวเตอร์")
+    appStore.title="รายงานการบำรุงรักษาระบบคอมพิวเตอร์";
     contractnos.value=await getContract()
     reportStore.isLoading=false;
     console.log('isLoading',reportStore.isLoading)
