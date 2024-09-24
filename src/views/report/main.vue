@@ -29,7 +29,7 @@
           <td v-for="cat in equips.cats" :key="cat.cat_id" align="center" valign="middle">
             {{ equip[cat.cat_id] | 0 }}
           </td>
-          <td></td>
+          <td align="center" valign="middle">{{ equip.approve?equip.approve:'-' }}</td>
           <td align="center" valign="middle">
             <span style="cursor: pointer" @click="openDocRg(equip.rg)"
               ><i class="fa-solid fa-print"></i
