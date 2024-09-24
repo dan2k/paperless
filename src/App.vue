@@ -124,7 +124,16 @@
               </li> -->
               <li class="nav-item" v-if="mode!=='development'">
                 <a class="nav-link" href="#" @click="home()"
-                  ><i class="fa-solid fa-house"></i></a>
+                  >ICC</a>
+              </li>
+              <li class="nav-item" v-if="authStore.isLogin">
+                  <span style="cursor:pointer" @click="$router.push({path:'/'})" class="nav-link"><i class="fa-solid fa-house"></i></span>
+              </li>
+              <li class="nav-item" v-if="authStore.isLogin && authStore.userData.user_type==2">
+                  <span style="cursor:pointer" @click="gotoAdmin()" class="nav-link">Admin</span>
+              </li>
+              <li class="nav-item" v-if="authStore.isLogin && authStore.userData.user_type==1">
+                  <span style="cursor:pointer" @click="$router.push({path:'/report'})" class="nav-link">Report</span>
               </li>
               <li class="nav-item" v-if="authStore.isLogin">
                 <a class="nav-link" href="#" @click="logout"
@@ -146,16 +155,18 @@
 <script setup>
 import { onMounted } from "vue";
 import {useService} from "./views/service"
-const{authStore,appStore}=useService()
+const{router,authStore,appStore}=useService()
 // const toggle = ref(false);
 const mode=import.meta.env.MODE;
 onMounted(()=>{
   appStore.setTitle="หน้าหลัก"
   appStore.toggle=!authStore.isLogin;
-
 })
 const home = ()=>{
   window.location.href='/mpsicc/cdg';
+}
+const gotoAdmin=()=>{
+  router.push({path:'/admin'});
 }
 const logout = () => {
   if(import.meta.env.MODE=="development"){
