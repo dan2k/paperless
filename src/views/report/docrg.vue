@@ -174,8 +174,8 @@
     </table>
     
     
-    <div class="footer w-100 mt-5 p-0">
-        <div class="w-100" style="height:100px;">&nbsp;</div>
+    <div class="footer w-100 mt-5 p-0" >
+        <div class="w-100" style="height:30px;">&nbsp;</div>
         <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
         <div class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==1)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==1)[0]?.position_desc}}</div>
         <br><br>
@@ -359,7 +359,7 @@ onMounted(async () => {
   mmTh.value = months.value.filter((it) => it.id == props.month)[0];
   yyTh.value = years.value.filter((it) => it.id == props.year)[0];
   rg.value = route.params.rg;
-  console.log(rg);
+  console.log(rg.value);
   reportStore.isLoading = true;
   let tmp = await getDoc(props.contractno, rg.value);
   docs.value = tmp.data;
@@ -368,7 +368,7 @@ onMounted(async () => {
   officers.value= await getOfficer(rg.value,props.month,props.year)
   isHide.value = false;
   reportStore.isLoading = false;
-  rg_desc.value = regions.value.filter((it) => it.rgid == Number(6))[0];
+  rg_desc.value = regions.value.filter((it) => it.rgid == Number(rg.value))[0];
 
 });
 const print = () => {
