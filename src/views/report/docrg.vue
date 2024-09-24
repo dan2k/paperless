@@ -172,9 +172,7 @@
         </tr>
       </tfoot>
     </table>
-    
-    
-    <div class="footer w-100 mt-5 p-0">
+    <div id="my-div" class="footer w-100 mt-5 p-0">
         <div class="w-100" style="height:100px;">&nbsp;</div>
         <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
         <div class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==1)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==1)[0]?.position_desc}}</div>
@@ -228,7 +226,7 @@
   body * {
     visibility: hidden;
   }
-
+  
   #print * {
     /* force-browsers-to-print-background */
     -webkit-print-color-adjust: exact !important;
