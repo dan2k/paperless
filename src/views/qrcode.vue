@@ -73,8 +73,8 @@
               <h5 class="text-center text-primary">*ประเมินความพึงพอใจ*</h5>
               <hr/>
               <div class="form-check px-5 my-3" v-for="s in optSatisfaction">
-                <input class="form-check-input" :id="s.value" type="radio"   :value="s.value" v-model="satisfaction">
-                <label class="form-check-label" :for="s.value">
+                <input  class="form-check-input" :id="s.value" type="radio"   :value="s.value" v-model="satisfaction">
+                <label style="font-weight: bold;" class="form-check-label" :for="s.value">
                   {{ s.label }}
                 </label>
               </div>
