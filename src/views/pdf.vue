@@ -417,8 +417,8 @@
         <div class="underline" style="width: 78%; float: left">&nbsp;</div>
       </div>
       <div style="width: 50%; float: right">
-        <div style="width: 21%; float: left; text-align: right">ลูกค้า :</div>
-        <div class="underline" style="width: 78%; float: left">&nbsp;</div>
+        <div style="width: 21%; float: left; text-align: right">ลูกค้า : </div>
+        <div class="underline" style="width: 78%; float: left">ThaID txID:&nbsp;{{ approves[0]?.txID }}</div>
       </div>
     </div>
     <div
@@ -432,12 +432,13 @@
       </div>
       <div style="width: 50%; float: left">
         <div style="width: 21%; float: left; text-align: right">(</div>
-        <div class="underline" style="width: 71%; float: left">&nbsp;</div>
+        <div class="underline" style="width: 71%; float: left" v-if="!approves">&nbsp;</div>
+        <div class="underline" style="width: 71%; float: left;text-align:center;" v-if="approves">&nbsp;&nbsp;{{approves[0]?.th_fullname}}</div>
         <div style="width: 7%; float: left; text-align: left">)</div>
       </div>
     </div>
-    <!-- <qrcode 
-      value="www.google.co.th"
+    <qrcode 
+      :value="approves[0]?.txID"
       :width="90"
       :height="90"
       :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
@@ -449,7 +450,7 @@
       style="position: absolute; bottom: 20px; right:5px;"
       imgclass="img-qr"
       myclass="my-qur"
-          /> -->
+          />
     <div
       style="clear: both; vertical-align: bottom; width: 100%; margin-bottom: 118px"
     ></div>
@@ -461,10 +462,11 @@
 <script setup>
 import { onMounted } from "vue";
 import {useService} from './service.js'
-// import qrcode from "qrcode-vue3";
-const {isShow,detail,tags,docs,doc2s,initPdf}=useService()
+import qrcode from "qrcode-vue3";
+const {isShow,approves,detail,tags,docs,doc2s,initPdf}=useService()
 onMounted(async ()=>{
-  initPdf()
+  await initPdf()
+  
 })
 </script>
 <style >
