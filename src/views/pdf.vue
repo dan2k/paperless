@@ -418,7 +418,7 @@
       </div>
       <div style="width: 50%; float: right">
         <div style="width: 21%; float: left; text-align: right">ลูกค้า : </div>
-        <div class="underline" style="width: 78%; float: left">ThaID txID:&nbsp;{{ approves[0]?.txID }}</div>
+        <div class="underline" style="width: 78%; float: left"><span v-if="approves">ThaID txID:&nbsp;{{ approves[0]?.txID }}</span></div>
       </div>
     </div>
     <div
@@ -438,6 +438,7 @@
       </div>
     </div>
     <qrcode 
+      v-if="approves"
       :value="approves[0]?.txID"
       :width="90"
       :height="90"
