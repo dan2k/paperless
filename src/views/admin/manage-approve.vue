@@ -131,7 +131,8 @@ const add=()=>{
 }
 const del=async (officerid,custptype,custpcode)=>{
   let tmp=await deleteOfficer(officerid,custptype,custpcode)
-  if(tmp=='no') return;
+  console.log(tmp)
+  if(tmp=='no' || !tmp) return;
   offices.value=tmp;
 }
 const edit=async (officerid,custptype,custpcode)=>{

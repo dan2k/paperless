@@ -111,9 +111,10 @@ export const useAdmin = () => {
       console.log(e)
       if(e.response.status==404){
         errAlert(e.response.data.msg);
-        return;  
+        return 'no';  
       }
       errAlert(e);
+      return 'no';
     }
     close()
   }

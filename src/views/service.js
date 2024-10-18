@@ -141,6 +141,7 @@ export const useService = () => {
   const tags = ref([]);
   const docs = ref([]);
   const doc2s = ref([]);
+  const approves=ref([]);
   const getJobDetail = async (jobid) => {
     start();
     try {
@@ -151,6 +152,7 @@ export const useService = () => {
         doc: rs.data.doc,
         doc2: rs.data.doc2,
         tag: rs.data.tag,
+        approve:rs.data.approve,
       };
     } catch (err) {
       errAlert(err);
@@ -252,26 +254,29 @@ export const useService = () => {
       });
       return;
     }
-    let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
+    let { data, doc, doc2, tag,approve } = await getJobDetail(route.params.jobid);
     detail.value = data[0];
     tags.value = tag;
     docs.value = doc;
     doc2s.value = doc2;
+    approves.value=approve;
   };
   const initDetail2 = async () => {
     appStore.title = "รายละเอียด";
-    let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
+    let { data, doc, doc2, tag ,approve} = await getJobDetail(route.params.jobid);
     detail.value = data[0];
     tags.value = tag;
     docs.value = doc;
     doc2s.value = doc2;
+    approves.value=approve;
   };
   const init=async ()=>{// use for pdf.vue
-    let { data, doc, doc2, tag } = await getJobDetail(route.params.jobid);
+    let { data, doc, doc2, tag,approve } = await getJobDetail(route.params.jobid);
     detail.value = data[0];
     tags.value = tag;
     docs.value = doc;
     doc2s.value = doc2;
+    approves.value=approve;
     // let rs= await api.get(`/paperless/v1/getVerify/${route.params.jobid}`);
     // if(!rs.data.status){
     //   errAlert("ไม่สามารถ Verify ข้อมูลได้")
@@ -280,6 +285,7 @@ export const useService = () => {
   }
   const initPdf = async () => {//use for pdf.vue
     await init()
+
     generatePDF();
   };
   const isShow = ref(false);
@@ -337,6 +343,7 @@ export const useService = () => {
     docs,
     doc2s,
     tags,
+    approves,
     isShow,
     getDCSInfo,
     loadFromServer,
