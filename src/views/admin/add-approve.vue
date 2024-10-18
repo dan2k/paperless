@@ -11,8 +11,8 @@
                         <select id="level" class="form-select form-select-sm" v-model="level" >
                             <option value="">-- เลือกหน้าที่ --</option>
                             <option value="1">ประธาน</option>
-                            <option value="2">กรรมการคนที่ 1</option>
-                            <option value="3">กรรมการคนที่ 2</option>
+                            <option value="2" v-if="$route.params.custptype==3">กรรมการคนที่ 1</option>
+                            <option value="3" v-if="$route.params.custptype==3">กรรมการคนที่ 2</option>
                             
                         </select>
                     </div>
