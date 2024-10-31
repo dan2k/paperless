@@ -238,7 +238,12 @@
                 <span class="fw-semibold">Verify:&nbsp;</span
                 >
                 <span class="fw-light text-success" v-if="i.isVerify">✔</span>
-                <span class="fw-light text-danger" v-if="!i.isVerify">✘</span>
+                <span class="fw-light text-danger" v-if="!i.isVerify">✘ [มีการแก้ไขข้อมูล]</span>
+              </div>
+              <div v-if="i.sv_approve_flag==1" class="col-sm-12 col-md-12">
+                <span class="fw-semibold">ลายเซ็นต์:&nbsp;</span
+                >
+                <span class="fw-light text-success" >{{i.txID}}<br><button class="btn btn-info btn-sm" @click="verify(i.txID)">ตรวจสอบ <i v-show="isLoad" class="fa fa-spinner fa-spin" ></i></button></span>
               </div>
               <div class="line my-1"></div>
               <div clas="col-12"><button class="btn btn-primary btn-sm float-end" @click="open1(i)">พิมพ์</button></div>
@@ -262,6 +267,7 @@ import { onMounted, ref, watch ,reactive,defineAsyncComponent} from "vue";
 // import datatable from "vue3-easy-data-table";
 // import "vue3-easy-data-table/dist/style.css";
 import { useService } from "./service";
+import { api,  start, close } from "@/helpers";
 const FilterBar = defineAsyncComponent(() => import("../components/filterbar.vue"));
 
 const {
@@ -284,6 +290,7 @@ const isRoute = ref(false);
 const group_id = route.query.groupid ?? authStore.userData.group_id;
 const options=reactive({groupid:group_id,level:1,custptype,custpcode})
 const sums = ref(0);
+const isLoad=ref(false);
 watch(items, (n) => {
   sums.value = items.value.length;
 });
@@ -291,6 +298,12 @@ const search = async () => {
   items.value.length=0
   await loadFromServer(custptype, custpcode);
 };
+const verify= async (txID)=>{
+  isLoad.value=true;
+  let rs=await api.get(`/paperless/v1/consent/verify/${txID}`)
+  isLoad.value=false;
+  console.log(rs);
+}
 onMounted(async () => {
   dcs.value = await getDCSInfo(custptype, custpcode);
   if (route.query.custptype && route.query.custpcode) {
