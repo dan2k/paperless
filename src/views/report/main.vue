@@ -31,7 +31,10 @@
           </td>
           <td align="center" valign="middle">{{ equip.approve?equip.approve:'-' }}</td>
           <td align="center" valign="middle">
-            <span style="cursor: pointer" @click="openDocRg(equip.rg)"
+            <span  v-if="equip.approve" style="cursor: pointer" @click="openDocRg(equip.rg)"
+              ><i class="fa-solid fa-print"></i
+            ></span>
+            <span  v-if="!equip.approve" 
               ><i class="fa-solid fa-print"></i
             ></span>
           </td>
@@ -74,9 +77,10 @@ const props = defineProps({
     required: true,
   },
 });
-const { regions, getEquip, reportStore, router, authStore ,generateExcel} = useReport();
+const { regions, getEquip,getApprove, reportStore, router, authStore ,generateExcel} = useReport();
 const equips = ref([]);
 const isHide = ref(true);
+const approves=ref([]);
 const gotoPcs = (rg) => {
   router.push({ path: `/report/pcs/${rg}` });
 };
@@ -87,6 +91,13 @@ onMounted(async () => {
   let rg = authStore.userData.section_id;
   let pageLevel = 1;
   equips.value = await getEquip(props.contractno, level, pageLevel, rg, 0);
+  approves.value=await getApprove(props.contractno,pageLevel,rg,props.month,props.year);
+  // console.log(approves.value)
+  equips.value.data.map((ob)=>{
+        let t=approves.value.data.filter((ob2,i2)=>ob.cust_ptype==ob2.cust_ptype && ob.rg==ob2.cust_pcode)
+        ob.approve=t.length?t[0].th_fullname:false;
+        return ob
+    })
   isHide.value = false;
   reportStore.isLoading = false;
 });
