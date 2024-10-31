@@ -32,7 +32,7 @@
         </tr>
         <tr>
           <th colspan="6" class="p-0 m-0" style="border:1px solid #c7c5c5 !important">
-            <table class="table p-0 m-0 w-100 tbrep2">
+            <table class="table p-0 m-0 w-100 tbrep2" @click.stop ref="myTable">
               <tbody class="fw-bold bg-info bg-gradient text-white">
                 <tr>
                   <th width="2%" class="text-center">ลำดับ</th>
@@ -64,9 +64,10 @@
           <td></td>
           <td>- ตรวจสอบสภาพเครื่อง</td>
           <td>เครื่องไม่ชำรุดเสียหาย</td>
-          <td>
-            <div class="form-check form-check-inline">
+          <td >
+            <div :disabled="false" class="form-check form-check-inline">
               <input
+                @click.prevent
                 class="form-check-input"
                 type="checkbox"
                 :name="'opt1-' + index"
@@ -82,6 +83,7 @@
           <td>
             <div class="form-check form-check-inline">
               <input
+                @click.prevent
                 class="form-check-input"
                 type="checkbox"
                 :name="'opt1-' + index"
@@ -102,6 +104,7 @@
           <td>
             <div class="form-check form-check-inline">
               <input
+                @click.prevent
                 class="form-check-input"
                 type="checkbox"
                 :name="'opt2-' + index"
@@ -117,6 +120,7 @@
           <td>
             <div class="form-check form-check-inline">
               <input
+                @click.prevent
                 class="form-check-input"
                 type="checkbox"
                 :name="'opt2-' + index"
@@ -137,6 +141,7 @@
           <td>
             <div class="form-check form-check-inline">
               <input
+                @click.prevent
                 class="form-check-input"
                 type="checkbox"
                 :name="'opt3-' + index"
@@ -152,6 +157,7 @@
           <td>
             <div class="form-check form-check-inline">
               <input
+                @click.prevent
                 class="form-check-input"
                 type="checkbox"
                 :name="'opt3-' + index"
@@ -316,7 +322,7 @@
 
 </style>
 <script setup>
-import { ref, defineProps, onMounted } from "vue";
+import { ref, defineProps, onMounted  } from "vue";
 import { useReport } from "./report.js";
 const props = defineProps({
   contractno: {
@@ -354,7 +360,7 @@ const mmTh = ref(null);
 const yyTh = ref(null);
 const contract = ref({});
 const officers=ref([]);
-
+const myTable=ref(null);
 onMounted(async () => {
   mmTh.value = months.value.filter((it) => it.id == props.month)[0];
   yyTh.value = years.value.filter((it) => it.id == props.year)[0];
@@ -369,7 +375,7 @@ onMounted(async () => {
   isHide.value = false;
   reportStore.isLoading = false;
   rg_desc.value = regions.value.filter((it) => it.rgid == Number(rg.value))[0];
-
+  
 });
 const print = () => {
   window.print();
