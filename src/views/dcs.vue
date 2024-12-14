@@ -243,7 +243,7 @@
               <div v-if="i.sv_approve_flag==1" class="col-sm-12 col-md-12">
                 <span class="fw-semibold">ลายเซ็นต์:&nbsp;</span
                 >
-                <span class="fw-light text-success" >{{i.txID}}<br><button class="btn btn-info btn-sm" @click="verify(i.txID)">ตรวจสอบ <i v-show="isLoad" class="fa fa-spinner fa-spin" ></i></button></span>
+                <span class="fw-light text-success" >{{i.txID}}<br><button class="btn btn-info btn-sm" @click="verify(i.txID,i.pid)">ตรวจสอบ <i v-show="isLoad" class="fa fa-spinner fa-spin" ></i></button></span>
               </div>
               <div class="line my-1"></div>
               <div clas="col-12"><button class="btn btn-primary btn-sm float-end" @click="open1(i)">พิมพ์</button></div>
@@ -298,9 +298,9 @@ const search = async () => {
   items.value.length=0
   await loadFromServer(custptype, custpcode);
 };
-const verify= async (txID)=>{
+const verify= async (txID,pid)=>{
   isLoad.value=true;
-  let rs=await api.get(`/paperless/v1/consent/verify/${txID}`)
+  let rs=await api.get(`/paperless/v1/consent/verify/${txID}/${pid}`)
   isLoad.value=false;
   console.log(rs);
 }
