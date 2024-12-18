@@ -79,6 +79,11 @@ const routes = [
 		component: () => import("../views/sv_detail.vue"),
 		beforeEnter: beforeEnter,
 	},
+	{
+		path:"/verify/:pid/:txId",
+		name:'verify',
+		component: () => import("../views/verify.vue"),
+	},
 	// {
 	// 	path:"/svpc/:jobid",
 	// 	name:'svpc',
