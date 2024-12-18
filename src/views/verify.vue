@@ -58,6 +58,8 @@
                 <div class="col-4 text-end fw-bold">วันเวลาอนุมัติ:</div>
                 <div class="col-8  fw-light px-2">{{consent.UpdatedDateFormatted}}</div>
               </div>
+              <hr/>
+              <div class="text-center"><button class="btn btn-danger text-center" @click="close()">ปิด</button></div>
             </div>
           </div>
         </div>
@@ -83,6 +85,9 @@ const isConsent=ref(false);
 const isError=ref(false);
 const error=ref(null)
 const {route}=useService();
+const close=()=>{
+  window.close();
+};
 onMounted(async ()=>{
   loading.value=true;
   try{
@@ -91,6 +96,12 @@ onMounted(async ()=>{
     if(rs.data.data?.verify){
       isVerify.value=true;
       let rs2=await api.get(`paperless/v1/consent/${route.params.txId}`);
+      if(!rs2.data?.data){
+        isError.value=true;
+        error.value=rs2.data.error;
+        loading.value=false;
+        return;
+      }
       consent.value=rs2.data.data;
       console.log(consent.value);
       isConsent.value=true;
