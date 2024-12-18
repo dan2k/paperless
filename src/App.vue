@@ -66,7 +66,7 @@
 
     <!-- Page Content Holder -->
     <div id="content">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-50 mb-1">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-opacity-50 mb-1" v-if="$route.name!='verify'">
         <div class="container-fluid">
           <!-- <button
             v-if="authStore.isLogin"          
