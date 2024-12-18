@@ -299,16 +299,7 @@ const search = async () => {
   await loadFromServer(custptype, custpcode);
 };
 const verify=  (txID,pid)=>{
-  /*isLoad.value=true;
-  let rs=await api.get(`/paperless/v1/consent/verify/${txID}/${pid}`)
-  // console.log(rs.data);
-  if(rs.data.data.verify){
-    let rs2=await api.get(`paperless/v1/consent/${txID}`);
-    console.log(rs2);
-  }
-  isLoad.value=false;
-  console.log(rs);
-  */
+  window.open(`${import.meta.env.VITE_PRIVATE_BASE_URL}verify/${pid}/${txID}`);
 }
 onMounted(async () => {
   dcs.value = await getDCSInfo(custptype, custpcode);
