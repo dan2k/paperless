@@ -414,7 +414,7 @@
     <div style="width: 100%">
       <div style="width: 50%; float: left">
         <div style="width: 21%; float: left">พนักงานบริษัท :</div>
-        <div class="underline" style="width: 78%; float: left">&nbsp;</div>
+        <div class="underline text-center" style="width: 78%; float: left; ">&nbsp;&nbsp;{{Array.from(new Set([`${detail.sv_resp_emp}::${detail.thiname1}`,`${detail.sv_assist_emp1}::${detail.thiname2}`,`${detail.sv_assist_emp2}::${detail.thiname3}`])).filter((it,i)=>it!=='::'&&it!==null).join(',')}}</div>
       </div>
       <div style="width: 50%; float: right">
         <div style="width: 21%; float: left; text-align: right">ลูกค้า : </div>
@@ -439,7 +439,7 @@
     </div>
     <qrcode 
       v-if="approves"
-      :value="approves[0]?.txID"
+      :value="`${baseUrl}verify/${approves[0]?.pid}/${approves[0]?.txID}`"
       :width="90"
       :height="90"
       :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
@@ -465,6 +465,7 @@ import { onMounted } from "vue";
 import {useService} from './service.js'
 import qrcode from "qrcode-vue3";
 const {isShow,approves,detail,tags,docs,doc2s,initPdf}=useService()
+const baseUrl=import.meta.env.VITE_PRIVATE_BASE_URL;
 onMounted(async ()=>{
   await initPdf()
   
