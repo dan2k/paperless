@@ -40,23 +40,24 @@
               </div>
               <div class="row" v-if="isConsent">
                 <div class="col-4 text-end fw-bold">รายละเอียด:</div>
-                <div class="col-8  fw-light px-2">{{consent.body}}</div>
+                <div class="col-8  fw-light px-2">{{`ขอนุมัติรายการ ${consent.ptype} ${consent.sv_no} ${consent.cust_pdesc} ${consent.province_name}`}}</div>
+              </div>
+              <div class="row" v-if="isConsent">
+                <div class="col-4 text-end fw-bold">ผู้ขออนุมัติ:</div>
+                <div class="col-8  fw-light px-2">{{consent.req_name}}</div>
               </div>
               <div class="row" v-if="isConsent">
                 <div class="col-4 text-end fw-bold">วันเวลาขออนุมัติ:</div>
-                <div class="col-8  fw-light px-2">{{consent.CreateDateFormatted}}</div>
+                <div class="col-8  fw-light px-2">{{consent.cdate}}</div>
               </div>
               <div class="row" v-if="isConsent">
-                <div class="col-4 text-end fw-bold">PID ผู้อนุมัติ:</div>
-                <div class="col-8  fw-light px-2">{{consent.pid}}</div>
+                <div class="col-4 text-end fw-bold">ผู้อนุมัติ:</div>
+                <div class="col-8  fw-light px-2">{{consent.th_fullname}} [{{formatThaiID(consent.pid)}}]</div>
               </div>
-              <div class="row" v-if="isConsent">
-                <div class="col-4 text-end fw-bold">สถานะคำขอ:</div>
-                <div class="col-8  fw-light px-2">{{consent.status}}</div>
-              </div>
+              
               <div class="row" v-if="isConsent">
                 <div class="col-4 text-end fw-bold">วันเวลาอนุมัติ:</div>
-                <div class="col-8  fw-light px-2">{{consent.UpdatedDateFormatted}}</div>
+                <div class="col-8  fw-light px-2">{{consent.udate}}</div>
               </div>
               <hr/>
               <div class="text-center"><button class="btn btn-danger text-center" @click="close()">ปิด</button></div>
@@ -88,6 +89,15 @@ const {route}=useService();
 const close=()=>{
   window.close();
 };
+const formatThaiID=(id)=> {
+    // ตรวจสอบว่าเลขมีความยาว 13 หลักและเป็นตัวเลข
+    if (!/^\d{13}$/.test(id)) {
+        return "Invalid ID";
+    }
+
+    // จัดรูปแบบตามรูปแบบที่กำหนด
+    return `${id.slice(0, 1)}-${id.slice(1, 5)}-${id.slice(5, 10)}-${id.slice(10, 12)}-${id.slice(12)}`;
+};
 onMounted(async ()=>{
   loading.value=true;
   try{
@@ -95,13 +105,13 @@ onMounted(async ()=>{
     verify.value=rs.data.message;
     if(rs.data.data?.verify){
       isVerify.value=true;
-      let rs2=await api.get(`paperless/v1/consent/${route.params.txId}`);
-      if(!rs2.data?.data){
-        isError.value=true;
-        error.value=rs2.data.error;
-        loading.value=false;
-        return;
-      }
+      let rs2=await api.get(`paperless/v1/approve/${route.params.txId}`);
+      // if(!rs2.data?.data){
+      //   isError.value=true;
+      //   error.value=rs2.data.error;
+      //   loading.value=false;
+      //   return;
+      // }
       consent.value=rs2.data.data;
       console.log(consent.value);
       isConsent.value=true;
