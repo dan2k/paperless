@@ -87,7 +87,7 @@ const routes = [
 	{
 		path:"/approve"
 		name:'approve',
-		component: () => import("../views/approve.vue"),
+		component: () => import("../views/demo.vue"),
 	},
 	// {
 	// 	path:"/svpc/:jobid",
