@@ -17,7 +17,10 @@
                 </div>
               </div>
               <hr/>
-              <div class="text-center"><button class="btn btn-danger text-center" @click="close()">ปิด</button></div>
+              <div class="text-center">
+                <button class="btn btn-primary text-center mx-2" @click="approve()">บันทึก</button>
+                <button class="btn btn-danger text-center" @click="close()">ปิด</button>
+              </div>
             </div>
           </div>
         </div>
@@ -47,6 +50,9 @@ const optSatisfaction=[
     {label:'ไม่พอใจมาก',value:1},
   ]
 const satisfaction=ref(null)
+const approve=()=>{
+  //
+}
 onMounted(async ()=>{
   loading.value=true;
   try{

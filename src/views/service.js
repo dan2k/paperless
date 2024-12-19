@@ -169,6 +169,13 @@ export const useService = () => {
       "https://imauth.bora.dopa.go.th/api/v1/oauth2/auth/?response_type=code&client_id=TGFNQU56RDNMcDRrWDRlNHhEUHNLNVNLOE8waU5wZ1Y=&redirect_uri=https://www.controldata.co.th/mpsicc/ddopa&scope=pid%20th_fullname%20dob&state=" +
       state;
   };
+  const gotoImauth2 = (jobid, s, uri,empid) => {
+    let state = btoa(`approve|${jobid}|${s}|${uri}|${empid}`);
+    window.location.href =
+      "https://imauth.bora.dopa.go.th/api/v2/oauth2/auth/?response_type=code&client_id=TGFNQU56RDNMcDRrWDRlNHhEUHNLNVNLOE8waU5wZ1Y=&redirect_uri=https://www.controldata.co.th/mpsicc/ddopa&scope=pid%20name%20birthdate&state=" +
+      state;
+  };
+  
   const approve = async () => {
     const inputOptions = new Promise((resolve) => {
       setTimeout(() => {
@@ -215,6 +222,7 @@ export const useService = () => {
       },
     });
   };
+
   const gotoCdg = () => {
     router.push({
       path: `/cdg`,
@@ -347,6 +355,7 @@ export const useService = () => {
     isShow,
     getDCSInfo,
     loadFromServer,
+    gotoImauth2,
     getSumDcs,
     getSumPcs,
     getSumRcs,
