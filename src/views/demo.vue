@@ -5,14 +5,15 @@
         <div class="col-12 col-md-5">
           <div class="card shadow">
             <div class="card-body">
-              <div class="row text-center">
-                <h5 class="card-title">ประเมินความพึงพอใจ</h5>
+              <div class="row text-center px-5">
+                <h5 class="card-title text-primary fw-bold">ประเมินความพึงพอใจ</h5>
                 <hr/>
-                <div class="form-check px-5 my-3" v-for="s in optSatisfaction">
-                  <input  class="form-check-input" :id="s.value" type="radio"   :value="s.value" v-model="satisfaction">
+                <div class="form-check px-4  my-3 text-start text-secondary fw-bold" style="font-size:18px;" v-for="s in optSatisfaction">
+                  <input  class="form-check-input mx-3" :id="s.value" type="radio"   :value="s.value" v-model="satisfaction">
                   <label style="font-weight: bold;" class="form-check-label" :for="s.value">
-                    {{ s.label }}
+                    {{ s.label }} 
                   </label>
+                  <img class="float-end" :src="`/${s.value}.png`"/>
                 </div>
               </div>
               <hr/>
