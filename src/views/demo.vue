@@ -25,6 +25,8 @@
           </div>
         </div>
       </div>
+      <!-- {{data}} -->
+      
 
 
   </div>
@@ -38,10 +40,14 @@
 import { onMounted, ref} from "vue";
 import { api } from "@/helpers";
 import { useService } from "./service";
-const {route}=useService();
+const {route,gotoImauth2}=useService();
 const close=()=>{
   window.close();
 };
+const data=ref(null);
+
+let empid='3459';
+let jobid='RG066704783';
 const optSatisfaction=[
     {label:'พอใจมาก',value:5},
     {label:'พอใจ',value:4},
@@ -51,9 +57,30 @@ const optSatisfaction=[
   ]
 const satisfaction=ref(null)
 const approve=()=>{
-  //
+  if(!satisfaction.value) return;
+  let uri = window.location.href;
+  
+  //gotoImauth2(route.params.jobid, satisfaction, uri);
+  gotoImauth2(jobid, satisfaction.value, uri,empid);
 }
 onMounted(async ()=>{
+  if (route.query.error) {
+    if (route.query.error == "false") {
+        let rs2=await api.post(`paperless/v1/consent/${route.query.pid}/${jobid}/${empid}`,{timeout: 1000*60*3});
+        let txID2=rs2.data.data.txID; 
+        data.value={
+          pid:route.query.pid,
+          dob:route.query.dob,
+          name:JSON.parse(route.query.th_fullname),
+          txID:txID2,
+        }
+    } else {
+        await errAlert(
+          `ไม่สามารถอนุมัติรายการได้กรุณาลองใหม่อีกครั้ง ${route.query.msg}`
+        );
+    }
+    return;
+  }
   loading.value=true;
   try{
     let rs=await api.get(`/paperless/v1/consent/verify/${route.params?.txId}/${route.params?.pid}`)
