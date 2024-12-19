@@ -5,58 +5,15 @@
         <div class="col-12 col-md-5">
           <div class="card shadow">
             <div class="card-body">
-              <div class="row text-center" v-if="isError">
-                <div class="fa-3x text-danger">
-                  <h5 class="card-title">เกิดข้อผิดผลาด</h5>
-                  <hr/>
-                  <span style="font-size:18px;">{{error}}</span>
-                </div>
-              </div>
-              <div class="row text-center" v-if="loading">
-                <div class="fa-3x text-info">
-                  <i class="fas fa-spinner fa-pulse"></i>
-                  <span style="font-size:18px;">&nbsp;กำลังตรวจสอบข้อมูลกับ ThaID</span>
-                </div>
-                
+              <div class="row text-center">
+                <h5 class="card-title">ประเมินความพึงพอใจ</h5>
                 <hr/>
-                
-              </div>
-              <div class="row text-center" v-if="!loading && !isError">
-                <div class="fa-3x text-success">
-                  <i class="fa-solid fa-check"></i>
-                  <span style="font-size:18px;">ดำเนินการตรวจสอบกับ ThaID เรียบร้อยแล้ว</span>
+                <div class="form-check px-5 my-3" v-for="s in optSatisfaction">
+                  <input  class="form-check-input" :id="s.value" type="radio"   :value="s.value" v-model="satisfaction">
+                  <label style="font-weight: bold;" class="form-check-label" :for="s.value">
+                    {{ s.label }}
+                  </label>
                 </div>
-                
-                <hr/>
-                
-              </div>
-              <div class="row" v-if="verify">
-                <div class="col-4 text-end fw-bold">TxID:</div>
-                <div class="col-8  fw-light px-2">{{$route.params['txId']}}</div>
-              </div>
-              <div class="row" v-if="verify">
-                <div class="col-4 text-end fw-bold">สถานะ:</div>
-                <div class="col-8  fw-light px-2">{{verify}}</div>
-              </div>
-              <div class="row" v-if="isConsent">
-                <div class="col-4 text-end fw-bold">รายละเอียด:</div>
-                <div class="col-8  fw-light px-2">{{consent.body}}</div>
-              </div>
-              <div class="row" v-if="isConsent">
-                <div class="col-4 text-end fw-bold">วันเวลาขออนุมัติ:</div>
-                <div class="col-8  fw-light px-2">{{consent.CreateDateFormatted}}</div>
-              </div>
-              <div class="row" v-if="isConsent">
-                <div class="col-4 text-end fw-bold">PID ผู้อนุมัติ:</div>
-                <div class="col-8  fw-light px-2">{{consent.pid}}</div>
-              </div>
-              <div class="row" v-if="isConsent">
-                <div class="col-4 text-end fw-bold">สถานะคำขอ:</div>
-                <div class="col-8  fw-light px-2">{{consent.status}}</div>
-              </div>
-              <div class="row" v-if="isConsent">
-                <div class="col-4 text-end fw-bold">วันเวลาอนุมัติ:</div>
-                <div class="col-8  fw-light px-2">{{consent.UpdatedDateFormatted}}</div>
               </div>
               <hr/>
               <div class="text-center"><button class="btn btn-danger text-center" @click="close()">ปิด</button></div>
@@ -77,17 +34,18 @@
 import { onMounted, ref} from "vue";
 import { api } from "@/helpers";
 import { useService } from "./service";
-const loading=ref(false);
-const verify=ref(false);
-const isVerify=ref(false);
-const consent=ref(false);
-const isConsent=ref(false);
-const isError=ref(false);
-const error=ref(null)
 const {route}=useService();
 const close=()=>{
   window.close();
 };
+const optSatisfaction=[
+    {label:'พอใจมาก',value:5},
+    {label:'พอใจ',value:4},
+    {label:'ปานกลาง',value:3},
+    {label:'ไม่พอใจ',value:2},
+    {label:'ไม่พอใจมาก',value:1},
+  ]
+const satisfaction=ref(null)
 onMounted(async ()=>{
   loading.value=true;
   try{
