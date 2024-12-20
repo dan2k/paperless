@@ -439,9 +439,9 @@
     </div>
     <qrcode 
       v-if="approves"
-      :value="`${baseUrl}verify/${approves[0]?.pid}/${approves[0]?.txID}`"
-      :width="90"
-      :height="90"
+      :value="`https://www.controldata.co.th/mpsicc/paperless/client/verify/${approves[0]?.pid}/${approves[0]?.txID}`"
+      :width="300"
+      :height="300"
       :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
       :imageOptions="{ hideBackgroundDots: true, imageSize: 0.4, margin:0 }"
       :dotsOptions="{

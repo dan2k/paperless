@@ -13,7 +13,8 @@
                   <label style="font-weight: bold;" class="form-check-label" :for="s.value">
                     {{ s.label }} 
                   </label>
-                  <img class="float-end" :src="`/${s.value}.png`"/>
+                  <img class="float-end" :src="`${s.value}.png`" />
+                  <!-- <img class="float-end" src="/1.png"   /> -->
                 </div>
               </div>
               <hr/>
@@ -56,6 +57,7 @@ const optSatisfaction=[
     {label:'ไม่พอใจมาก',value:1},
   ]
 const satisfaction=ref(null)
+const loading=ref(false);
 const approve=()=>{
   if(!satisfaction.value) return;
   let uri = window.location.href;
