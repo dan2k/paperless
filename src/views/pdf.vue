@@ -414,7 +414,7 @@
     <div style="width: 100%">
       <div style="width: 50%; float: left">
         <div style="width: 21%; float: left">พนักงานบริษัท :</div>
-        <div class="underline text-center" style="width: 78%; float: left; ">&nbsp;&nbsp;{{Array.from(new Set([`${detail.sv_resp_emp}::${detail.thiname1}`,`${detail.sv_assist_emp1}::${detail.thiname2}`,`${detail.sv_assist_emp2}::${detail.thiname3}`])).filter((it,i)=>it!=='::'&&it!==null).join(',')}}</div>
+        <div class="underline text-center" style="width: 78%; float: left; ">&nbsp;&nbsp;{{Array.from(new Set([`${detail.sv_resp_emp}::${detail.thiname1}`,`${detail.sv_assist_emp1}::${detail.thiname2}`,`${detail.sv_assist_emp2}::${detail.thiname3}`])).filter((it,i)=>it.trim().indexOf('null')==-1).join(',')}}</div>
       </div>
       <div style="width: 50%; float: right">
         <div style="width: 21%; float: left; text-align: right">ลูกค้า : </div>
