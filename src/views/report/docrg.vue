@@ -304,17 +304,22 @@
     display:inline;
   }
 
-  
+  /* body {
+    counter-reset: page 0;
+  } */
   @page {
     size: "A4";
     margin-top: 7mm;
     margin-bottom: 5mm;
     margin-left: 8.128mm !important;
     margin-right: 8.128mm !important;
-    counter-increment: page;
-    counter-reset: page 1;
     @top-right {
-      content: "Page " counter(page) " of " counter(pages);
+      margin-top: 3mm;
+      content: "" counter(page) "/" counter(pages);
+    }
+    @bottom-left{
+      counter-increment: page;
+      counter-reset: page;
     }
   }    
   
