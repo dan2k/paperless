@@ -17,7 +17,13 @@ export const useReport = () => {
     { rgid: 8, rg_desc: "ศูนย์บริหารการทะเบียนภาค 8" },
     { rgid: 9, rg_desc: "ศูนย์บริหารการทะเบียนภาค 9" },
   ]);
-  const years = ref([{ id: "2024", text: "2567" }]);
+  let startYear=2024;
+  const d = new Date();
+  let nowYear = Number(d.getFullYear());
+  const years = ref([]);
+  for(let i=startYear;i<=nowYear;i++){
+    years.value.push({id:i,text:i+543});
+  }
   const months = ref([
     { id: "01", text: "มกราคม" },
     { id: "02", text: "กุมภาพันธ์" },
