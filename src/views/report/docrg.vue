@@ -264,7 +264,7 @@
   .tbrep1{
     width:99% !important;
   }
-  .tbrep1 thead tr {
+  .tbrep1 thead tr{
     border: 0 none #fff;
   }
   /* .tbrep2 tbody tr {
@@ -279,12 +279,23 @@
     border-right-color: #c7c5c5 !important;
     border-right-style: solid !important;
     border-right-width: 1px !important;
+    padding-top:0 !important;
+    padding-bottom: 0 !important;
   }
+  .tbrep1 tbody tr:first-of-type td {
+    padding-top: 8px !important; /* บังคับ padding-top สำหรับแถวแรก */
+  }
+  /* .tbrep1 tbody td:first-of-type,
+  .tbrep1 tbody tr:first-of-type {
+    padding-top: 1 !important; 
+  } */
+  
   tbody:nth-last-child(1) tr:nth-last-child(1) {
     border-bottom-color: #c7c5c5;
     border-bottom-style: solid;
     border-bottom-width: 1;
   }
+  
   tfoot td,
   tfoot tr {
     border:#fff solid 0;
