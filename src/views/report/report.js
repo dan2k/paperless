@@ -38,9 +38,9 @@ export const useReport = () => {
     { id: "11", text: "พฤศจิกายน" },
     { id: "12", text: "ธันวาคม" },
   ]);
-  const getContract = async () => {
+  const getContract = async (level, rg, pv) => {
     try {
-      let rs = await api.get(`/paperless/report/v1/getContract`);
+      let rs = await api.get(`/paperless/report/v1/getContract/${level}/${rg}/${pv}`);
       return rs.data.data;
     } catch (e) {
       errAlert(e);

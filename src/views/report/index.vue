@@ -65,15 +65,18 @@ const contractno=ref("");
 const month=ref("")
 const year=ref("")
 const router=useRouter()
-const {appStore,getContract,reportStore,months,years}=useReport()
+const {appStore,getContract,authStore,reportStore,months,years}=useReport()
 const change=()=>{
     if(!contractno.value||!year.value|| !month.value) return;
     console.log('yes')
     router.push({path:'/report/main/'+Date.now()})
 }
 onMounted(async ()=>{
+    let level = authStore.userData.sur_level;
+    let rg = authStore.userData.section_id;
+    let pv = authStore.userData.cc;
     appStore.title='รายงานการบำรุงรักษาระบบคอมพิวเตอร์';
-    contractnos.value=await getContract()
+    contractnos.value=await getContract(level, rg, pv)
     reportStore.isLoading=false;
     console.log('isLoading',reportStore.isLoading)
     // console.log(contractnos.value);
