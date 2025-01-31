@@ -79,7 +79,7 @@
               <span style="color: #999" v-if="type == 0">{{ d.contract }}</span>
               <div style="color: #999" v-if="type == 1">
                 <ul>
-                  <li v-for="c in d.contract.split('|')">{{ c }} {{}}</li>
+                  <li v-for="c in d.contract?.split('|')">{{ c }} {{}}</li>
                 </ul>
               </div>
             </div>
