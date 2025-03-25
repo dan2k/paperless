@@ -32,8 +32,11 @@
             <button v-if="!isHide" class="btn btn-primary btn-sm mx-2" @click="generateExcel(equips.data,equips.cats)">
                 พิมพ์สรุปจำนวนอุปกรณ์
             </button>
-            <button v-if="!isHide" :disabled="isDisabledApprove" class="btn btn-primary btn-sm" @click="save()">
+            <button v-if="!approveState" :disabled="isDisabledApprove" class="btn btn-primary btn-sm" @click="save()">
                 ยืนยันการบำรุงรักษา
+            </button>
+            <button  class="btn btn-success btn-sm" v-if="approveState">
+                สถานะ: ยืนยันรายการแล้ว
             </button>
         </div>
         <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">กำลังประมวลผล......</div>
@@ -65,7 +68,7 @@ const props = defineProps({
         required: true 
       },
 });
-const {approve,checkPid,getApprove,getEquip,reportStore,router,route,authStore,generateExcel}=useReport()
+const {approve,checkPid,getApprove,getApproveStatus,getEquip,reportStore,router,route,authStore,generateExcel}=useReport()
 const equips=ref([]);
 const pid=authStore.userData.ses_empid;
 const isDisabledApprove=ref(true);
@@ -73,6 +76,7 @@ const approves=ref([]);
 const isHide=ref(true);
 const rg=route.params.rg;
 const officerid=ref(null)
+const approveState=ref(false);
 const gotoDcs=(pv,pv_desc)=>{
     router.push({path:`/report/dcs/${rg}/${pv}/${pv_desc}`})
 }
@@ -84,6 +88,8 @@ const save= async ()=>{
     let status=await approve(props.contractno,officerid.value,pageLevel,rg,props.month,props.year)
     console.log({status})
     isDisabledApprove.value=status;
+    let status2=await getApproveStatus(props.contractno,pv,props.month,props.year)
+    approveState.value=status2.status;
 }
  onMounted(async()=>{
     reportStore.isLoading=true;
@@ -110,6 +116,8 @@ const save= async ()=>{
     isHide.value=false
     reportStore.isLoading=false;
     console.log({equips,approves})
+    let status2=await getApproveStatus(props.contractno,pv,props.month,props.year)
+    approveState.value=status2.status;
 })
  
 </script>
