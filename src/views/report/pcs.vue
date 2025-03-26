@@ -88,7 +88,7 @@ const save= async ()=>{
     let status=await approve(props.contractno,officerid.value,pageLevel,rg,props.month,props.year)
     console.log({status})
     isDisabledApprove.value=status;
-    let status2=await getApproveStatus(props.contractno,pv,props.month,props.year)
+    let status2=await getApproveStatus(props.contractno,rg,props.month,props.year)
     approveState.value=status2.status;
 }
  onMounted(async()=>{
@@ -116,7 +116,7 @@ const save= async ()=>{
     isHide.value=false
     reportStore.isLoading=false;
     console.log({equips,approves})
-    let status2=await getApproveStatus(props.contractno,pv,props.month,props.year)
+    let status2=await getApproveStatus(props.contractno,rg,props.month,props.year)
     approveState.value=status2.status;
 })
  
