@@ -38,6 +38,12 @@ const routes = [
 		beforeEnter: beforeEnter,	
 	},
 	{
+		path: "/qrcode-dev/:jobid",
+		name: "qrcode-dev",
+		component: () => import("../views/qrcode-dev.vue"),
+		beforeEnter: beforeEnter,	
+	},
+	{
 		path: "/",
 		name: "home",
 		component: () => import("../views/home.vue"),
@@ -101,7 +107,12 @@ const routes = [
 		component: () => import("../views/sv_detailPC-new.vue"),
 		beforeEnter: beforeEnter,
 	},
-	
+	{
+		path:"/svpc-dev/:jobid",
+		name:'svpc-dev-dev',
+		component: () => import("../views/sv_detailPC-new-dev.vue"),
+		beforeEnter: beforeEnter,
+	},
 	{
 		path:"/ddopa",
 		name:'ddopa',
