@@ -91,6 +91,8 @@ const consent=ref(null);
 const isError=ref(false);
 const success=ref(false);
 const data=ref(null)
+let jobid=route.params.jobid;
+let empid=route.params.empid;
 const baseUrl=import.meta.env.VITE_PRIVATE_BASE_URL;
 const approve=()=>{
   if(!satisfaction.value){
@@ -101,7 +103,8 @@ const approve=()=>{
   
   // gotoImauth2(route.params.jobid, satisfaction, uri);
   // gotoImauth2(jobid, satisfaction.value, uri,empid);
-  gotoImauth2(route.params.jobid, satisfaction.value, uri,route.params.empid);
+  
+  gotoImauth2(jobid, satisfaction.value, uri,empid);
 }
 onMounted(async ()=>{
   if (route.query.error) {
