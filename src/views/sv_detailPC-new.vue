@@ -195,6 +195,20 @@
           </ul>
         </div>
       </div>
+      <qrcode
+            :value="url"
+            style="position: absolute; bottom: 25px; right:10px;"
+            :width="100"
+            :height="100"
+            :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
+            :imageOptions="{ hideBackgroundDots: true, imageSize: 0.4, margin: 0 }"
+            :dotsOptions="{
+              type: 'square',
+              color: '#000000',
+            }"
+            imgclass="img-qr"
+            myclass="my-qur"
+          />
     </div>
 
     <div class="row">
@@ -209,7 +223,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from "vue";
+import { onMounted,ref } from "vue";
 import { useService } from "./service.js";
 import qrcode from "qrcode-vue3";
 const {
@@ -223,8 +237,11 @@ const {
   initDetail2,
   gotoCdg,
 } = useService();
+const url=ref('')
 onMounted(async () => {
+  url.value=`https://www.controldata.co.th/mpsicc/paperless/client/approve/${route.params['jobid']}`;
   await initDetail2();
+  console.log({url});
 });
 </script>
 <style>
