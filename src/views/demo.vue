@@ -13,7 +13,7 @@
                   <label style="font-weight: bold;" class="form-check-label" :for="s.value">
                     {{ s.label }} 
                   </label>
-                  <img class="float-end" :src="`${s.value}.png`" />
+                  <img class="float-end" :src="`${baseUrl}${s.value}.png`" />
                   <!-- <img class="float-end" src="/1.png"   /> -->
                 </div>
               </div>
@@ -91,6 +91,7 @@ const consent=ref(null);
 const isError=ref(false);
 const success=ref(false);
 const data=ref(null)
+const baseUrl=import.meta.env.VITE_PRIVATE_BASE_URL;
 const approve=()=>{
   if(!satisfaction.value){
     errAlert("กรุณาเลือกความพึงพอใจ");
