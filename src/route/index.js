@@ -85,7 +85,7 @@ const routes = [
 		component: () => import("../views/verify.vue"),
 	},
 	{
-		path:"/approve/:jobid",
+		path:"/approve/:jobid/:empid",
 		name:'approve',
 		component: () => import("../views/demo.vue"),
 	},

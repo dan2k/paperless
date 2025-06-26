@@ -227,6 +227,7 @@ import { onMounted,ref } from "vue";
 import { useService } from "./service.js";
 import qrcode from "qrcode-vue3";
 const {
+  authStore,
   route,
   detail,
   tags,
@@ -238,8 +239,9 @@ const {
   gotoCdg,
 } = useService();
 const url=ref('')
+const empid = authStore.userData.ses_empid;
 onMounted(async () => {
-  url.value=`https://www.controldata.co.th/mpsicc/paperless/client/approve/${route.params['jobid']}`;
+  url.value=`https://www.controldata.co.th/mpsicc/paperless/client/approve/${route.params['jobid']}/${empid}`;
   await initDetail2();
   console.log({url});
 });

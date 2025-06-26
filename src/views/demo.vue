@@ -13,7 +13,7 @@
                   <label style="font-weight: bold;" class="form-check-label" :for="s.value">
                     {{ s.label }} 
                   </label>
-                  <img class="float-end" :src="`/${s.value}.png`" />
+                  <img class="float-end" :src="`${s.value}.png`" />
                   <!-- <img class="float-end" src="/1.png"   /> -->
                 </div>
               </div>
@@ -72,8 +72,8 @@ const close=()=>{
   window.close();
 };
 
-let empid='3459';
-let jobid='RG066704783';
+// let empid='3459';
+// let jobid='RG066704783';
 const optSatisfaction=[
     {label:'พอใจมาก',value:5},
     {label:'พอใจ',value:4},
@@ -98,8 +98,9 @@ const approve=()=>{
   }
   let uri = window.location.href;
   
-  //gotoImauth2(route.params.jobid, satisfaction, uri);
-  gotoImauth2(jobid, satisfaction.value, uri,empid);
+  // gotoImauth2(route.params.jobid, satisfaction, uri);
+  // gotoImauth2(jobid, satisfaction.value, uri,empid);
+  gotoImauth2(route.params.jobid, satisfaction.value, uri,route.params.empid);
 }
 onMounted(async ()=>{
   if (route.query.error) {
