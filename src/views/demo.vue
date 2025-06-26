@@ -13,7 +13,7 @@
                   <label style="font-weight: bold;" class="form-check-label" :for="s.value">
                     {{ s.label }} 
                   </label>
-                  <img class="float-end" :src="`${s.value}.png`" />
+                  <img class="float-end" :src="`/${s.value}.png`" />
                   <!-- <img class="float-end" src="/1.png"   /> -->
                 </div>
               </div>
