@@ -225,6 +225,19 @@ export const useService = () => {
       },
     });
   };
+  const approve3 = async () => {
+    let jobid=route.params.jobid
+    // console.log(jobid);
+    router.push({
+      path: `/qrcode-dev/${jobid}`,
+      query: {
+        type: route.query.type,
+        ptype: route.query.ptype,
+        pv: route.query.pv,
+        pcode: route.query.pcode,
+      },
+    });
+  };
 
   const gotoCdg = () => {
     router.push({
@@ -368,6 +381,7 @@ export const useService = () => {
     open,
     approve,
     approve2,
+    approve3,
     gotoCdg,
     initDetail,
     initDetail2,

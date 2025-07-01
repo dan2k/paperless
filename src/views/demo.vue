@@ -162,6 +162,8 @@ onMounted(async ()=>{
                   name:JSON.parse(route.query.th_fullname),
                   txID:txID2,
                 }
+                let rs2=await api.post(`/paperless/v1/approve/${jobid.value}/${satisfaction.value}/${empid}/${data.value.pid}/${data.value.name}/${data.value.dob}/${data.value.txID}/${rs.data.data.CreateDateFormatted}/${rs.data.data.UpdatedDateFormatted}`)
+                console.log(rs2);
                 success.value=true;
                 error.value=`${data.value.name} <br>อนุมัติรายการเรียบร้อยแล้ว`;
                 loading.value=false;
