@@ -103,7 +103,7 @@ const approve=()=>{
   
   // gotoImauth2(route.params.jobid, satisfaction, uri);
   // gotoImauth2(jobid, satisfaction.value, uri,empid);
-  
+
   gotoImauth2(jobid, satisfaction.value, uri,empid);
 }
 onMounted(async ()=>{
@@ -158,11 +158,12 @@ onMounted(async ()=>{
                 let txID2=consent.value.data.data.txID; 
                 data.value={
                   pid:route.query.pid,
-                  dob:route.query.dob,
+                  dob:0,
                   name:JSON.parse(route.query.th_fullname),
                   txID:txID2,
+                  satisfaction:route.query.satisfaction,
                 }
-                let rs2=await api.post(`/paperless/v1/approve/${jobid.value}/${satisfaction.value}/${empid}/${data.value.pid}/${data.value.name}/${data.value.dob}/${data.value.txID}/${rs.data.data.CreateDateFormatted}/${rs.data.data.UpdatedDateFormatted}`)
+                let rs2=await api.post(`/paperless/v1/approve/${route.params.jobid}/${data.value.satisfaction}/${empid}/${data.value.pid}/${data.value.name}/${data.value.dob}/${data.value.txID}/${rs.data.data.CreateDateFormatted}/${rs.data.data.UpdatedDateFormatted}`)
                 console.log(rs2);
                 success.value=true;
                 error.value=`${data.value.name} <br>อนุมัติรายการเรียบร้อยแล้ว`;
