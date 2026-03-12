@@ -172,49 +172,49 @@
           <td></td>
         </tr>
       </tbody>
-      <tfoot class="footer-tfoot">
+      <tfoot>
         <tr>
-          <td colspan="6" style="border:none; padding-top: 20px;">
-            <div class="footer w-100 p-0">
-              <div class="w-100" style="height:30px;">&nbsp;</div>
-              <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
-              <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==1)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==1)[0]?.position_desc}}</div>
-              <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
-              <br><br>
-              <table class="w-100 mx-auto footer-sig-table" style="border:none !important; border-collapse:collapse;">
-                <tbody>
-                  <tr>
-                    <td align="center" style="border:none !important; padding:8px;">
-                      <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
-                      <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==2)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==2)[0]?.position_desc}}</div>
-                      <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
-                    </td>
-                    <td align="center" style="border:none !important; padding:8px;">
-                      <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
-                      <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==3)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==3)[0]?.position_desc}}</div>
-                      <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </td>
+          <td colspan="6">&nbsp;</td>
         </tr>
       </tfoot>
     </table>
-
-    <!-- footer สำหรับแสดงบนหน้าจอ (ไม่พิมพ์) -->
     
     
-    
-
+    <div class="footer w-100 mt-5 p-0" >
+        <div class="w-100" style="height:30px;">&nbsp;</div>
+        <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
+        <div class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==1)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==1)[0]?.position_desc}}</div>
+        <br><br>
+        <table class="w-100 mx-auto">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
+                        <div v-if="isShowCommittee" class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==2)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==2)[0]?.position_desc}}</div>
+                        <div else="isShowCommittee" class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</div>
+                    </td>
+                    <td align="center">
+                        <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
+                        <div v-if="isShowCommittee" class="text-center ">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==3)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==3)[0]?.position_desc}}</div>
+                        <div else="isShowCommittee" class="text-center ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="w-100 mx-auto text-center noprint">
+      <button v-if="!isHide" class="btn btn-primary btn-sm" @click="print()">
+        พิมพ์
+      </button>  
+    </div> -->
     <div class="w-100 mx-auto text-center  d-flex justify-content-center align-items-center gap-3 mb-3 noprint d-print-none">
+  
       <!-- ปุ่มพิมพ์ -->
       <button v-if="!isHide" class="btn btn-primary btn-sm" @click="print()">
         <i class="bi bi-printer"></i> พิมพ์
       </button>  
 
-      <!-- Checkbox Switch -->
+      <!-- Checkbox Switch (เอา mb-3 ออกเพื่อให้ขนานกับปุ่ม) -->
       <div class="form-check form-switch mb-0">
         <input 
           class="form-check-input" 
@@ -227,6 +227,7 @@
           แสดงรายชื่อคณะกรรมการ
         </label>
       </div>
+
     </div>
     
     <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">
@@ -234,7 +235,6 @@
     </div>
   </div>
 </template>
-
 <style>
 .tbrep1,
 .tbrep2 {
@@ -248,7 +248,6 @@
 .footer{
     display:none;
 }
-
 @media print {
   header {
     position: fixed;
@@ -262,6 +261,7 @@
   }
   
   #print * {
+    /* force-browsers-to-print-background */
     -webkit-print-color-adjust: exact !important;
     visibility: visible;
   }
@@ -275,100 +275,96 @@
     display: none;
   }
 
-  .tbrep1 {
-    width: 99% !important;
-    border: none !important;
+  
+  tbody td,
+  tbody tr {
+    border-bottom-color: #fff;
+    border-bottom-style: none;
+    border-bottom-width: 0;
+    
+    border-top-color: #fff;
+    border-top-style: none;
+    border-top-width: 0;
   }
-  .tbrep1 thead tr {
+  .tbrep1{
+    width:99% !important;
+  }
+  .tbrep1 thead tr{
     border: 0 none #fff;
   }
+  /* .tbrep2 tbody tr {
+    border: 1 solid #c7c5c5;
+  } */
 
-  /* ลบ border top/bottom ทุก td ใน tbrep1 */
-  .tbrep1 tbody td {
-    border-top: none !important;
-    border-bottom: none !important;
-    border-left: 1px solid #c7c5c5 !important;
-    border-right: 1px solid #c7c5c5 !important;
-    padding-top: 0 !important;
+  .tbrep1 tbody td,
+  .tbrep1 tbody tr {
+    border-left-color: #c7c5c5 !important;
+    border-left-style: solid !important;
+    border-left-width: 1px !important;
+    border-right-color: #c7c5c5 !important;
+    border-right-style: solid !important;
+    border-right-width: 1px !important;
+    padding-top:0 !important;
     padding-bottom: 0 !important;
   }
-  .tbrep1 tbody tr {
-    border-top: none !important;
-    border-bottom: none !important;
-  }
   .tbrep1 tbody tr:first-of-type td {
-    padding-top: 8px !important;
+    padding-top: 8px !important; /* บังคับ padding-top สำหรับแถวแรก */
   }
-  /* เส้นบนของ tbody แต่ละกลุ่ม (แถวแรก) */
-  .tbrep1 tbody tr:first-child > td {
-    border-top: 1px solid #c7c5c5 !important;
+  /* .tbrep1 tbody td:first-of-type,
+  .tbrep1 tbody tr:first-of-type {
+    padding-top: 1 !important; 
+  } */
+  
+  tbody:nth-last-child(1) tr:nth-last-child(1) {
+    border-bottom-color: #c7c5c5;
+    border-bottom-style: solid;
+    border-bottom-width: 1;
   }
-  /* เส้นล่างของ tbody แต่ละกลุ่ม (แถวสุดท้าย) — ใช้ outline-bottom ไม่ได้
-     แก้โดยใส่ border-bottom ที่ tbody โดยตรง */
-  .tbrep1 tbody {
-    border-bottom: 1px solid #c7c5c5 !important;
-    border-left: 1px solid #c7c5c5 !important;
-    border-right: 1px solid #c7c5c5 !important;
+  
+  tfoot td,
+  tfoot tr {
+    border:#fff solid 0;
+    border-top-color: #000;
+    border-top-style: solid;
+    border-top-width: 1;
   }
+    
 
-  /* tfoot: ไม่มี border เลย */
-  .tbrep1 tfoot,
-  .tbrep1 tfoot td,
-  .tbrep1 tfoot tr {
-    border: none !important;
-    background: transparent !important;
-  }
 
-  /* ป้องกัน tfoot repeat ทุกหน้า และให้ footer ไม่แตกหน้า */
-  .footer-tfoot {
-    display: table-row-group !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  /* footer-sig-table: ไม่มีกรอบเลย — ใช้ inline style + CSS ซ้อนกัน */
-  table.footer-sig-table,
-  table.footer-sig-table > tbody,
-  table.footer-sig-table > tbody > tr,
-  table.footer-sig-table > tbody > tr > td {
-    border: none !important;
-    border-width: 0 !important;
-    border-style: none !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
-    outline: none !important;
-    background: transparent !important;
-  }
-
+  /* .tbrep1  thead tr:nth-child(2) th:nth-child(1) {
+    border: 1 solid #c7c5c5 !important;
+  } */
   .footer {
-    position: static;
-    font-size: 12px;
-    display: block;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
+    position: static; /* <-- Key line */
+    font-size:12px;
+    display:inline;
   }
 
-  /* ===== @page rules: แสดงเลขหน้าทุกหน้า ===== */
+  /* body {
+    counter-reset: page 0;
+  } */
   @page {
-    size: A4;
-    margin-top: 15mm;
+    size: "A4";
+    margin-top: 7mm;
     margin-bottom: 5mm;
-    margin-left: 8.128mm;
-    margin-right: 8.128mm;
+    margin-left: 8.128mm !important;
+    margin-right: 8.128mm !important;
     @top-right {
       margin-top: 3mm;
-      font-size: 12px;
-      font-weight: bold;
-      content: counter(page) "/" counter(pages);
+      content: "" counter(page) "/" counter(pages);
     }
-  }
+    @bottom-left{
+      counter-increment: page;
+      counter-reset: page;
+    }
+  }    
+  
 }
-</style>
 
+</style>
 <script setup>
 import { ref, defineProps, onMounted  } from "vue";
 import { useReport } from "./report.js";
-
 const props = defineProps({
   contractno: {
     type: String,
@@ -383,7 +379,6 @@ const props = defineProps({
     required: true,
   },
 });
-
 const {
   regions,
   getDoc,
@@ -395,7 +390,6 @@ const {
   years,
   getOfficer,
 } = useReport();
-
 const isHide = ref(true);
 const docs = ref([]);
 const rg = ref("");
@@ -406,10 +400,9 @@ const back = () => {
 const mmTh = ref(null);
 const yyTh = ref(null);
 const contract = ref({});
-const officers = ref([]);
-const myTable = ref(null);
+const officers=ref([]);
+const myTable=ref(null);
 const isShowCommittee = ref(false);
-
 onMounted(async () => {
   mmTh.value = months.value.filter((it) => it.id == props.month)[0];
   yyTh.value = years.value.filter((it) => it.id == props.year)[0];
@@ -420,12 +413,12 @@ onMounted(async () => {
   docs.value = tmp.data;
   contract.value = tmp.contract;
   console.log(tmp);
-  officers.value = await getOfficer(rg.value, props.month, props.year);
+  officers.value= await getOfficer(rg.value,props.month,props.year)
   isHide.value = false;
   reportStore.isLoading = false;
   rg_desc.value = regions.value.filter((it) => it.rgid == Number(rg.value))[0];
+  
 });
-
 const print = () => {
   window.print();
 };
