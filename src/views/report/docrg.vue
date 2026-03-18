@@ -172,63 +172,136 @@
           <td></td>
         </tr>
       </tbody>
+
+      <!-- ===== CHANGED: tfoot เปลี่ยนให้แสดง footer ตาม footerMode ===== -->
       <tfoot class="footer-tfoot">
         <tr>
           <td colspan="6" style="border:none; padding-top: 20px;">
             <div class="footer w-100 p-0">
               <div class="w-100" style="height:30px;">&nbsp;</div>
-              <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
-              <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==1)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==1)[0]?.position_desc}}</div>
-              <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
-              <br><br>
-              <table class="w-100 mx-auto footer-sig-table" style="border:none !important; border-collapse:collapse;">
-                <tbody>
-                  <tr>
-                    <td align="center" style="border:none !important; padding:8px;">
-                      <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
-                      <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==2)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==2)[0]?.position_desc}}</div>
-                      <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
-                    </td>
-                    <td align="center" style="border:none !important; padding:8px;">
-                      <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
-                      <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==3)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==3)[0]?.position_desc}}</div>
-                      <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+              <!-- ===== CHANGED: footer โหมดคณะกรรมการ (เดิม) — แสดงเมื่อ footerMode !== 'receive' ===== -->
+              <template v-if="footerMode !== 'receive'">
+                <div class="text-center fw-bold mx-auto w-75">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ประธานกรรมการ</div>
+                <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==1)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==1)[0]?.position_desc}}</div>
+                <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
+                <br><br>
+                <table class="w-100 mx-auto footer-sig-table" style="border:none !important; border-collapse:collapse;">
+                  <tbody>
+                    <tr>
+                      <td align="center" style="border:none !important; padding:8px;">
+                        <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
+                        <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==2)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==2)[0]?.position_desc}}</div>
+                        <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
+                      </td>
+                      <td align="center" style="border:none !important; padding:8px;">
+                        <div class="text-center fw-bold">ลงชื่อ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; กรรมการ</div>
+                        <div v-if="isShowCommittee" class="text-center">(&nbsp;{{ officers.data?.filter((ob)=>ob.level==3)[0]?.th_fullname }}&nbsp;)<br>{{officers.data?.filter((ob)=>ob.level==3)[0]?.position_desc}}</div>
+                        <div v-else class="text-center">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br></div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </template>
+
+              <!-- ===== CHANGED: footer โหมดตรวจรับ (ใหม่) — แสดงเมื่อ footerMode === 'receive' ===== -->
+              <template v-else>
+                <table class="w-100 mx-auto footer-sig-table" style="border:none !important; border-collapse:collapse;">
+                  <tbody>
+                    <tr>
+                      <!-- ===== CHANGED: คอลัมน์ซ้าย ผู้ดำเนินการ ===== -->
+                      <td align="center" style="border:none !important; padding:8px;">
+                        <div class="text-center fw-bold">
+                          ลงชื่อ............................................ผู้ดำเนินการ
+                        </div>
+                        <div class="text-center">
+                          (.................................................)
+                        </div>
+                        <div class="text-center">บริษัท คอนโทรล ดาต้า (ประเทศไทย) จำกัด</div>
+                      </td>
+                      <!-- ===== CHANGED: คอลัมน์ขวา ผู้ตรวจรับงาน ===== -->
+                      <td align="center" style="border:none !important; padding:8px;">
+                        <div class="text-center fw-bold">
+                          ลงชื่อ............................................ผู้ตรวจรับงาน
+                        </div>
+                        <div class="text-center">
+                          (.................................................)
+                        </div>
+                        <div class="text-center">วันที่ ............/............/............</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </template>
+
             </div>
           </td>
         </tr>
       </tfoot>
+      <!-- ===== END CHANGED ===== -->
+
     </table>
 
     <!-- footer สำหรับแสดงบนหน้าจอ (ไม่พิมพ์) -->
-    
-    
-    
-
-    <div class="w-100 mx-auto text-center  d-flex justify-content-center align-items-center gap-3 mb-3 noprint d-print-none">
+    <div class="w-100 mx-auto text-center d-flex justify-content-center align-items-center gap-3 mb-3 noprint d-print-none">
       <!-- ปุ่มพิมพ์ -->
       <button v-if="!isHide" class="btn btn-primary btn-sm" @click="print()">
         <i class="bi bi-printer"></i> พิมพ์
-      </button>  
+      </button>
 
-      <!-- Checkbox Switch -->
-      <div class="form-check form-switch mb-0">
-        <input 
-          class="form-check-input" 
-          type="checkbox" 
-          id="toggleCommittee" 
-          v-model="isShowCommittee"
-          style="cursor: pointer;"
-        >
-        <label class="form-check-label fw-bold" for="toggleCommittee" style="cursor: pointer;">
-          แสดงรายชื่อคณะกรรมการ
-        </label>
+      <!-- ===== CHANGED: เปลี่ยนจาก checkbox switch เป็น radio group 3 ตัวเลือก ===== -->
+      <div class="d-flex align-items-center gap-3">
+
+        <!-- Radio: ไม่แสดงรายชื่อ (ค่าเริ่มต้น) -->
+        <div class="form-check mb-0">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="modeNone"
+            value="none"
+            v-model="footerMode"
+            style="cursor: pointer;"
+          />
+          <label class="form-check-label fw-bold" for="modeNone" style="cursor: pointer;">
+            ไม่แสดงรายชื่อ
+          </label>
+        </div>
+
+        <!-- ===== CHANGED: Radio: แสดงรายชื่อคณะกรรมการ (แทน checkbox เดิม) ===== -->
+        <div class="form-check mb-0">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="modeCommittee"
+            value="committee"
+            v-model="footerMode"
+            style="cursor: pointer;"
+          />
+          <label class="form-check-label fw-bold" for="modeCommittee" style="cursor: pointer;">
+            แสดงรายชื่อคณะกรรมการ
+          </label>
+        </div>
+
+        <!-- ===== CHANGED: Radio: ตรวจรับ (ใหม่) ===== -->
+        <div class="form-check mb-0">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="modeReceive"
+            value="receive"
+            v-model="footerMode"
+            style="cursor: pointer;"
+          />
+          <label class="form-check-label fw-bold" for="modeReceive" style="cursor: pointer;">
+            ตรวจรับ
+          </label>
+        </div>
+
       </div>
+      <!-- ===== END CHANGED ===== -->
+
     </div>
-    
+
     <div v-if="isHide" class="alert alert-primary w-25 mx-auto text-center">
       กำลังประมวลผล......
     </div>
@@ -283,7 +356,6 @@
     border: 0 none #fff;
   }
 
-  /* ลบ border top/bottom ทุก td ใน tbrep1 */
   .tbrep1 tbody td {
     border-top: none !important;
     border-bottom: none !important;
@@ -299,19 +371,15 @@
   .tbrep1 tbody tr:first-of-type td {
     padding-top: 8px !important;
   }
-  /* เส้นบนของ tbody แต่ละกลุ่ม (แถวแรก) */
   .tbrep1 tbody tr:first-child > td {
     border-top: 1px solid #c7c5c5 !important;
   }
-  /* เส้นล่างของ tbody แต่ละกลุ่ม (แถวสุดท้าย) — ใช้ outline-bottom ไม่ได้
-     แก้โดยใส่ border-bottom ที่ tbody โดยตรง */
   .tbrep1 tbody {
     border-bottom: 1px solid #c7c5c5 !important;
     border-left: 1px solid #c7c5c5 !important;
     border-right: 1px solid #c7c5c5 !important;
   }
 
-  /* tfoot: ไม่มี border เลย */
   .tbrep1 tfoot,
   .tbrep1 tfoot td,
   .tbrep1 tfoot tr {
@@ -319,14 +387,12 @@
     background: transparent !important;
   }
 
-  /* ป้องกัน tfoot repeat ทุกหน้า และให้ footer ไม่แตกหน้า */
   .footer-tfoot {
     display: table-row-group !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
-  /* footer-sig-table: ไม่มีกรอบเลย — ใช้ inline style + CSS ซ้อนกัน */
   table.footer-sig-table,
   table.footer-sig-table > tbody,
   table.footer-sig-table > tbody > tr,
@@ -348,7 +414,6 @@
     break-inside: avoid !important;
   }
 
-  /* ===== @page rules: แสดงเลขหน้าทุกหน้า ===== */
   @page {
     size: A4;
     margin-top: 15mm;
@@ -366,7 +431,7 @@
 </style>
 
 <script setup>
-import { ref, defineProps, onMounted  } from "vue";
+import { ref, defineProps, onMounted, computed } from "vue"; // CHANGED: เพิ่ม computed import
 import { useReport } from "./report.js";
 
 const props = defineProps({
@@ -408,7 +473,14 @@ const yyTh = ref(null);
 const contract = ref({});
 const officers = ref([]);
 const myTable = ref(null);
-const isShowCommittee = ref(false);
+
+// ===== CHANGED: แทนที่ isShowCommittee (boolean) ด้วย footerMode (string) =====
+// ค่าที่เป็นไปได้: 'none' | 'committee' | 'receive'
+const footerMode = ref('none');
+
+// ===== CHANGED: computed เพื่อให้ v-if="isShowCommittee" ใน template ยังทำงานได้ =====
+const isShowCommittee = computed(() => footerMode.value === 'committee');
+// ===== END CHANGED =====
 
 onMounted(async () => {
   mmTh.value = months.value.filter((it) => it.id == props.month)[0];
