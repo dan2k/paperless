@@ -210,24 +210,27 @@
                   <tbody>
                     <tr>
                       <!-- ===== CHANGED: คอลัมน์ซ้าย ผู้ดำเนินการ ===== -->
-                      <td align="center" style="border:none !important; padding:8px;">
+                      <td align="left" style="border:none !important; padding:8px;">
                         <div class="text-center fw-bold">
                           ลงชื่อ............................................ผู้ดำเนินการ
                         </div>
-                        <div class="text-center">
-                          (.................................................)
+                        <div class="">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(..............................................)
                         </div>
                         <div class="text-center">บริษัท คอนโทรล ดาต้า (ประเทศไทย) จำกัด</div>
                       </td>
                       <!-- ===== CHANGED: คอลัมน์ขวา ผู้ตรวจรับงาน ===== -->
-                      <td align="center" style="border:none !important; padding:8px;">
+                      <td align="left" style="border:none !important; padding:8px;">
                         <div class="text-center fw-bold">
                           ลงชื่อ............................................ผู้ตรวจรับงาน
                         </div>
-                        <div class="text-center">
-                          (.................................................)
+                        <div class="">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(..............................................)
                         </div>
-                        <div class="text-center">วันที่ ............/............/............</div>
+                        <div class="text-center">
+                          &nbsp;
+                        </div>
+                        <div class="text-center">วันที่ ............/............/............&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                       </td>
                     </tr>
                   </tbody>
