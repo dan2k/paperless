@@ -222,7 +222,7 @@
                       <!-- ===== CHANGED: คอลัมน์ขวา ผู้ตรวจรับงาน ===== -->
                       <td align="left" style="border:none !important; padding:8px;">
                         <div class="text-center fw-bold">
-                          ลงชื่อ............................................ผู้ตรวจรับงาน
+                          ลงชื่อ............................................ผู้ตรวจสอบ
                         </div>
                         <div class="">
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(..............................................)
