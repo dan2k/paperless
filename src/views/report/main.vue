@@ -31,10 +31,16 @@
           </td>
           <td align="center" valign="middle">{{ equip.approve?equip.approve:'-' }}</td>
           <td align="center" valign="middle">
-            <span  v-if="equip.approve" style="cursor: pointer" @click="openDocRg(equip.rg)"
+            <!-- <span  v-if="equip.approve" style="cursor: pointer" @click="openDocRg(equip.rg)"
               ><i class="fa-solid fa-print"></i
             ></span>
             <span  v-if="!equip.approve" 
+              ><i class="fa-solid fa-print"></i
+            ></span> -->
+            <span   style="cursor: pointer" @click="openDocRg(equip.rg)"
+              ><i class="fa-solid fa-print"></i
+            ></span>
+            <span   
               ><i class="fa-solid fa-print"></i
             ></span>
           </td>
