@@ -239,8 +239,10 @@
       
       let rs= await api.get(`/paperless/v1/getShare/${txID}`,{ timeout: 1000*60*3});
       
-      if(rs.data?.pid == null || rs.data?.birthdate == null || rs.data?.name ==null){
-        error.value='กรุณาแชร์ข้อมูลให้ครบดังนี้ <ul><li>เลขประจำตัวประชาชน</li><li>วัน/เดือน/ปีเกิด</li><li>ชื่อ-นามสกุล ภาษาไทย</li></ul>';
+      // if(rs.data?.pid == null || rs.data?.birthdate == null || rs.data?.name ==null){
+      if(rs.data?.pid == null  || rs.data?.name ==null){
+        // error.value='กรุณาแชร์ข้อมูลให้ครบดังนี้ <ul><li>เลขประจำตัวประชาชน</li><li>วัน/เดือน/ปีเกิด</li><li>ชื่อ-นามสกุล ภาษาไทย</li></ul>';
+        error.value='กรุณาแชร์ข้อมูลให้ครบดังนี้ <ul><li>เลขประจำตัวประชาชน</li><li>ชื่อ-นามสกุล ภาษาไทย</li></ul>';
         close();
         return;
       }
@@ -253,7 +255,8 @@
       isSatisfy.value=true;
       data.value={
         pid:rs.data.pid,
-        dob:rs.data.birthdate,
+        // dob:rs.data.birthdate,
+        dob:10000000,
         name:rs.data.name,
         txID:txID2,
       }
