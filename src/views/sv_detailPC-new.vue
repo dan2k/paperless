@@ -241,7 +241,7 @@ const {
 const url=ref('')
 const empid = authStore.userData.ses_empid;
 onMounted(async () => {
-  url.value=`https://www.controldata.co.th/mpsicc/paperless/client/approve/${route.params['jobid']}/${empid}`;
+  url.value=`/mpsicc/paperless/client/approve/${route.params['jobid']}/${empid}`;
   await initDetail2();
   console.log({url});
 });

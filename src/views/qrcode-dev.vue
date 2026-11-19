@@ -76,7 +76,7 @@
   const {authStore,appStore,route,gotoCdg} = useService();
   // const authStore = useAuthStore();
   const empid = authStore.userData.ses_empid;
-  const url=ref(`https://www.controldata.co.th/mpsicc/paperless/client/approve/${route.params['jobid']}/${empid}`);
+  const url=ref(`/mpsicc/paperless/client/approve/${route.params['jobid']}/${empid}`);
   const status = ref(false);
   const isChecking = ref(false);
   const isLoading = ref(false);

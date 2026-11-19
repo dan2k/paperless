@@ -439,7 +439,7 @@
     </div>
     <qrcode 
       v-if="approves"
-      :value="`https://www.controldata.co.th/mpsicc/paperless/client/verify/${approves[0]?.pid}/${approves[0]?.txID}`"
+      :value="`/mpsicc/paperless/client/verify/${approves[0]?.pid}/${approves[0]?.txID}`"
       :width="300"
       :height="300"
       :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"

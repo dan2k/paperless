@@ -19,9 +19,10 @@
 <script setup>
     // import {useService } from "./service"
     // const {router} =useService();
+    const thaidCallback=import.meta.env.VITE_PRIVATE_CALLBACK_THAID_URL;
     const gotoImauth=()=>{
         let state=btoa('approve|RG06660001')
-        window.location.href="https://imauth.bora.dopa.go.th/api/v1/oauth2/auth/?response_type=code&client_id=TGFNQU56RDNMcDRrWDRlNHhEUHNLNVNLOE8waU5wZ1Y=&redirect_uri=https://www.controldata.co.th/mpsicc/ddopa&scope=pid%20th_fullname%20dob&state="+state; 
+        window.location.href=`https://imauth.bora.dopa.go.th/api/v1/oauth2/auth/?response_type=code&client_id=TGFNQU56RDNMcDRrWDRlNHhEUHNLNVNLOE8waU5wZ1Y=&redirect_uri=${thaidCallback}&scope=pid%20th_fullname%20dob&state=`+state; 
     }
 </script>
 
