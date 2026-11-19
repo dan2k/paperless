@@ -8,7 +8,7 @@ import {
   saraban_bolditalic,
   saraban_italic,
 } from "./sarabunnew.js";
-import { jsPDF } from "jsPDF";
+import { jsPDF } from "jspdf";
 
 export const useService = () => {
   const authStore = useAuthStore();
